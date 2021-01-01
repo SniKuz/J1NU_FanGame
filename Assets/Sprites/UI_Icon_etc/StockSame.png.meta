@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: 538d0323dc1171845a90f28922ab1564
+guid: 91a1f6ac91d346445bbe24e9c18e2ff3
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -5337677560099659235
-    second: Staff_twitch_S_Lank_0
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -100,28 +97,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Staff_twitch_S_Lank_0
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 4
-        width: 22
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d12afa01a82cce5b0800000000000000
-      internalID: -5337677560099659235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
