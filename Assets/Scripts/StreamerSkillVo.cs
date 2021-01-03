@@ -9,10 +9,10 @@ public class StreamerSkillVo
     public string _skillName;
     public int _level;
     public int[] _nextLevelGold; 
-    public string _function;
+    public string[] _function;
     public string _skillIntroduce;
 
-    public StreamerSkillVo(int id, Sprite icon, string skillName, int level, int[] nextLevelGold, string function, string skillIntroduce){
+    public StreamerSkillVo(int id, Sprite icon, string skillName, int level, int[] nextLevelGold, string[] function, string skillIntroduce){
         _id = id;
         _icon = icon;
         _skillName = skillName;

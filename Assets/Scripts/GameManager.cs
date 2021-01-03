@@ -7,24 +7,31 @@ public class GameManager : MonoBehaviour
 {
     public GameManager gameManager;
     public GoodsSystem goodsSystem;
+    public StaffManager staffManager;
 
     public Transform backGround;
     public enum Type {GoodsRoom, BossRoom, StreamingRoom};
     public Type curType;
-    public float time; //60s check
     public int day;
     public int guage; // Event check(Battery Guage)
     public int money; // moeny
     public int goods; // goods
     public int viwer; // Twitch viwer
 
+    public float time; //20s check
+    public float timeMPS; // StaffMps Time
+
     private void Update() {
         TimeFlow();
     }
 
     void TimeFlow(){
-        time -= Time.deltaTime;
 
+        //#.Guage Time
+        time -= Time.deltaTime;
+        timeMPS += Time.deltaTime;
+
+        //#.Guage Over
         if(time <= 0f){
             guage--;
             if(guage < 1){
@@ -38,10 +45,20 @@ public class GameManager : MonoBehaviour
             
             time = 20f;
         }
+
+        //#.Auto Making by staffs- StaffMPS Time
+        if(timeMPS >=1f){
+            for(int i = 0; i < 4; i++){
+                goods += (int)staffManager.staffCnt[0, i];
+                viwer += (int)staffManager.staffCnt[2, i];
+            }
+            timeMPS = 0f;
+        }
+
         goods = goods > goodsSystem.maxGoodsCapacity ? goodsSystem.maxGoodsCapacity : gameManager.goods; // goods는 최대 goods 용량 못넘어감
     }
 
-
+    //#. Map Move
     public void TypeBtnClick(string dir){
         if(dir == "Right" && (int)gameManager.curType < 2){
             gameManager.curType++;
@@ -53,16 +70,16 @@ public class GameManager : MonoBehaviour
         switch(gameManager.curType)
         {
             case GameManager.Type.GoodsRoom:
-            break;
+                break;
 
             case GameManager.Type.BossRoom:
-            break;
+                break;
 
             case GameManager.Type.StreamingRoom:
-            break;
+                break;
 
             default:
-            break;
+                break;
         }
 
         //#.Move BackGround
