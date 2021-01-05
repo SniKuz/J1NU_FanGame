@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:152f12ed7ef9c406da351454fc6d12a103df5ee28406473460963e009fdc7233
-size 630
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SoundManager : MonoBehaviour
+{
+    private AudioSource musicPlayer;
+    public AudioClip backGroundMusic;
+
+    private void Start() {
+        musicPlayer = GetComponent<AudioSource>();
+        backGround(backGroundMusic, musicPlayer);
+    }
+    public static void backGround(AudioClip clip, AudioSource audioPlayer){
+        audioPlayer.Stop();
+        audioPlayer.clip = clip;
+        audioPlayer.loop = true;
+        audioPlayer.time = 0;
+        audioPlayer.volume = 0.1f;
+        audioPlayer.Play();
+    }
+}
