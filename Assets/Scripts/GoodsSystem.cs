@@ -27,8 +27,8 @@ public class GoodsSystem : MonoBehaviour
     public int goodsDesignCnt; // cnt for how many click is one goodDesignBonusCnt
     public int goodsDesignBonusCnt; // goodsDesingTime
     private int designBonus; // Bonus about goods price
-    private int goodsMakeCnt;
-    public int maxGoodsCapacity; // How many goods can have.
+    public int goodsMakeCnt;
+    public int goodsCapacityCnt;
     private bool goodsTransporting;
     public float goodsTransportTime;
     private float goodsTransportSpeed; // goods sell speed
@@ -43,7 +43,7 @@ public class GoodsSystem : MonoBehaviour
         goodsDesignBonusCnt = 3;
         designBonus = 2;
         goodsMakeCnt = 10;
-        maxGoodsCapacity = 100;
+        goodsCapacityCnt = 30;
         goodsTransporting = false;
         goodsTransportSpeed = 1;
         goodsTransPortCapacity = 5;
@@ -83,6 +83,7 @@ public class GoodsSystem : MonoBehaviour
                         GoodsMakeBtn();
                         break;
                     case "GoodsPacking":
+                        GoodsCapacityBtn();
                         break;
                     case "Goods_Transport_Box":
                         ChangeGoodsTransporting();
@@ -96,7 +97,6 @@ public class GoodsSystem : MonoBehaviour
         if(Input.GetMouseButtonDown(0)){
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out raycastHit, Mathf.Infinity)){
-                Debug.Log("HIT");
                 switch (raycastHit.collider.gameObject.name)
                 {
                     case "Design_Btn_OnOff":
@@ -107,6 +107,9 @@ public class GoodsSystem : MonoBehaviour
                         break;
                     case "Goods_Make":
                         GoodsMakeBtn();
+                        break;
+                    case "Goods_Packing":
+                        GoodsCapacityBtn();
                         break;
                     case "Goods_Transport_Box":
                         ChangeGoodsTransporting();
@@ -158,16 +161,31 @@ public class GoodsSystem : MonoBehaviour
         goodsMakeCnt-= 1;
         if(goodsMakeCnt <= 0){
             goodsMakeCnt = 10;
+            gameManager.prevGoods = gameManager.goods;
             gameManager.goods += 1;
         }
+        GoodsMakeAnimOn();
+    }
+
+    public void GoodsMakeAnimOn(){
         makeleftArmAnim.SetTrigger("on");
         makerightArmAnim.SetTrigger("on");
         leftArmSpark.SetTrigger("on");
         rightArmSpark.SetTrigger("on");
+
     }
 
     void MaxCapacityUp(){
-        maxGoodsCapacity += maxGoodsCapacity;
+        gameManager.maxCapacity += 1;
+    }
+
+    void GoodsCapacityBtn(){
+        goodsCapacityCnt -= 1;
+        capacityAnim.SetTrigger("on");
+        if(goodsCapacityCnt <= 0){
+            goodsCapacityCnt = 30;
+            MaxCapacityUp();
+        }
     }
 
 

@@ -17,9 +17,13 @@ public class GameManager : MonoBehaviour
     public int money; // moeny
     public int goods; // goods
     public int viwer; // Twitch viwer
+    public int maxCapacity; //총 굿즈 개수
+    public int prevGoods;
 
     public float time; //20s check
     public float timeMPS; // StaffMps Time
+    public int staffCost;//totalStaffCost
+    public int workStaff;// How many staff working
 
     private void Update() {
         TimeFlow();
@@ -37,6 +41,7 @@ public class GameManager : MonoBehaviour
             if(guage < 1){
                 guage = 5;
                 day++;
+                money -= staffCost; // each month -> staff cost pay
                 //Important Event 발생
             }
 
@@ -48,14 +53,16 @@ public class GameManager : MonoBehaviour
 
         //#.Auto Making by staffs- StaffMPS Time
         if(timeMPS >=1f){
+            prevGoods = goods;
             for(int i = 0; i < 4; i++){
                 goods += (int)staffManager.staffCnt[0, i];
+                goodsSystem.goodsDesignBonusCnt += (int)staffManager.staffCnt[1, i]; 
                 viwer += (int)staffManager.staffCnt[2, i];
             }
             timeMPS = 0f;
         }
 
-        goods = goods > goodsSystem.maxGoodsCapacity ? goodsSystem.maxGoodsCapacity : gameManager.goods; // goods는 최대 goods 용량 못넘어감
+        goods = goods > maxCapacity ? maxCapacity : goods; // goods는 최대 goods 용량 못넘어감
     }
 
     //#. Map Move
