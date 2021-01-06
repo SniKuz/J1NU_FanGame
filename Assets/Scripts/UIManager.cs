@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
 	public GoodsSystem goodsSystem;
     public StreamerSkillManager skillManager;
     public StaffManager staffManager;
+    public EventManager eventManager;
 
 	public Image dateImage;
 	public Sprite[] guageImage;
@@ -64,6 +65,11 @@ public class UIManager : MonoBehaviour
     public GameObject BackGroundForDontTouchOnemoreDraw;
     public GameObject staffOneRecruitBtn;
     public GameObject staffTenRecruitBtn;
+
+    public RectTransform eventSet;
+    public TextMeshProUGUI eventTitle;
+    public TextMeshProUGUI eventContent;
+    public GameObject eventEffect;
 
     
 
@@ -456,4 +462,55 @@ public class UIManager : MonoBehaviour
     }
 
     //#.---------------------[Status]
+
+
+
+
+
+    //#.---------------------[Event]
+    public void EventUpdate(EventVo curEvent){
+        eventManager.MakeEventBtn(curEvent._id);
+        eventTitle.text = curEvent._title;
+        eventContent.text = curEvent._content;
+        eventSet.transform.DOScale(new Vector3(1,1,1),0.4f);
+    }
+
+    //id->btnIndex : Event branch. 아이디 버튼별로 이벤트 분기. 
+    public void EventBtn(int btn){
+        switch(eventManager.curEvent._id){
+            case 0:
+                if(btn == 0){
+                    EventBtnEffect("다행히 도망쳐 돈을 내지 않습니다.");
+                }
+                break;
+            case 1:
+                if(btn == 0){
+                    Debug.Log("1-0");
+                }else if(btn ==1){
+                    Debug.Log("1-1");
+                }
+                break;
+            case 2:
+                if(btn == 0){
+                    Debug.Log("2-0");
+                }else if(btn ==1){
+                    Debug.Log("2-1");
+                }else if(btn ==2){
+                    Debug.Log("2-2");
+                }
+                break;
+        }
+        for(int i=0; i<3; i++){
+            Destroy(eventManager.eventBtnPocket[i]);
+        }
+    }
+
+    public void EventBtnEffect(string effect){
+        eventEffect.transform.localScale = new Vector3(1, 1, 1);
+        eventEffect.GetComponentInChildren<TextMeshProUGUI>().text = effect;
+    }
+    public void CloseEventBtnEffect(){
+        eventSet.transform.localScale = new Vector3(0, 0, 0);
+        eventEffect.transform.localScale = new Vector3(0, 0, 0);
+    }
 }

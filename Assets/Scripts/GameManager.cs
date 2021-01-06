@@ -6,8 +6,10 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     public GameManager gameManager;
+    public UIManager uiManager;
     public GoodsSystem goodsSystem;
     public StaffManager staffManager;
+    public EventManager eventManager;
 
     public Transform backGround;
     public enum Type {GoodsRoom, BossRoom, StreamingRoom};
@@ -19,7 +21,6 @@ public class GameManager : MonoBehaviour
     public int viwer; // Twitch viwer
     public int maxCapacity; //총 굿즈 개수
     public int prevGoods;
-
     public float time; //20s check
     public float timeMPS; // StaffMps Time
     public int staffCost;//totalStaffCost
@@ -55,14 +56,19 @@ public class GameManager : MonoBehaviour
         if(timeMPS >=1f){
             prevGoods = goods;
             for(int i = 0; i < 4; i++){
-                goods += (int)staffManager.staffCnt[0, i];
-                goodsSystem.goodsDesignBonusCnt += (int)staffManager.staffCnt[1, i]; 
-                viwer += (int)staffManager.staffCnt[2, i];
+                goods += (int)staffManager.staffCnt[0, i] * (int)staffManager.staffMPS[0, i];
+                goodsSystem.goodsDesignBonusCnt += (int)staffManager.staffCnt[1, i] * (int)staffManager.staffMPS[0, i]; 
+                viwer += (int)staffManager.staffCnt[2, i] * (int)staffManager.staffMPS[0, i];
             }
             timeMPS = 0f;
         }
 
         goods = goods > maxCapacity ? maxCapacity : goods; // goods는 최대 goods 용량 못넘어감
+
+        //#.Check Event
+        if(eventManager.CheckEvent(day)){
+            uiManager.EventUpdate(eventManager.curEvent);
+        }
     }
 
     //#. Map Move
@@ -110,9 +116,5 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-    }
-
-    public void StockSystem(){
-        
     }
 }
