@@ -7,13 +7,14 @@ public class StockManager : MonoBehaviour
     public GameManager gameManager;
 
     public GameObject stockItem;
+    public GameObject stockManger;//for newStockItem Instantiate
 
     private GameObject[] DogStock = new GameObject[10];
 
     public int checkDayChange; //for check gamemanager day change
     public int checkGuageChange; //for check gamemanager guage change
 
-    private void Start() {
+    private void Awake() {
         for(int i=0; i<10; i++){
             DogStock[i] = newStock("개잡주"+i, i*10, i*1000);
         }
@@ -30,7 +31,7 @@ public class StockManager : MonoBehaviour
 
     public GameObject newStock(string name, int price, int totalStock){
         GameObject newStockItem = Instantiate(stockItem, new Vector3(0, 0, 0), Quaternion.identity);
-        newStockItem.transform.SetParent(GameObject.Find("StockManager").transform);
+        newStockItem.transform.SetParent(stockManger.transform);
         newStockItem.GetComponent<StockItem>().SetStockName(name);
         newStockItem.GetComponent<StockItem>().SetStockPrice(price);
         newStockItem.GetComponent<StockItem>().SetTotalStock(totalStock);
