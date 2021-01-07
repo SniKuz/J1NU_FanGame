@@ -5,15 +5,18 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager instance = null;
     public GameManager gameManager;
     public UIManager uiManager;
     public GoodsSystem goodsSystem;
     public StaffManager staffManager;
     public EventManager eventManager;
+    public SoundManager soundManager;
 
     public Transform backGround;
     public enum Type {GoodsRoom, BossRoom, StreamingRoom};
     public Type curType;
+    public bool isStopTime;
     public int day;
     public int guage; // Event check(Battery Guage)
     public int money; // moeny
@@ -26,11 +29,31 @@ public class GameManager : MonoBehaviour
     public int staffCost;//totalStaffCost
     public int workStaff;// How many staff working
 
+    //#.------싱글톤-------
+    private void Awake() {
+        if(null == instance){
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else{
+            Destroy(this.gameObject);
+        }
+    }
+    public static GameManager Instance{
+        get{
+            if (null == instance){
+                return null;
+            }
+            return instance;
+        }
+    }
+
     private void Update() {
         TimeFlow();
     }
 
     void TimeFlow(){
+        if(isStopTime) return;
 
         //#.Guage Time
         time -= Time.deltaTime;
@@ -68,6 +91,7 @@ public class GameManager : MonoBehaviour
         //#.Check Event
         if(eventManager.CheckEvent(day)){
             uiManager.EventUpdate(eventManager.curEvent);
+            isStopTime = true;
         }
     }
 
@@ -97,6 +121,7 @@ public class GameManager : MonoBehaviour
 
         //#.Move BackGround
         gameManager.ChangeMap();
+        soundManager.PanelClick();
     }
 
 

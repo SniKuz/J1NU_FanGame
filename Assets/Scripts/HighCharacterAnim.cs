@@ -1,3 +1,44 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4f18c55d767d244649500d5f5ad0c7536302d8f2cdf11d026eee3dbf4904d6bd
-size 751
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/* This code for change Animation
+now there are only default and sleep animation so code is only change isSleep parameter
+**/
+public class HighCharacterAnim : MonoBehaviour
+{
+
+    private Animator anim;
+    private float animChangeTime;
+    private bool isDefault;
+    // Start is called before the first frame update
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+        animChangeTime = 0f;
+        isDefault = true;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(GameManager.Instance.isStopTime){
+            anim.SetBool("Default",false);
+            anim.SetBool("Sleep", false);
+            return ;
+        }
+
+        animChangeTime += Time.deltaTime;
+        if(animChangeTime>120f){
+            animChangeTime = 0;
+            isDefault = !isDefault;
+        }
+        if(isDefault){
+            anim.SetBool("Default",true);
+            anim.SetBool("Sleep", false);
+        }else{
+            anim.SetBool("Default",false);
+            anim.SetBool("Sleep", true);
+        }
+    }
+}

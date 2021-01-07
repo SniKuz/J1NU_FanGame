@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class StaffManager : MonoBehaviour
 {
+    public SoundManager soundManager;
     public int[] waitStaffCnt;
     public int[,] staffCnt; //배치한 스태프 수
     public float[,] staffMPS; // Staff가 초당 만드는 생산량 Make Per Sec
@@ -45,18 +46,21 @@ public class StaffManager : MonoBehaviour
     }
 
         public void OpenDrawStaff(int num){
+            int bgm = 0;//For most high grade staff
             if(num ==1){
                 hideStaffOne.GetComponent<Button>().enabled = false;//여러번 안눌리게 On Off
                 int randomStaff = Random.Range(0, 100);
                 if(randomStaff <50){
-                drawStaffGrade = 3;// Rank C 50%
+                    drawStaffGrade = 3;// Rank C 50%
                 } else if(50 <= randomStaff && randomStaff < 80){
-                drawStaffGrade = 2;// Rank B 30%
+                    drawStaffGrade = 2;// Rank B 30%
                 }else if(80 <= randomStaff && randomStaff < 97){
-                drawStaffGrade = 1;// Rank A 17%
+                    drawStaffGrade = 1;// Rank A 17%
                 }else{
                     drawStaffGrade = 0;// Rank S 3%
+                    bgm++;
                 }
+                soundManager.StaffOpen(bgm);//if bgm <= 0 ->ABC, bgm >0 ->S
                 StartCoroutine("DrawOpenOneStaffDelay");
             }else if(num == 10){
                 hideStaffTen.GetComponent<Button>().enabled = false;//여러번 안눌리게 On Off
@@ -70,8 +74,10 @@ public class StaffManager : MonoBehaviour
                         drawTenStaffGrade[i] = 1;// Rank A 17%
                     }else{
                         drawTenStaffGrade[i] = 0;// Rank S 3%
+                        bgm++;
                     }
                 }
+                soundManager.StaffOpen(bgm);//if bgm <= 0 ->ABC, bgm >0 ->S
                 StartCoroutine("DrawOpenTenStaffDelay");
             }
     }

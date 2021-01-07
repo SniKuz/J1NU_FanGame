@@ -52,6 +52,8 @@ public class GoodsSystem : MonoBehaviour
 
 
     private void Update() {
+        if(GameManager.Instance.isStopTime) return;
+
         TouchGoodsCreate();
         if(Input.GetKeyDown(KeyCode.D)) ChangeGoodsDesigning();
         if(Input.GetKeyDown(KeyCode.S)) ChangeGoodsTransporting(); 
@@ -66,7 +68,7 @@ public class GoodsSystem : MonoBehaviour
     }
 
     void TouchGoodsCreate(){
-
+    if(GameManager.Instance.isStopTime) return;//시간 멈출시 Touch불가
 #if UNITY_ANDROID
         if(Input.touchCount > 0){
             if(Input.GetTouch(0).phase == TouchPhase.Began){
@@ -92,8 +94,7 @@ public class GoodsSystem : MonoBehaviour
             }
         }
 #endif
-
-#if UNITY_EDITOR
+#if UNITY_EDITOR 
         if(Input.GetMouseButtonDown(0)){
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out raycastHit, Mathf.Infinity)){
@@ -131,6 +132,8 @@ public class GoodsSystem : MonoBehaviour
     }
 
     public void ChangeGoodsDesigning(){
+        if(GameManager.Instance.isStopTime) return;//시간 멈출시
+
         if(goodsDesignBonusCnt <= 0 ) goodsDesigning = false;
         else goodsDesigning  = !goodsDesigning;
         BtnSpriteChange(goodsDesigning);

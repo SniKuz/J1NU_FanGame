@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public StreamerSkillManager skillManager;
     public StaffManager staffManager;
     public EventManager eventManager;
+    public SoundManager soundManager;
 
 	public Image dateImage;
 	public Sprite[] guageImage;
@@ -70,6 +71,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI eventTitle;
     public TextMeshProUGUI eventContent;
     public GameObject eventEffect;
+    public GameObject stopTimeWindow;
 
     
 
@@ -78,6 +80,7 @@ public class UIManager : MonoBehaviour
         skillUIUpdate();
     }
 	private void LateUpdate() {
+        if(GameManager.Instance.isStopTime) return;
 
         //#0. 
 		dateImage.fillAmount = gameManager.time/20f;
@@ -195,6 +198,7 @@ public class UIManager : MonoBehaviour
 				informationPanel.DOLocalMoveY(-878, 0.4f).SetEase(Ease.InBack);
 			}
 		}
+        soundManager.PanelClick();
 	}
 
     //------------------------------------[StreamerPanel TabBtn]
@@ -273,6 +277,7 @@ public class UIManager : MonoBehaviour
                 SelectSkill(15);
                 break;
 		}
+        soundManager.PanelClick();
 	}
 
 
@@ -341,6 +346,7 @@ public class UIManager : MonoBehaviour
                 staffGetBtn.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(50, 50, 50, 255);   
                 break;
         }
+        soundManager.PanelClick();
     }
 
     public void StaffIn(string rank){
@@ -473,6 +479,8 @@ public class UIManager : MonoBehaviour
         eventTitle.text = curEvent._title;
         eventContent.text = curEvent._content;
         eventSet.transform.DOScale(new Vector3(1,1,1),0.4f);
+
+        stopTimeWindow.SetActive(true);
     }
 
     //id->btnIndex : Event branch. 아이디 버튼별로 이벤트 분기. 
@@ -512,5 +520,7 @@ public class UIManager : MonoBehaviour
     public void CloseEventBtnEffect(){
         eventSet.transform.localScale = new Vector3(0, 0, 0);
         eventEffect.transform.localScale = new Vector3(0, 0, 0);
+        gameManager.isStopTime = false;
+        stopTimeWindow.SetActive(false);
     }
 }
