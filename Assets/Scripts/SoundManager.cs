@@ -4,19 +4,43 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    private AudioSource musicPlayer;
-    public AudioClip backGroundMusic;
+    public AudioSource backGroundMusic;
+    public AudioSource panelAudioSource;
+    public AudioSource staffABCOpen;
+    public AudioSource staffSOepn;
 
     private void Start() {
-        musicPlayer = GetComponent<AudioSource>();
-        backGround(backGroundMusic, musicPlayer);
+        //#0.Global soundVolume Setting
+        backGroundMusic.volume = GlobalVar.soundVolume /10f;
+        panelAudioSource.volume = GlobalVar.soundVolume /10f;
+        staffABCOpen.volume = GlobalVar.soundVolume /10f;
+        staffSOepn.volume = GlobalVar.soundVolume /10f;
+
+        backGroundMusic = GetComponent<AudioSource>();
+        backGround(backGroundMusic);
     }
-    public static void backGround(AudioClip clip, AudioSource audioPlayer){
+    public static void backGround(AudioSource audioPlayer){
         audioPlayer.Stop();
-        audioPlayer.clip = clip;
         audioPlayer.loop = true;
         audioPlayer.time = 0;
-        audioPlayer.volume = 0.1f;
         audioPlayer.Play();
+    }
+
+    public void PanelClick(){
+        panelAudioSource.loop = false;
+        panelAudioSource.time = 0;
+        panelAudioSource.Play();
+    }
+
+    public void StaffOpen(int staff){
+        if(staff <= 0){
+            staffABCOpen.loop = false;
+            staffABCOpen.time = 0;
+            staffABCOpen.Play();
+        }else if(staff > 0){
+            staffSOepn.loop = false;
+            staffSOepn.time = 0;
+            staffSOepn.Play();
+        }
     }
 }
