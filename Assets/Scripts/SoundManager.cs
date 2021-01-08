@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource panelAudioSource;
     public AudioSource staffABCOpen;
     public AudioSource staffSOepn;
+    public AudioSource skillLevelUp;
 
     private void Start() {
         //#0.Global soundVolume Setting
@@ -15,6 +16,7 @@ public class SoundManager : MonoBehaviour
         panelAudioSource.volume = GlobalVar.soundVolume /10f;
         staffABCOpen.volume = GlobalVar.soundVolume /10f;
         staffSOepn.volume = GlobalVar.soundVolume /10f;
+        skillLevelUp.volume =GlobalVar.soundVolume /10f;
 
         backGroundMusic = GetComponent<AudioSource>();
         backGround(backGroundMusic);
@@ -31,6 +33,10 @@ public class SoundManager : MonoBehaviour
         panelAudioSource.time = 0;
         panelAudioSource.Play();
     }
+    public void SkillUp(){
+        skillLevelUp.time = 0;
+        skillLevelUp.Play();
+    }
 
     public void StaffOpen(int staff){
         if(staff <= 0){
@@ -44,3 +50,4 @@ public class SoundManager : MonoBehaviour
         }
     }
 }
+

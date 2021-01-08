@@ -31,7 +31,7 @@ public class PrologueManager : MonoBehaviour
         page--;
         cartoons[page].DOLocalMoveY(0, 0.5f).SetEase(Ease.OutBack);
 
-        if(page == 4){
+        if(page == 5){
             rightBtn.gameObject.SetActive(true);
             inGameBtn.gameObject.SetActive(false);
         }
@@ -41,7 +41,7 @@ public class PrologueManager : MonoBehaviour
         clickSound.Play();
         cartoons[page].DOLocalMoveY(1500, 0.5f).SetEase(Ease.InBack);
         page++;
-        if(page==5){
+        if(page==6){
             //EndBtnVisible
             rightBtn.gameObject.SetActive(false);
             inGameBtn.gameObject.SetActive(true);

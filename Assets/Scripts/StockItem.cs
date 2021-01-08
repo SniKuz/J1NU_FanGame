@@ -7,6 +7,7 @@ using TMPro;
 public class StockItem : MonoBehaviour
 {
     public GameManager gameManager;
+    public StreamerSkillManager skillManager;
     public string stockName; //Name of stock
     public int stockPrice; //How much
     public int totalStock; // How many stock
@@ -34,7 +35,6 @@ public class StockItem : MonoBehaviour
         stockPriceText.text = string.Format("{0:n0}", stockPrice);
         totalStockText.text = myStock +"/" +totalStock;
     }
-    
     public string GetStockName(){
         return this.stockName;
     }
@@ -68,7 +68,7 @@ public class StockItem : MonoBehaviour
 
     public void BuyStock(){
         if(this.totalStock > this.myStock){
-            gameManager.money -= stockPrice;
+            gameManager.money -= (int)(stockPrice * skillManager.skillList[17]._functionDesc[skillManager.skillList[17]._level]);
             this.myStock++;
             totalStockText.text = myStock +"/" + totalStock;
         }
@@ -76,15 +76,18 @@ public class StockItem : MonoBehaviour
 
     public void SellStock(){
         if(this.myStock>0){
-            gameManager.money += stockPrice;
+            gameManager.money += (int)(stockPrice * skillManager.skillList[18]._functionDesc[skillManager.skillList[18]._level]);
             this.myStock--;
             totalStockText.text = myStock +"/" + totalStock;
         }
     }
 
     public void ChangeStockPrice(){
-        int Volatility = Random.Range(-50, 51);
-        this.stockPrice = stockPrice + stockPrice * Volatility/100; // -50~50% 변동
+        int volatilityLow = -50 + (int)(skillManager.skillList[12]._functionDesc[skillManager.skillList[12]._level] + skillManager.skillList[15]._functionDesc[skillManager.skillList[15]._level]);;
+        int volatilityHigh = 31 + (int)skillManager.skillList[16]._functionDesc[skillManager.skillList[16]._level];
+
+        int Volatility = Random.Range(volatilityLow, volatilityHigh);
+        this.stockPrice = stockPrice + stockPrice * Volatility/100; // -50~30% 변동
         SetStockPrice(this.stockPrice);
         if(Volatility > 0){
             this.stockVolatilityImg.gameObject.GetComponent<Image>().sprite = stockUpImgae;
