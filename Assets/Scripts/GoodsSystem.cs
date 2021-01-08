@@ -6,6 +6,7 @@ public class GoodsSystem : MonoBehaviour
 {
 
     public GameManager gameManager;
+    public StreamerSkillManager skillManager;
 
     public GameObject DesignOnOffBtn;
 
@@ -17,11 +18,11 @@ public class GoodsSystem : MonoBehaviour
     public Animator capacityAnim;
     public Animator transportAnim;
 
+    public int[] maxCnt; // each touch max. 0:Design, 1:Maek, 2:Capacity
     public Sprite[] onOffBtnSprite;
     private Ray ray;
     private RaycastHit raycastHit;
-
-    private int goodsPrice; // 1 goods price
+    public int goodsPrice; // 1 goods price
     private bool goodsDesigning;
     private float goodsDesigningTime;
     public int goodsDesignCnt; // cnt for how many click is one goodDesignBonusCnt
@@ -31,23 +32,17 @@ public class GoodsSystem : MonoBehaviour
     public int goodsCapacityCnt;
     private bool goodsTransporting;
     public float goodsTransportTime;
-    private float goodsTransportSpeed; // goods sell speed
-    private int goodsTransPortCapacity; // How many goods can sell in one time
+    public int goodsTransPortCapacity; // How many goods can sell in one time
 
     private void Start() {
         //추후 데이터 저장해서 업그레이드 반영해야함
         goodsPrice = 10; 
         goodsDesigning = false;
-        goodsDesignCnt = 10;
         goodsDesigningTime = 5; 
         goodsDesignBonusCnt = 3;
         designBonus = 2;
-        goodsMakeCnt = 10;
-        goodsCapacityCnt = 30;
         goodsTransporting = false;
-        goodsTransportSpeed = 1;
         goodsTransPortCapacity = 5;
-        goodsTransportTime = 5;
     }
 
 
@@ -55,8 +50,6 @@ public class GoodsSystem : MonoBehaviour
         if(GameManager.Instance.isStopTime) return;
 
         TouchGoodsCreate();
-        if(Input.GetKeyDown(KeyCode.D)) ChangeGoodsDesigning();
-        if(Input.GetKeyDown(KeyCode.S)) ChangeGoodsTransporting(); 
 
         if(goodsTransporting){
             GoodsTrnasport();
@@ -120,13 +113,21 @@ public class GoodsSystem : MonoBehaviour
                 }
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Q)){
+            GoodsDesignCntUp();
+        }
+        if(Input.GetKeyDown(KeyCode.W)){
+            GoodsMakeBtn();
+        }
 #endif
     }
 
     void GoodsDesignCntUp(){
-        goodsDesignCnt-=1;
-        if(goodsDesignCnt <= 0){
-            goodsDesignCnt = 10;
+        designAnim.SetTrigger("on");
+        goodsDesignCnt += 1  + (int)skillManager.skillList[9]._functionDesc[skillManager.skillList[9]._level];
+        if(goodsDesignCnt >= maxCnt[0]){
+            goodsDesignCnt -= maxCnt[0];
             goodsDesignBonusCnt++;
         }
     }
@@ -137,7 +138,6 @@ public class GoodsSystem : MonoBehaviour
         if(goodsDesignBonusCnt <= 0 ) goodsDesigning = false;
         else goodsDesigning  = !goodsDesigning;
         BtnSpriteChange(goodsDesigning);
-        designAnim.SetBool("on", goodsDesigning);
     }
 
     public void GoodsDesignBonus(){
@@ -152,18 +152,16 @@ public class GoodsSystem : MonoBehaviour
             goodsDesignBonusCnt --;
         }
 
-        
         if(goodsDesignBonusCnt <=0) {
             goodsDesigning = false;
-            designAnim.SetBool("on", false);
             BtnOff(DesignOnOffBtn);
         }
     }
 
     void GoodsMakeBtn(){
-        goodsMakeCnt-= 1;
-        if(goodsMakeCnt <= 0){
-            goodsMakeCnt = 10;
+        goodsMakeCnt+= 1 + (int)skillManager.skillList[5]._functionDesc[skillManager.skillList[5]._level]; //Collet0 Skill
+        if(goodsMakeCnt >= maxCnt[1]){
+            goodsMakeCnt -= maxCnt[1];
             gameManager.prevGoods = gameManager.goods;
             gameManager.goods += 1;
         }
@@ -183,10 +181,10 @@ public class GoodsSystem : MonoBehaviour
     }
 
     void GoodsCapacityBtn(){
-        goodsCapacityCnt -= 1;
+        goodsCapacityCnt += 1 + (int)skillManager.skillList[9]._functionDesc[skillManager.skillList[9]._level];;
         capacityAnim.SetTrigger("on");
-        if(goodsCapacityCnt <= 0){
-            goodsCapacityCnt = 30;
+        if(goodsCapacityCnt >= maxCnt[2]){
+            goodsCapacityCnt -= maxCnt[2];
             MaxCapacityUp();
         }
     }
@@ -204,18 +202,19 @@ public class GoodsSystem : MonoBehaviour
     //계속 파는상태로 둘 때 어떻게 해야할까? 좀 고민
     public void GoodsTrnasport()
     {
-        goodsTransportTime -=  Time.deltaTime * goodsTransportSpeed;
-        if(goodsTransportTime <= 0f)
+        goodsTransportTime +=  Time.deltaTime;
+        if(goodsTransportTime >= 5f * skillManager.skillList[1]._functionDesc[skillManager.skillList[1]._level])//굿즈 판매속도 증가
         {
-            goodsTransportTime = 5; // 시간 초기화
-            if(gameManager.goods < goodsTransPortCapacity){ // 굿즈 개수가 포팅 최대 개수가 안된다면
-                gameManager.money += goodsPrice * gameManager.goods;
+            goodsTransportTime = 0; // 시간 초기화
+            if(gameManager.goods < goodsTransPortCapacity + skillManager.skillList[2]._functionDesc[skillManager.skillList[2]._level]){ // 굿즈 개수가 포팅 최대 개수가 안된다면
+                gameManager.money += goodsPrice * gameManager.goods * (int)skillManager.skillList[4]._functionDesc[skillManager.skillList[4]._level];//GoldSaHayng4 Skill
                 gameManager.goods = 0;
                 goodsTransporting = false;
             }
             else {                    
-                gameManager.money += goodsPrice * goodsTransPortCapacity;
-                gameManager.goods -= goodsTransPortCapacity;
+                gameManager.money += goodsPrice * (int)((goodsTransPortCapacity + skillManager.skillList[2]._functionDesc[skillManager.skillList[2]._level]) //최대 판매 개수 + 스킬 추가 판매 개수
+                * (skillManager.skillList[4]._functionDesc[skillManager.skillList[4]._level]));
+                gameManager.goods -= (int)(goodsTransPortCapacity + skillManager.skillList[2]._functionDesc[skillManager.skillList[2]._level]);
             }
         }
     }

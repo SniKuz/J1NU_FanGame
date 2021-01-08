@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     public StaffManager staffManager;
     public EventManager eventManager;
     public SoundManager soundManager;
+    public TalkManager talkManager;
+    public TutorialManager tutorialManager;
 
 	public Image dateImage;
 	public Sprite[] guageImage;
@@ -27,6 +29,7 @@ public class UIManager : MonoBehaviour
     public RectTransform staffPanel;
     public RectTransform informationPanel;
 
+    //#.--------Streamer Skill
 	public GameObject GoldSaHyangUpgradeSet;
     public GameObject GoldSaHyangPanelBnt;
 	public GameObject ColletUpgradeSet;
@@ -38,6 +41,7 @@ public class UIManager : MonoBehaviour
 
     public Image[] skillTreeIcons;
     public TextMeshProUGUI[] skillTreeLevel;
+    public Button skillGuideBtn;
     public Image SkillDescImg;
     public TextMeshProUGUI skillDescName;
     public TextMeshProUGUI skillDescLevel;
@@ -46,6 +50,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI skillDescGold;
     public StreamerSkillVo selectedSkill;
 
+    //#.---------Staff
     public TextMeshProUGUI staffCostText;
     public TextMeshProUGUI maxStaffCapasityText;
     public GameObject staffSetBtn;
@@ -63,22 +68,81 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI staffGoldPerGuage;
     public TextMeshProUGUI staffCapacity;
 
+    //#.StaffDraw
     public GameObject BackGroundForDontTouchOnemoreDraw;
     public GameObject staffOneRecruitBtn;
     public GameObject staffTenRecruitBtn;
 
+    //#.----------------status
+    public TextMeshProUGUI statusGoodsPrice;
+    public TextMeshProUGUI statusDonationPrice;
+    public TextMeshProUGUI statusGoodsSellTime;
+    public TextMeshProUGUI statusGoodsSellCapacity;
+    public TextMeshProUGUI statusDesignMakeBtn;
+    public TextMeshProUGUI statusDesignAutoMake;
+    public TextMeshProUGUI statusGoodsMakeBtn;
+    public TextMeshProUGUI statusGoodsAutoMake;
+    public TextMeshProUGUI statusCapacityMakeBtn;
+    public TextMeshProUGUI statusCapacityAutoMake;
+
+    //#.------------event
     public RectTransform eventSet;
     public TextMeshProUGUI eventTitle;
     public TextMeshProUGUI eventContent;
     public GameObject eventEffect;
     public GameObject stopTimeWindow;
 
+    //#.------------talk panel
+    public RectTransform talkBackGround;
+    public Image talkPortrait;
+    public TextMeshProUGUI talkName;
+    public TextMeshProUGUI talkText;
+    public GameObject talkEndCursor;
+
     
 
     private void Start(){
         //#. SkillTree Icon Init
         skillUIUpdate();
+
+
+        //#T. Test Tutorial talk
+        if(!tutorialManager.isTutorialEnd)
+            Invoke("StartTutorial", 2f);
     }
+
+    //#T. Test-----------------------
+    void StartTutorial(){
+        SetTalkBackGround();
+
+        gameManager.isStopTime = true;
+        talkManager.curTalkActor = (int)TalkManager.Actor.지누; //Actor정하기
+        talkManager.NextTalk();
+        Talk();    
+        }
+
+    //#T. Test
+    void Talk(){
+        //#.Check Talk Null -> #57. 2h4m에서 보니까 버젼이 다른지 talkManager.GetTalk이 나는 ++이 if 안에서도 되는데, 영상은 안됨 그래서 잠시 바꿈
+        string talk = talkManager.GetTalk();
+
+        if(talk == null){
+            gameManager.isStopTime = false;
+            SetTalkBackGround();
+            return ;
+        }
+
+        //#.Talk Set
+        talkName.text = talkManager.GetName();
+        talkText.text = talk;
+        talkPortrait.sprite = talkManager.GetPortrait();//표정이 제일 마지막이어함
+    }
+    public void TalkBtnClick(){
+        Talk();
+    }
+    //ㄴ#T.Test
+
+
 	private void LateUpdate() {
         if(GameManager.Instance.isStopTime) return;
 
@@ -115,11 +179,26 @@ public class UIManager : MonoBehaviour
         if(staffManager.staffCnt[0, 1]>0) goodsSystem.GoodsMakeAnimOn();
         if(staffManager.staffCnt[0, 2]>0) goodsSystem.GoodsMakeAnimOn();
         if(staffManager.staffCnt[0, 3]>0) goodsSystem.GoodsMakeAnimOn();
+        if(staffManager.staffCnt[1, 0]>0) goodsSystem.designAnim.SetTrigger("on");
+        if(staffManager.staffCnt[1, 1]>0) goodsSystem.designAnim.SetTrigger("on");
+        if(staffManager.staffCnt[1, 2]>0) goodsSystem.designAnim.SetTrigger("on");
+        if(staffManager.staffCnt[1, 3]>0) goodsSystem.designAnim.SetTrigger("on");
 
         //#.StaffCost and Staff Max Capacity
-        staffCostText.text = string.Format("{0:n0}", gameManager.staffCost);
+        staffCostText.text = string.Format("{0:n0}", gameManager.totalstaffCost);
         maxStaffCapasityText.text = gameManager.workStaff +"/"+ gameManager.maxCapacity /50;
 
+        //#.Status Panel Update
+        int staffAutoMakeDesign = 0;
+        int staffAutoMakeGoods = 0;
+        for(int i = 0; i < 4; i++){
+            staffAutoMakeDesign += (int)(staffManager.staffCnt[0, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]);
+            staffAutoMakeGoods += (int)(staffManager.staffCnt[1, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]); 
+        }
+        statusDesignAutoMake.text = staffAutoMakeDesign + "";
+        statusGoodsAutoMake.text = staffAutoMakeGoods +"";
+        statusCapacityAutoMake.text = staffAutoMakeDesign+"";
+        StatusPanelUpdate();
 
 
 	}
@@ -283,14 +362,23 @@ public class UIManager : MonoBehaviour
 
     //------------------------------------------[Streamer - Skill]
     public void SelectSkill(int id){
-        selectedSkill = skillManager.GetSkill(id);
-        SkillDescImg.sprite = selectedSkill._icon;
-        skillDescName.text = selectedSkill._skillName;
-        skillDescLevel.text = "LV." + selectedSkill._level;
-        skillDescFunc.text = selectedSkill._function[selectedSkill._level];
-        skillDescIntroduce.text = selectedSkill._skillIntroduce;
-        skillDescGold.text = "필요골드" + selectedSkill._nextLevelGold[selectedSkill._level];
-        
+        selectedSkill = skillManager.GetSkill(id); //skillSelect
+
+        if(selectedSkill._level >=5){
+                SkillDescImg.sprite = selectedSkill._icon;
+                skillDescName.text = selectedSkill._skillName;
+                skillDescLevel.text = "LV.MAX";
+                skillDescGold.text = "최대 레벨입니다.";
+                skillDescFunc.text = selectedSkill._function[5];
+                skillDescIntroduce.text = selectedSkill._skillIntroduce;
+        }else{
+            SkillDescImg.sprite = selectedSkill._icon;
+            skillDescName.text = selectedSkill._skillName;
+            skillDescLevel.text = "LV." + selectedSkill._level;
+            skillDescFunc.text = selectedSkill._function[selectedSkill._level];
+            skillDescIntroduce.text = selectedSkill._skillIntroduce;
+            skillDescGold.text = "필요골드" + selectedSkill._nextLevelGold[selectedSkill._level];
+        }
     }
 
     public void skillUIUpdate(){ //icon, SkillLevel Update
@@ -304,10 +392,11 @@ public class UIManager : MonoBehaviour
 
 
     public void SkillUpBtn(){
+        if(selectedSkill == null || selectedSkill._level>=5) return ;
         if(selectedSkill._level <5){
-            gameManager.money -= selectedSkill._nextLevelGold[selectedSkill._level];
+            gameManager.money -= selectedSkill._nextLevelGold[selectedSkill._level];//다음 레벨 가는 가격 빼고
             skillManager.SkillLevelUp(selectedSkill._id); // level++;
-            skillUIUpdate(); 
+            skillUIUpdate(); //
 
             if(selectedSkill._level >=5){
                 skillDescLevel.text = "LV.MAX";
@@ -318,8 +407,20 @@ public class UIManager : MonoBehaviour
                 skillDescGold.text = "필요골드" + selectedSkill._nextLevelGold[selectedSkill._level];
                 skillDescFunc.text = selectedSkill._function[selectedSkill._level];
             }
+            
+            //#.SkillGuideAnim
+            skillGuideBtn.enabled = false;//잠시 버튼 끄고
+            skillDescLevel.transform.DOPunchScale(new Vector3(1, 1, 1), 0.3f);
+            skillDescGold.transform.DOPunchScale(new Vector3(1, 1, 1), 0.3f);
+            skillDescFunc.transform.DOPunchScale(new Vector3(1, 1, 1), 0.3f);
+            Invoke("SkillGuideBtnOn", 0.5f);//애니메이션 끝나고 버튼 다시 온. 애니메이션때문에 버튼 안터지게
         }
+        soundManager.SkillUp();
     }
+    public void SkillGuideBtnOn(){
+        skillGuideBtn.enabled = true;
+    }
+
 
     //----------------------------------[StaffPanel]
     public void TabStaffBtn(string staffGetSet){
@@ -386,7 +487,7 @@ public class UIManager : MonoBehaviour
                 totalWorkStaff += staffManager.staffCnt[i, j];
             }
         }
-        gameManager.staffCost = totalStaffCost;
+        gameManager.totalstaffCost = totalStaffCost;
         gameManager.workStaff = totalWorkStaff;
     }
 
@@ -426,11 +527,18 @@ public class UIManager : MonoBehaviour
                 totalWorkStaff += staffManager.staffCnt[i, j];
             }
         }
-        gameManager.staffCost = totalStaffCost;
+        gameManager.totalstaffCost = totalStaffCost;
         gameManager.workStaff = totalWorkStaff;
     }
 
     public void StaffDrawBtn(int num){
+
+        //#.Cost Check
+        if((num == 1 && gameManager.money < 10000) || 
+        (num == 10 && gameManager.money < 90000)) return;
+        gameManager.money -= num == 1 ? 10000 : 90000;
+
+        //#.Draw Start Anim
         staffManager.StartDrawStaff(num);
         BackGroundForDontTouchOnemoreDraw.SetActive(true);
     }
@@ -469,7 +577,15 @@ public class UIManager : MonoBehaviour
 
     //#.---------------------[Status]
 
-
+    void StatusPanelUpdate(){
+        statusGoodsPrice.text = goodsSystem.goodsPrice * skillManager.skillList[4]._functionDesc[skillManager.skillList[4]._level] +"";
+        statusDonationPrice.text = gameManager.donationPrice * skillManager.skillList[13]._functionDesc[skillManager.skillList[13]._level] +"";
+        statusGoodsSellTime.text =  5f * skillManager.skillList[1]._functionDesc[skillManager.skillList[1]._level]+"";
+        statusGoodsSellCapacity.text = goodsSystem.goodsTransPortCapacity + skillManager.skillList[2]._functionDesc[skillManager.skillList[2]._level] +"";
+        statusDesignMakeBtn.text = goodsSystem.maxCnt[0]+"";
+        statusGoodsMakeBtn.text = goodsSystem.maxCnt[1]+"";
+        statusCapacityMakeBtn.text = goodsSystem.maxCnt[2]+"";
+    }
 
 
 
@@ -522,5 +638,14 @@ public class UIManager : MonoBehaviour
         eventEffect.transform.localScale = new Vector3(0, 0, 0);
         gameManager.isStopTime = false;
         stopTimeWindow.SetActive(false);
+    }
+
+    //#.------------------[Talk]-------------
+    public void SetTalkBackGround(){
+        if(talkBackGround.anchoredPosition.y == -500){
+            talkBackGround.DOLocalMoveY(-540, 0.6f).SetEase(Ease.OutQuad); //Anchor기준이 애매해서 그냥 수정 X
+        }else if(talkBackGround.anchoredPosition.y == 0){
+            talkBackGround.DOLocalMoveY(-1040, 0.4f).SetEase(Ease.OutQuad);
+        }
     }
 }

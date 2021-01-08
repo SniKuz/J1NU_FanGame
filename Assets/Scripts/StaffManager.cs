@@ -34,6 +34,7 @@ public class StaffManager : MonoBehaviour
 
     public void StartDrawStaff(int num){
         if(num == 1){
+
             hideStaffOne.SetActive(true);
             hideStaffOne.transform.DOPunchScale(new Vector3(1, 1, 1), 2, 2, 0.5f);
             Invoke("TouchAfterOneAnimEnd", 2.3f);
