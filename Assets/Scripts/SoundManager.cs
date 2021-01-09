@@ -12,11 +12,11 @@ public class SoundManager : MonoBehaviour
 
     private void Start() {
         //#0.Global soundVolume Setting
-        backGroundMusic.volume = GlobalVar.soundVolume /10f;
-        panelAudioSource.volume = GlobalVar.soundVolume /10f;
-        staffABCOpen.volume = GlobalVar.soundVolume /10f;
-        staffSOepn.volume = GlobalVar.soundVolume /10f;
-        skillLevelUp.volume =GlobalVar.soundVolume /10f;
+        // backGroundMusic.volume = GlobalVar.soundVolume /10f;
+        // panelAudioSource.volume = GlobalVar.soundVolume /10f;
+        // staffABCOpen.volume = GlobalVar.soundVolume /10f;
+        // staffSOepn.volume = GlobalVar.soundVolume /10f;
+        // skillLevelUp.volume =GlobalVar.soundVolume /10f;
 
         backGroundMusic = GetComponent<AudioSource>();
         backGround(backGroundMusic);
