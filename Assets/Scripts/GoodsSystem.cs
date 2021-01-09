@@ -39,7 +39,6 @@ public class GoodsSystem : MonoBehaviour
         goodsPrice = 10; 
         goodsDesigning = false;
         goodsDesigningTime = 5; 
-        goodsDesignBonusCnt = 3;
         designBonus = 2;
         goodsTransporting = false;
         goodsTransPortCapacity = 5;
@@ -47,7 +46,6 @@ public class GoodsSystem : MonoBehaviour
 
 
     private void Update() {
-        if(GameManager.Instance.isStopTime) return;
 
         TouchGoodsCreate();
 
@@ -61,7 +59,6 @@ public class GoodsSystem : MonoBehaviour
     }
 
     void TouchGoodsCreate(){
-    if(GameManager.Instance.isStopTime) return;//시간 멈출시 Touch불가
 #if UNITY_ANDROID
         if(Input.touchCount > 0){
             if(Input.GetTouch(0).phase == TouchPhase.Began){
@@ -162,8 +159,10 @@ public class GoodsSystem : MonoBehaviour
         goodsMakeCnt+= 1 + (int)skillManager.skillList[5]._functionDesc[skillManager.skillList[5]._level]; //Collet0 Skill
         if(goodsMakeCnt >= maxCnt[1]){
             goodsMakeCnt -= maxCnt[1];
-            gameManager.prevGoods = gameManager.goods;
-            gameManager.goods += 1;
+            if(gameManager.maxCapacity > gameManager.goods){
+                gameManager.prevGoods = gameManager.goods;
+                gameManager.goods += 1;
+            }
         }
         GoodsMakeAnimOn();
     }

@@ -13,11 +13,13 @@ public class GameManager : MonoBehaviour
     public StaffManager staffManager;
     public EventManager eventManager;
     public SoundManager soundManager;
+    public TutorialManager tutorialManager;
 
     public Transform backGround;
     public enum Type {GoodsRoom, BossRoom, StreamingRoom};
     public Type curType;
     public bool isStopTime;
+    public bool isStopUI;
     public int day;
     public int guage; // Event check(Battery Guage)
     public int money; // moeny
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
     public int viwer; // viwer
     public int donationPrice; //donationPrice
     public int maxCapacity; //총 굿즈 개수
+    public int staffCapacity;
     public int prevGoods;
     public float time; //20s check
     public float timeMPS; // StaffMps Time - 
@@ -48,6 +51,10 @@ public class GameManager : MonoBehaviour
             }
             return instance;
         }
+    }
+
+    private void Start() {
+        staffCapacity = 2 + ((int)maxCapacity/50); //staffCapcity는 default 2 + maxCapacity/50 + 게이지마다 1명씩 상승? 밸런스 조절 ㄱ
     }
 
     private void Update() {
@@ -79,6 +86,8 @@ public class GameManager : MonoBehaviour
             viwer += (int)skillManager.skillList[7]._functionDesc[skillManager.skillList[7]._level];
             money += (int)(viwer * donationPrice * skillManager.skillList[13]._functionDesc[skillManager.skillList[13]._level]);
             time = 20f;
+
+            staffCapacity++;
         }
 
         //#.Auto Making by staffs- StaffMPS Time
@@ -95,9 +104,10 @@ public class GameManager : MonoBehaviour
         }
 
         //Check Event
-        if(eventManager.CheckEvent(day)){
+        if(eventManager.CheckEvent(day)){ //이건 날마다 있는 이벤트. 튜토리얼 이벤트는 UI돌아가야함.
             uiManager.EventUpdate(eventManager.curEvent);
             isStopTime = true;
+            isStopUI = true;
         }
 
         goods = goods > maxCapacity ? maxCapacity : goods; // goods는 최대 goods 용량 못넘어감

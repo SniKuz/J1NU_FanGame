@@ -22,7 +22,7 @@ public class HighCharacterAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.isStopTime){
+        if(GameManager.Instance.isStopUI){
             anim.SetBool("Default",false);
             anim.SetBool("Sleep", false);
             return ;

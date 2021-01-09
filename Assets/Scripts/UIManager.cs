@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
 	public TextMeshProUGUI moneyText;
 	public TextMeshProUGUI goodsText;
 	public TextMeshProUGUI viwerText;
+    public TextMeshProUGUI designBonusText;
 
 	public RectTransform stockPanel;
 	public RectTransform streamerPanel;
@@ -96,55 +97,27 @@ public class UIManager : MonoBehaviour
     public RectTransform talkBackGround;
     public Image talkPortrait;
     public TextMeshProUGUI talkName;
-    public TextMeshProUGUI talkText;
+    public TextTypeEffect talkText;
     public GameObject talkEndCursor;
 
     
 
     private void Start(){
+        if(tutorialManager.isTutorialEnd){
+
+        }else{
+        }
         //#. SkillTree Icon Init
         skillUIUpdate();
 
-
         //#T. Test Tutorial talk
         if(!tutorialManager.isTutorialEnd)
-            Invoke("StartTutorial", 2f);
+            gameManager.isStopTime = true;
+            talkManager.curTalkActor = (int)TalkManager.Actor.지누; //Actor정하기
+            Invoke("TutorialTalk", 1f);
     }
-
-    //#T. Test-----------------------
-    void StartTutorial(){
-        SetTalkBackGround();
-
-        gameManager.isStopTime = true;
-        talkManager.curTalkActor = (int)TalkManager.Actor.지누; //Actor정하기
-        talkManager.NextTalk();
-        Talk();    
-        }
-
-    //#T. Test
-    void Talk(){
-        //#.Check Talk Null -> #57. 2h4m에서 보니까 버젼이 다른지 talkManager.GetTalk이 나는 ++이 if 안에서도 되는데, 영상은 안됨 그래서 잠시 바꿈
-        string talk = talkManager.GetTalk();
-
-        if(talk == null){
-            gameManager.isStopTime = false;
-            SetTalkBackGround();
-            return ;
-        }
-
-        //#.Talk Set
-        talkName.text = talkManager.GetName();
-        talkText.text = talk;
-        talkPortrait.sprite = talkManager.GetPortrait();//표정이 제일 마지막이어함
-    }
-    public void TalkBtnClick(){
-        Talk();
-    }
-    //ㄴ#T.Test
-
-
 	private void LateUpdate() {
-        if(GameManager.Instance.isStopTime) return;
+        if(gameManager.isStopUI) return;
 
         //#0. 
 		dateImage.fillAmount = gameManager.time/20f;
@@ -157,6 +130,9 @@ public class UIManager : MonoBehaviour
         //#.Goods UI
 		if(gameManager.goods > 100000) goodsText.text = gameManager.goods/1000 +"k/" + gameManager.maxCapacity/1000 +"k";
 		else goodsText.text = gameManager.goods + "/" + gameManager.maxCapacity;
+
+        //#.DesignBonus UI
+        designBonusText.text = goodsSystem.goodsDesignBonusCnt+"";
 
 
 
@@ -186,7 +162,7 @@ public class UIManager : MonoBehaviour
 
         //#.StaffCost and Staff Max Capacity
         staffCostText.text = string.Format("{0:n0}", gameManager.totalstaffCost);
-        maxStaffCapasityText.text = gameManager.workStaff +"/"+ gameManager.maxCapacity /50;
+        maxStaffCapasityText.text = gameManager.workStaff +"/"+ gameManager.staffCapacity;
 
         //#.Status Panel Update
         int staffAutoMakeDesign = 0;
@@ -451,7 +427,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void StaffIn(string rank){
-        if(gameManager.maxCapacity/50 <= gameManager.workStaff) return;
+        if(gameManager.staffCapacity <= gameManager.workStaff) return;
         switch(rank){
             case "S":
                 if(staffManager.waitStaffCnt[0] > 0){
@@ -637,15 +613,50 @@ public class UIManager : MonoBehaviour
         eventSet.transform.localScale = new Vector3(0, 0, 0);
         eventEffect.transform.localScale = new Vector3(0, 0, 0);
         gameManager.isStopTime = false;
+        gameManager.isStopUI = false;
         stopTimeWindow.SetActive(false);
     }
 
     //#.------------------[Talk]-------------
-    public void SetTalkBackGround(){
-        if(talkBackGround.anchoredPosition.y == -500){
-            talkBackGround.DOLocalMoveY(-540, 0.6f).SetEase(Ease.OutQuad); //Anchor기준이 애매해서 그냥 수정 X
-        }else if(talkBackGround.anchoredPosition.y == 0){
-            talkBackGround.DOLocalMoveY(-1040, 0.4f).SetEase(Ease.OutQuad);
+    public void SetTalkBackGround(bool talking){
+        if(talking == true){
+            if(talkBackGround.anchoredPosition.y == -500)
+                talkBackGround.DOLocalMoveY(-540, 0.6f).SetEase(Ease.OutQuad); //Anchor기준이 애매해서 그냥 수정 X
         }
+        else{
+            if(talkBackGround.anchoredPosition.y == 0)
+                talkBackGround.DOLocalMoveY(-1040, 0.4f).SetEase(Ease.OutQuad);
+        }
+    }
+
+     public void TutorialTalk(){
+        // talkManager.curTalkActor = (int)TalkManager.Actor.지누; //Actor정하기
+        talkManager.NextTalk();
+        talkText.isStart = true;
+        Talk();
+    }
+
+    public void Talk(){
+        //#.Talk Set
+        talkName.text = talkManager.GetName();
+        talkText.SetMsg(talkManager.GetTalk());
+        if(talkText.isEnd){
+            //#.Restart Time & TalkBackGround Down
+            SetTalkBackGround(false);
+            
+            if(!tutorialManager.isTutorialEnd){
+                tutorialManager.NextTutorial();
+            }
+        }
+        else{ //talkEnd아닐때만
+            talkPortrait.sprite = talkManager.GetPortrait();//표정이 제일 마지막이어함
+            SetTalkBackGround(true);
+        }
+    }
+    public void TalkBtnClick(){
+        if(talkText.isAnim){
+            talkText.SetMsg(talkText.msgText.text);
+        }else
+            Talk();
     }
 }
