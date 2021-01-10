@@ -109,8 +109,35 @@ public class TutorialManager : MonoBehaviour
                     uiManager.stockPanel.gameObject.SetActive(true);
                 }
                 break;
-            case 10://화자 : 아리스톨 : 7 : 주식패널 눌렀고 -> 
+            case 10://화자 : 아리스톨 : 7 : 주식패널 눌렀고 -> 여러 주식들이 보이죠?
                 if(uiManager.stockPanel.localPosition.y == 0 && !isStartedNext){
+                    talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.TutorialTalk();
+                    isStartedNext = true;
+                }
+                break;
+            case 11://화자 : 아리스톨 : 8 : 스트리머 패널 선택 -> 여기는 소속 스트리머 
+                if(uiManager.streamerPanel.localPosition.y == 0 && !isStartedNext){
+                    talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.TutorialTalk();
+                    isStartedNext = true;
+                }
+                break;
+            case 12://화자 : 아리스톨 : 9 : 스태프 패널 선택 -> 여기는 스태프를 고용하고 배치 
+                if(uiManager.staffPanel.localPosition.y == 0 && !isStartedNext){
+                    talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.TutorialTalk();
+                    isStartedNext = true;
+                }
+                break;
+            case 13://화자 : 아리스톨 : 10 : 스태프 뽑기 창 -> 
+                if(uiManager.staffGet.activeSelf == true && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;

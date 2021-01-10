@@ -100,6 +100,9 @@ public class UIManager : MonoBehaviour
     public TextTypeEffect talkText;
     public GameObject talkEndCursor;
 
+    public GameObject tutorailSkipBtn;
+    public GameObject tutorialNotSkipBtn;
+
     
 
     private void Start(){
@@ -113,8 +116,10 @@ public class UIManager : MonoBehaviour
         //#T. Test Tutorial talk
         if(!tutorialManager.isTutorialEnd)
             gameManager.isStopTime = true;
-            talkManager.curTalkActor = (int)TalkManager.Actor.지누; //Actor정하기
-            Invoke("TutorialTalk", 1f);
+            gameManager.isStopUI = true;
+            stopTimeWindow.SetActive(true);
+            tutorailSkipBtn.SetActive(true);
+            tutorialNotSkipBtn.SetActive(true);
     }
 	private void LateUpdate() {
         if(gameManager.isStopUI) return;
@@ -621,7 +626,7 @@ public class UIManager : MonoBehaviour
     public void SetTalkBackGround(bool talking){
         if(talking == true){
             if(talkBackGround.anchoredPosition.y == -500)
-                talkBackGround.DOLocalMoveY(-540, 0.6f).SetEase(Ease.OutQuad); //Anchor기준이 애매해서 그냥 수정 X
+                talkBackGround.DOLocalMoveY(-540, 0.4f).SetEase(Ease.OutQuad); //
         }
         else{
             if(talkBackGround.anchoredPosition.y == 0)
@@ -658,5 +663,24 @@ public class UIManager : MonoBehaviour
             talkText.SetMsg(talkText.msgText.text);
         }else
             Talk();
+    }
+
+    public void TutorialSkipBtn(int i){
+        if(i == 0){//No
+            talkManager.curTalkActor = (int)TalkManager.Actor.지누; //Actor정하기
+            Invoke("TutorialTalk", 1f);
+            tutorailSkipBtn.SetActive(false);
+            tutorialNotSkipBtn.SetActive(false);
+            gameManager.isStopUI = false;
+            stopTimeWindow.SetActive(false);
+        }else if(i == 1){//Yes
+        gameManager.isStopTime = false;
+        gameManager.isStopUI = false;
+        stopTimeWindow.SetActive(false);
+        talkManager.talkState[0] = 2;//튜토리얼 중 대사량
+        talkManager.talkState[1] = 9;//튜토리얼 중 대사량
+        tutorailSkipBtn.SetActive(false);
+        tutorialNotSkipBtn.SetActive(false);
+        }
     }
 }
