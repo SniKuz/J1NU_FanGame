@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
                 guage = 5;
                 day++;
 
-                int Bang = Random.Range(0, 1000);
+                int Bang = Random.Range(0, 3);
                 if(Bang <= 2) money += (int)(skillManager.skillList[8]._functionDesc[skillManager.skillList[8]._level] * 35000000);
                 money += (int)skillManager.skillList[10]._functionDesc[skillManager.skillList[10]._level];
                 //Important Event 발생
