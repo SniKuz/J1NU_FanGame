@@ -7,6 +7,7 @@ public class TutorialManager : MonoBehaviour
     public UIManager uiManager;
     public TalkManager talkManager;
     public GoodsSystem goodsManager;
+    public StaffManager staffManager;
     public bool isTutorialEnd; //튜토를 했나?
     public int tutorialIndex;
     public float timer1;
@@ -20,7 +21,7 @@ public class TutorialManager : MonoBehaviour
             case 1: //화자 : 아리스톨 : 0 :사장님 드디어 나오셨군요!
                 timer1 += Time.deltaTime;
 
-                if(timer1 > 1f && !isStartedNext){
+                if(timer1 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
@@ -31,7 +32,7 @@ public class TutorialManager : MonoBehaviour
             case 2://화자 지누 : 1 :아리스톨! 진짜 오랜만이다...~
                 timer2 += Time.deltaTime;
 
-                if(timer2 > 1f && !isStartedNext){
+                if(timer2 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
@@ -42,7 +43,7 @@ public class TutorialManager : MonoBehaviour
             case 3://화자 : 아리스톨 : 1 :사장님 갔다오신 동안에
                 timer1 += Time.deltaTime;
 
-                if(timer1 > 1f && !isStartedNext){
+                if(timer1 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
@@ -53,7 +54,7 @@ public class TutorialManager : MonoBehaviour
             case 4://화자 지누 : 2 :망했다는 것치곤 배경이나쁘지 않은데
                  timer2 += Time.deltaTime;
 
-                if(timer2 > 1f && !isStartedNext){
+                if(timer2 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
@@ -64,7 +65,7 @@ public class TutorialManager : MonoBehaviour
             case 5://화자 : 아리스톨 : 2 :제작자가 국가의 납치를 당해서
                 timer1 += Time.deltaTime;
 
-                if(timer1 > 1f && !isStartedNext){
+                if(timer1 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
@@ -139,6 +140,50 @@ public class TutorialManager : MonoBehaviour
             case 13://화자 : 아리스톨 : 10 : 스태프 뽑기 창 -> 
                 if(uiManager.staffGet.activeSelf == true && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.TutorialTalk();
+                    isStartedNext = true;
+                    GameManager.Instance.money += 10000; // 스태프 뽑기용 돈 주기
+                }
+                break;
+            case 14://화자 : 아리스톨 : 11 : 스태프 뽑기 -> 게임 스타트
+                if(GameManager.Instance.money < 10000 && !isStartedNext && !staffManager.drawingTime){ //뽑기에 썼기를 바라며
+                    talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.TutorialTalk();
+                    isStartedNext = true;
+                }
+                break;
+            case 15://화자 지누 : 3 : 설명 진짜 기네요
+                 timer1 += Time.deltaTime;
+
+                if(timer1 > 0.6f && !isStartedNext){
+                    talkManager.curTalkActor = TalkManager.Actor.지누;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.TutorialTalk();
+                    isStartedNext = true;
+                }
+                break;
+
+            case 16://화자 금사향 : 0 : 내가 있으니까 걱정하지마
+                 timer2 += Time.deltaTime;
+
+                if(timer2 > 0.6f && !isStartedNext){
+                    talkManager.curTalkActor = TalkManager.Actor.금사향;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.TutorialTalk();
+                    isStartedNext = true;
+                }
+                break;
+            case 17://화자 지누 : 4 : 오우 Z같은거 봐
+                 timer1 += Time.deltaTime;
+
+                if(timer1 > 0.6f && !isStartedNext){
+                    talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
                     uiManager.TutorialTalk();

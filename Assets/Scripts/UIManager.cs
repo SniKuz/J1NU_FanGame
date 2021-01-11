@@ -125,7 +125,7 @@ public class UIManager : MonoBehaviour
         if(gameManager.isStopUI) return;
 
         //#0. 
-		dateImage.fillAmount = gameManager.time/20f;
+		dateImage.fillAmount = gameManager.time/15f;
 		dateText.text = gameManager.day+"" ;	
 
         //#.Money UI	
@@ -188,7 +188,7 @@ public class UIManager : MonoBehaviour
 	public void PanelBtn(string panelName){
 		if(panelName == "StockPanel"){
 			if(stockPanel.localPosition.y == -878){
-				stockPanel.DOLocalMoveY(0, 0.6f).SetEase(Ease.OutBack);
+				stockPanel.DOLocalMoveY(0, 0.4f).SetEase(Ease.OutBack);
 
 				//#.Other UI Panel Hide
 				if(streamerPanel.localPosition.y == 0){
@@ -206,7 +206,7 @@ public class UIManager : MonoBehaviour
 		}
 		if(panelName == "StreamerPanel"){
 			if(streamerPanel.localPosition.y == -878){
-				streamerPanel.DOLocalMoveY(0, 0.6f).SetEase(Ease.OutBack);
+				streamerPanel.DOLocalMoveY(0, 0.4f).SetEase(Ease.OutBack);
 
 				//#.Other UI Panel Hide
 				if(stockPanel.localPosition.y == 0){
@@ -224,7 +224,7 @@ public class UIManager : MonoBehaviour
 		}
         if(panelName == "StaffPanel"){
 			if(staffPanel.localPosition.y == -878){
-				staffPanel.DOLocalMoveY(0, 0.6f).SetEase(Ease.OutBack);
+				staffPanel.DOLocalMoveY(0, 0.4f).SetEase(Ease.OutBack);
 
 				//#.Other UI Panel Hide
 				if(stockPanel.localPosition.y == 0){
@@ -242,7 +242,7 @@ public class UIManager : MonoBehaviour
 		}
         if(panelName == "InformationPanel"){
 			if(informationPanel.localPosition.y == -878){
-				informationPanel.DOLocalMoveY(0, 0.6f).SetEase(Ease.OutBack);
+				informationPanel.DOLocalMoveY(0, 0.4f).SetEase(Ease.OutBack);
 
 				//#.Other UI Panel Hide
 				if(stockPanel.localPosition.y == 0){
@@ -626,11 +626,11 @@ public class UIManager : MonoBehaviour
     public void SetTalkBackGround(bool talking){
         if(talking == true){
             if(talkBackGround.anchoredPosition.y == -500)
-                talkBackGround.DOLocalMoveY(-540, 0.4f).SetEase(Ease.OutQuad); //
+                talkBackGround.DOLocalMoveY(-540, 0.2f).SetEase(Ease.OutQuad); //
         }
         else{
             if(talkBackGround.anchoredPosition.y == 0)
-                talkBackGround.DOLocalMoveY(-1040, 0.4f).SetEase(Ease.OutQuad);
+                talkBackGround.DOLocalMoveY(-1040, 0.2f).SetEase(Ease.OutQuad);
         }
     }
 
@@ -645,6 +645,27 @@ public class UIManager : MonoBehaviour
         //#.Talk Set
         talkName.text = talkManager.GetName();
         talkText.SetMsg(talkManager.GetTalk());
+        switch((int)talkManager.curTalkActor){
+            case 0:
+                talkName.color = new Color32(143, 86, 59, 255);
+                break;
+            case 1:
+                talkName.color = new Color32(180, 180, 180, 255);
+                break;
+            case 2:
+                talkName.color = new Color32(50, 50, 50, 255);
+                break;
+            case 3:
+                talkName.color = new Color32(211, 47, 239, 255);
+                break;
+            case 4:
+                talkName.color = new Color32(255, 218, 59, 255);
+                break;
+            case 5:
+                talkName.color = new Color32(255, 150, 0, 255);
+                break;
+        }
+
         if(talkText.isEnd){
             //#.Restart Time & TalkBackGround Down
             SetTalkBackGround(false);
@@ -674,11 +695,14 @@ public class UIManager : MonoBehaviour
             gameManager.isStopUI = false;
             stopTimeWindow.SetActive(false);
         }else if(i == 1){//Yes
+        tutorialManager.isTutorialEnd = true;
+        tutorialManager.tutorialIndex = 18;
         gameManager.isStopTime = false;
         gameManager.isStopUI = false;
         stopTimeWindow.SetActive(false);
-        talkManager.talkState[0] = 2;//튜토리얼 중 대사량
-        talkManager.talkState[1] = 9;//튜토리얼 중 대사량
+        talkManager.talkState[0] = 4;//튜토리얼 중 대사량
+        talkManager.talkState[1] = 11;//튜토리얼 중 대사량
+        talkManager.talkState[2] = 0;
         tutorailSkipBtn.SetActive(false);
         tutorialNotSkipBtn.SetActive(false);
         }
