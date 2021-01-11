@@ -20,6 +20,8 @@ public class StaffManager : MonoBehaviour
     public int drawStaffGrade;
     public int[] drawTenStaffGrade;
 
+    public bool drawingTime; // while drawing don't talk tutorail or etc
+
     private void Awake() {
         waitStaffCnt = new int[4] {0, 0, 0, 0};
         staffCnt = new int[3, 4]{ {0, 0, 0, 0}
@@ -33,6 +35,7 @@ public class StaffManager : MonoBehaviour
     }
 
     public void StartDrawStaff(int num){
+        drawingTime = true;
         if(num == 1){
 
             hideStaffOne.SetActive(true);
@@ -111,6 +114,7 @@ public class StaffManager : MonoBehaviour
                 waitStaffCnt[drawTenStaffGrade[i]]++;
             }
         }
+        drawingTime = false;
     }
     public void TouchAfterOneAnimEnd(){
         hideStaffOne.GetComponent<Button>().enabled = true;//CapsuleOne 여러번 안눌리게 On Off

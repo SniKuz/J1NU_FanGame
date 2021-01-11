@@ -24,7 +24,7 @@ public class StreamerSkillManager : MonoBehaviour
 
     void GenerateStreamerSkill(){
         StreamerSkillVo GoldSaHyang0 = new StreamerSkillVo(0,skillIcons[0], "치명적인 귀여움", 0, new int[5] {1000, 3000, 5000, 10000, 20000}, 
-                                                new string[] {"스태프 월급 축소 0%",
+                                                new string[] {  "스태프 월급 축소 0%",
                                                                  "스태프 월급 축소 4%", 
                                                                  "스태프 월급 축소 8%", 
                                                                  "스태프 월급 축소 12%", 

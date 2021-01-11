@@ -85,13 +85,13 @@ public class GameManager : MonoBehaviour
             //게이지마다 +1씩 시청자 증가
             viwer += (int)skillManager.skillList[7]._functionDesc[skillManager.skillList[7]._level];
             money += (int)(viwer * donationPrice * skillManager.skillList[13]._functionDesc[skillManager.skillList[13]._level]);
-            time = 20f;
+            time = 15f;
 
             staffCapacity++;
         }
 
         //#.Auto Making by staffs- StaffMPS Time
-        if(timeMPS >=20f){
+        if(timeMPS >=15f){
             prevGoods = goods;
             for(int i = 0; i < 4; i++){
                 goods += (int)(staffManager.staffCnt[0, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]);
@@ -117,6 +117,9 @@ public class GameManager : MonoBehaviour
     //#. Map Move
     public void TypeBtnClick(string dir){
         if(dir == "Right" && (int)gameManager.curType < 2){
+            if(!tutorialManager.isTutorialEnd
+                && tutorialManager.tutorialIndex < 17) 
+                return;
             gameManager.curType++;
 
         }else if(dir == "Left"&&(int)gameManager.curType > 0){
