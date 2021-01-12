@@ -18,7 +18,7 @@ public class GoodsSystem : MonoBehaviour
     public Animator capacityAnim;
     public Animator transportAnim;
 
-    public int[] maxCnt; // each touch max. 0:Design, 1:Maek, 2:Capacity
+    public int[] maxCnt; // each touch max. 0:Design, 1:Make, 2:Capacity
     public Sprite[] onOffBtnSprite;
     private Ray ray;
     private RaycastHit raycastHit;
@@ -74,7 +74,7 @@ public class GoodsSystem : MonoBehaviour
                     case "Goods_Make":
                         GoodsMakeBtn();
                         break;
-                    case "GoodsPacking":
+                    case "Goods_Packing":
                         GoodsCapacityBtn();
                         break;
                     case "Goods_Transport_Box":
@@ -116,6 +116,9 @@ public class GoodsSystem : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.W)){
             GoodsMakeBtn();
+        }
+        if(Input.GetKeyDown(KeyCode.E)){
+            GoodsCapacityBtn();
         }
 #endif
     }
@@ -160,7 +163,6 @@ public class GoodsSystem : MonoBehaviour
         if(goodsMakeCnt >= maxCnt[1]){
             goodsMakeCnt -= maxCnt[1];
             if(gameManager.maxCapacity > gameManager.goods){
-                gameManager.prevGoods = gameManager.goods;
                 gameManager.goods += 1;
             }
         }

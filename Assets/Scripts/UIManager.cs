@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
 	public GameManager gameManager;
 	public GoodsSystem goodsSystem;
+    public StockManager stockManager;
     public StreamerSkillManager skillManager;
     public StaffManager staffManager;
     public EventManager eventManager;
@@ -585,23 +586,150 @@ public class UIManager : MonoBehaviour
         switch(eventManager.curEvent._id){
             case 0:
                 if(btn == 0){
-                    EventBtnEffect("다행히 도망쳐 돈을 내지 않습니다.");
+                    EventBtnEffect("그렇지 다행히 군적금에 제대로 있네. 28일동안 남은 모든것...\n돈 + 10000");
+                    gameManager.money += 10000;
+                }
+                else if(btn == 1){
+                    EventBtnEffect("너무 든든하게 먹었나? 주식에 남은게 없네.\n돈 + 3000");
+                    gameManager.money += 3000;
+                }
+                else if(btn == 2){
+                    EventBtnEffect("X트코인으로 생긴 빚이 1억 2천이라고 이 XXX끼야!!\n돈 - 10000");
+                    gameManager.money -= 10000;
                 }
                 break;
             case 1:
                 if(btn == 0){
-                    Debug.Log("1-0");
+                    EventBtnEffect("도망치다가 기계에 부딪혔다...\n디자인 클릭 필요 터치 수 + 5");
+                    goodsSystem.maxCnt[0] += 5;
                 }else if(btn ==1){
-                    Debug.Log("1-1");
+                    EventBtnEffect("놀랍게도 문을 두드린 사람은 꽃핀누나였다! 또 한번 큰 은총을 받았다...\n돈 + 100000");
+                    gameManager.money += 100000;
                 }
                 break;
             case 2:
                 if(btn == 0){
-                    Debug.Log("2-0");
+                    EventBtnEffect("내가 발전기 실수를 할리가 없지. 탬탬도 아니고 ㅋ...\n발전기를 무사히 고쳤습니다.");
                 }else if(btn ==1){
-                    Debug.Log("2-1");
+                    EventBtnEffect("아 진짜 갑자기 옆에서 튀어나와서 실수한거라니까!\n굿즈 클릭 필요 터치 수 + 3");;
+                    goodsSystem.maxCnt[1] += 3;
                 }else if(btn ==2){
-                    Debug.Log("2-2");
+                    EventBtnEffect("발전기는 망가졌지만 아예 새로운 발전기를 디자인했습니다!\n굿즈 용량 필요 터치수 -3");
+                    goodsSystem.maxCnt[2] -= 3;
+                }
+                break;
+            case 3:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았다. 안전이 최고지!");
+                }
+                break;
+
+            case 4:
+                if(btn == 0){
+                    EventBtnEffect("서로 노려보던 둘은 다음날부터 같이 방송을 하기 시작했다. 둘은 서로의 가능성을 보고 싸우기보다 타협을 한 것이다! 이 조합은 사기가 아닌가? 코렛샤 컴퍼니가 코요코요 컴퍼니가 되는 순간을 나는 목격했다.\n 시청자수 + 1000");
+                    gameManager.viwer += 1000;
+                }else if(btn ==1){
+                    EventBtnEffect("왜 이렇게 사이가 안좋 아아아악! 뿌요야!! 그만 좀 물라고 진짜!!!");
+                }
+                break;
+            case 5:
+                if(btn == 0){
+                    EventBtnEffect("지원금을 통해 반탬탬파는 급격히 몸집을 불려 밀감 컴퍼니를 향해 방해공작을 펼쳤습니다. 하지만 배신자로 인하여 빠르게 진압 됐으며 대부분이 처단 당했습니다.\n지원금 - 10000");
+                    gameManager.money -= 10000;
+                }else if(btn ==1){
+                    EventBtnEffect("속보 - 신원불명의 밀고자? 밀감 컴퍼니 CEO 탬탬버린 회사 자금을 횡령한 것으로 드러나...\n해당 자금은 현재 모게임사로 흘러들어갔으며 이에 그녀는 해당 게임사로부터 적우의 칭호를 받은 것으로 밝혀졌다. 현재까지 발생한 피해액만 340억으로 알려져 이에 투자자들은 극심한 분노를 터트리고 있다.\n주식가격 -40%");
+                    int milgamStockPrice = (int)(stockManager.mainStock.GetComponent<StockItem>().GetStockPrice() * 0.6f);
+                    stockManager.mainStock.GetComponent<StockItem>().SetStockPrice(milgamStockPrice);
+                }
+                break;
+            case 6:
+                if(btn == 0){
+                    EventBtnEffect("배상금으로 그분의 분노를 해소합니다.\n배상금 -10000");
+                    gameManager.money -= 10000;
+                }else if(btn ==1){
+                    EventBtnEffect("주식으로 그분의 분노를 해소합니다.\n보유 밀감 컴퍼니 주식 10% 양도");
+                    stockManager.mainStock.GetComponent<StockItem>().myStock -= (int)(stockManager.mainStock.GetComponent<StockItem>().myStock / 10);
+                }else if(btn == 2){
+                    EventBtnEffect("굿즈 공장을 개박살을 냅니다. 굿즈 공장에 모든 생산 기계들이 효율이 떨어집니다.\n생산 기계 필요 터치 수 50% 증가");//2배도 ㄱㅊ은듯
+                    for(int i =0; i<3; i++){
+                        goodsSystem.maxCnt[i] += (int)(goodsSystem.maxCnt[i] / 0.5f);
+                    }
+                }
+                break;
+            case 7:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았습니다. 안전이 최고지!");
+                }
+                break;
+            case 8:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았습니다. 안전이 최고지!");
+                }
+                break;
+                
+            case 9:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았습니다. 안전이 최고지!");
+                }
+                break;
+            case 10:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았습니다. 안전이 최고지!");
+                }
+                break;
+            case 11:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았습니다. 안전이 최고지!");
+                }
+                break;
+            case 12:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았습니다. 안전이 최고지!");
+                }
+                break;
+            case 13:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았습니다. 안전이 최고지!");
+                }
+                break;
+            case 14:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았습니다. 안전이 최고지!");
+                }
+                break;
+            case 15:
+                if(btn == 0){
+                    EventBtnEffect("굿즈 의탁의 선입금으로 굿즈 저장 용량을 증가시켜줬습니다.\n굿즈 저장 공간 + 30");
+                    gameManager.maxCapacity += 30;
+                }else if(btn ==1){
+                    EventBtnEffect("아무일도 일어나지 않았습니다. 안전이 최고지!");
                 }
                 break;
         }
