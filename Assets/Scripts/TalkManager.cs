@@ -29,7 +29,8 @@ public class TalkManager : MonoBehaviour
         //#1.: Tutorial Talk
         talkData.Add(0000 + 0, new string[]{   "I'm Back:0",
                                                 "드디어... 드디어 집에 돌아왔다.:1",
-                                                "아니 근데 28일만에 돌아왔는데 왜 아무도 연락이 없어?:2"});//뒤에 :0은 표정
+                                                "아니 근데 28일만에 돌아왔는데 왜 아무도 연락이 없어?:2",
+                                                "가기전에는 그 난리를 하더니 진짜 너무하네:2"});//뒤에 :0은 표정
 
         talkData.Add(1000 + 0, new string[]{    "사장님 드디어 나오셨군요!:3",
                                                 "지금 아주 난장판입니다!:1"});
@@ -127,7 +128,7 @@ public class TalkManager : MonoBehaviour
                                                 "실패하면 바로 파산엔딩이니 열심히하죠..:1"
                                                 });
 
-        talkData.Add(0000 + 3, new string[]{   "설명 진짜 기네요.:0",
+        talkData.Add(0000 + 3, new string[]{   "설명 진짜 길다.:0",
                                                 "끄고 데바데하러 갈뻔:2",
                                                 });
         

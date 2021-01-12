@@ -17,6 +17,7 @@ public class StockManager : MonoBehaviour
     public GameObject mainStock;
 
     public Sprite[] ranStockImg;
+    public Sprite[] mainStockImg;
 
     private void Awake() {
         for(int i=0; i<10; i++){

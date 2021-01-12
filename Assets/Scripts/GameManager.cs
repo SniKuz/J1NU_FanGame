@@ -28,8 +28,7 @@ public class GameManager : MonoBehaviour
     public int donationPrice; //donationPrice
     public int maxCapacity; //총 굿즈 개수
     public int staffCapacity;
-    public int prevGoods;
-    public float time; //20s check
+    public float time; //
     public float timeMPS; // StaffMps Time - 
     public int totalstaffCost;//totalStaffCost
     public int workStaff;// How many staff working
@@ -77,7 +76,7 @@ public class GameManager : MonoBehaviour
                 guage = 5;
                 day++;
 
-                int Bang = Random.Range(0, 3);
+                int Bang = Random.Range(0, 1000);
                 if(Bang <= 2) money += (int)(skillManager.skillList[8]._functionDesc[skillManager.skillList[8]._level] * 35000000);
                 money += (int)skillManager.skillList[10]._functionDesc[skillManager.skillList[10]._level];
                 //Important Event 발생
@@ -85,23 +84,21 @@ public class GameManager : MonoBehaviour
             //게이지마다 +1씩 시청자 증가
             viwer += (int)skillManager.skillList[7]._functionDesc[skillManager.skillList[7]._level];
             money += (int)(viwer * donationPrice * skillManager.skillList[13]._functionDesc[skillManager.skillList[13]._level]);
-            time = 15f;
 
-            staffCapacity++;
-        }
-
-        //#.Auto Making by staffs- StaffMPS Time
-        if(timeMPS >=15f){
-            prevGoods = goods;
+            //#.Auto Making by staffs- StaffMPS Time
             for(int i = 0; i < 4; i++){
                 goods += (int)(staffManager.staffCnt[0, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]);
                 goodsSystem.goodsDesignBonusCnt += (int)(staffManager.staffCnt[1, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]); 
                 gameManager.maxCapacity += (int)(staffManager.staffCnt[1, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]); 
                 viwer += (int)(staffManager.staffCnt[2, i] * staffManager.staffMPS[0, i] * (skillManager.skillList[14]._functionDesc[skillManager.skillList[14]._level] + skillManager.skillList[19]._functionDesc[skillManager.skillList[19]._level] ));
             }
-            timeMPS = 0f;
             money -= (int)(totalstaffCost * skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level]); // each month -> staff cost pay
+
+            time = 15f;
+
+            staffCapacity++;
         }
+
 
         //Check Event
         if(eventManager.CheckEvent(day)){ //이건 날마다 있는 이벤트. 튜토리얼 이벤트는 UI돌아가야함.
