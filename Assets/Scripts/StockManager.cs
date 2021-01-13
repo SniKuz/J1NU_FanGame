@@ -29,7 +29,7 @@ public class StockManager : MonoBehaviour
     }
 
     private void Update() {
-        ChangeDogStocks();
+        ChangeSubStocks();
         ChangeAllStockPrice();
     }
 
@@ -49,7 +49,7 @@ public class StockManager : MonoBehaviour
         Destroy(subStock[i]);
     }
 
-    public void ChangeDogStocks(){
+    public void ChangeSubStocks(){
         if(gameManager.day > checkDayChange){
             int changeStock = Random.Range(0, 5);
             while(changeStock>=0){

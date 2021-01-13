@@ -10,10 +10,12 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     public StreamerSkillManager skillManager;
     public GoodsSystem goodsSystem;
+    public StockManager stockManager;
     public StaffManager staffManager;
     public EventManager eventManager;
     public SoundManager soundManager;
     public TutorialManager tutorialManager;
+    public MainStoryManager mainStoryManager;
 
     public Transform backGround;
     public enum Type {GoodsRoom, BossRoom, StreamingRoom};
@@ -105,6 +107,20 @@ public class GameManager : MonoBehaviour
             uiManager.EventUpdate(eventManager.curEvent);
             isStopTime = true;
             isStopUI = true;
+        }
+
+        //Check Main Story
+        if(!mainStoryManager.isColletStoryStart && day == 5){
+            uiManager.ColletStoryStart();
+            mainStoryManager.isColletStoryStart = true;
+        }
+        if(!mainStoryManager.isTamX2StoryStart && day == 10){
+            uiManager.TamX2StoryStart();
+            mainStoryManager.isTamX2StoryStart = true;
+        }
+        if(!mainStoryManager.isNanayangtoryStart && day == 15){
+            uiManager.NanayangStoryStart();
+            mainStoryManager.isNanayangtoryStart = true;
         }
 
         goods = goods > maxCapacity ? maxCapacity : goods; // goods는 최대 goods 용량 못넘어감
