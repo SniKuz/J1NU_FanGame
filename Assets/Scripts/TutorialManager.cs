@@ -25,7 +25,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -36,7 +36,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -47,7 +47,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -58,7 +58,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -69,7 +69,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -78,7 +78,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
-                    Invoke("InvokeTutorialTalk", 1f);
+                    Invoke("InvokeTutorialTalk", 0.6f);
                     isStartedNext = true;
                 }
                 break;
@@ -87,7 +87,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -96,7 +96,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -105,7 +105,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                     uiManager.stockPanel.gameObject.SetActive(true);
                 }
@@ -115,7 +115,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    Invoke("InvokeTutorialTalk", 0.6f);
                     isStartedNext = true;
                 }
                 break;
@@ -124,7 +124,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -133,7 +133,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -142,7 +142,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    Invoke("InvokeTutorialTalk", 0.6f);
                     isStartedNext = true;
                     GameManager.Instance.money += 10000; // 스태프 뽑기용 돈 주기
                 }
@@ -152,7 +152,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -163,7 +163,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -175,7 +175,7 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.금사향;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
                 }
                 break;
@@ -186,8 +186,11 @@ public class TutorialManager : MonoBehaviour
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
-                    uiManager.TutorialTalk();
+                    uiManager.StoryTalk();
                     isStartedNext = true;
+
+                    isTutorialEnd = true;
+                    GameManager.Instance.isStopTime = false;
                 }
                 break;
         }
@@ -198,7 +201,7 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void InvokeTutorialTalk(){
-        uiManager.TutorialTalk();
+        uiManager.StoryTalk();
     }
 
 }

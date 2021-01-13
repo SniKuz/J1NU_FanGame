@@ -25,8 +25,8 @@ public class StockItem : MonoBehaviour
     public Button buyStockBtn;
     public Button sellStockBtn;
 
-    static int volatilityLow; //stock low. All stock must have same volatility
-    static int volatilityHigh; //stock high. All stock must have same volatility
+    public static int volatilityLow; //stock low. All stock must have same volatility
+    public static int volatilityHigh; //stock high. All stock must have same volatility
 
 //moneyText.text = string.Format("{0:n0}", gameManager.money);
     public StockItem(string stockName, int stockPrice, int totalStock, Sprite ranStockImg){
