@@ -9,6 +9,9 @@ public class SoundManager : MonoBehaviour
     public AudioSource staffABCOpen;
     public AudioSource staffSOepn;
     public AudioSource skillLevelUp;
+    public AudioSource electricDrill;
+
+    public bool drillBool;
 
     private void Start() {
         //#0.Global soundVolume Setting
@@ -36,6 +39,18 @@ public class SoundManager : MonoBehaviour
     public void SkillUp(){
         skillLevelUp.time = 0;
         skillLevelUp.Play();
+    }
+
+    public void DrillSound(){
+        if(drillBool == false){
+            drillBool = true;
+            electricDrill.time = 0;
+            electricDrill.Play();
+            Invoke("DrillBoolChange", 1f);
+        }
+    }
+    public void DrillBoolChange(){
+        drillBool = false;
     }
 
     public void StaffOpen(int staff){

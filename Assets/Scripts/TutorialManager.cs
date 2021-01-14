@@ -8,6 +8,7 @@ public class TutorialManager : MonoBehaviour
     public TalkManager talkManager;
     public GoodsSystem goodsManager;
     public StaffManager staffManager;
+
     public bool isTutorialEnd; //튜토를 했나?
     public int tutorialIndex;
     public float timer1;
@@ -107,7 +108,7 @@ public class TutorialManager : MonoBehaviour
                     timer2 = 0;
                     uiManager.StoryTalk();
                     isStartedNext = true;
-                    uiManager.stockPanel.gameObject.SetActive(true);
+                    Invoke("stockPanelActive", 0.6f);
                 }
                 break;
             case 10://화자 : 아리스톨 : 7 : 주식패널 눌렀고 -> 여러 주식들이 보이죠?
@@ -117,6 +118,8 @@ public class TutorialManager : MonoBehaviour
                     timer2 = 0;
                     Invoke("InvokeTutorialTalk", 0.6f);
                     isStartedNext = true;
+
+                    Invoke("streamerPanelActive", 0.6f);
                 }
                 break;
             case 11://화자 : 아리스톨 : 8 : 스트리머 패널 선택 -> 여기는 소속 스트리머 
@@ -126,6 +129,8 @@ public class TutorialManager : MonoBehaviour
                     timer2 = 0;
                     uiManager.StoryTalk();
                     isStartedNext = true;
+
+                    Invoke("staffPanelActive", 0.6f);
                 }
                 break;
             case 12://화자 : 아리스톨 : 9 : 스태프 패널 선택 -> 여기는 스태프를 고용하고 배치 
@@ -154,6 +159,8 @@ public class TutorialManager : MonoBehaviour
                     timer2 = 0;
                     uiManager.StoryTalk();
                     isStartedNext = true;
+
+                    Invoke("informationPanelActive", 0.6f);
                 }
                 break;
             case 15://화자 지누 : 3 : 설명 진짜 기네요
@@ -202,6 +209,19 @@ public class TutorialManager : MonoBehaviour
 
     public void InvokeTutorialTalk(){
         uiManager.StoryTalk();
+    }
+
+    public void stockPanelActive(){
+        uiManager.stockPanel.gameObject.SetActive(true);
+    }
+    public void streamerPanelActive(){
+        uiManager.streamerPanel.gameObject.SetActive(true);
+    }
+    public void staffPanelActive(){
+        uiManager.staffPanel.gameObject.SetActive(true);
+    }
+    public void informationPanelActive(){
+        uiManager.informationPanel.gameObject.SetActive(true);
     }
 
 }

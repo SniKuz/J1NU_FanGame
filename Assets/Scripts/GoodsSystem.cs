@@ -7,6 +7,7 @@ public class GoodsSystem : MonoBehaviour
 
     public GameManager gameManager;
     public StreamerSkillManager skillManager;
+    public SoundManager soundManager;
 
     public GameObject DesignOnOffBtn;
 
@@ -17,6 +18,7 @@ public class GoodsSystem : MonoBehaviour
     public Animator rightArmSpark;
     public Animator capacityAnim;
     public Animator transportAnim;
+    public Animator transportEarthAnim;
 
     public int[] maxCnt; // each touch max. 0:Design, 1:Make, 2:Capacity
     public Sprite[] onOffBtnSprite;
@@ -36,7 +38,6 @@ public class GoodsSystem : MonoBehaviour
 
     private void Start() {
         //추후 데이터 저장해서 업그레이드 반영해야함
-        goodsPrice = 10; 
         goodsDesigning = false;
         goodsDesigningTime = 5; 
         designBonus = 2;
@@ -51,7 +52,10 @@ public class GoodsSystem : MonoBehaviour
 
         if(goodsTransporting){
             GoodsTrnasport();
-        } else transportAnim.SetBool("on", false);
+        } else{
+            transportAnim.SetBool("on", false);
+            transportEarthAnim.SetBool("on", false);
+        }
 
         if(goodsDesigning){
             GoodsDesignBonus();
@@ -111,14 +115,19 @@ public class GoodsSystem : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Q)){
-            GoodsDesignCntUp();
-        }
-        if(Input.GetKeyDown(KeyCode.W)){
-            GoodsMakeBtn();
-        }
-        if(Input.GetKeyDown(KeyCode.E)){
-            GoodsCapacityBtn();
+        if(gameManager.curType == 0){
+            if(Input.GetKeyDown(KeyCode.Q)){
+                GoodsDesignCntUp();
+            }
+            if(Input.GetKeyDown(KeyCode.W)){
+                GoodsMakeBtn();
+            }
+            if(Input.GetKeyDown(KeyCode.Space)){
+                GoodsMakeBtn();
+            }
+            if(Input.GetKeyDown(KeyCode.E)){
+                GoodsCapacityBtn();
+            }
         }
 #endif
     }
@@ -138,13 +147,14 @@ public class GoodsSystem : MonoBehaviour
         if(goodsDesignBonusCnt <= 0 ) goodsDesigning = false;
         else goodsDesigning  = !goodsDesigning;
         BtnSpriteChange(goodsDesigning);
+        soundManager.PanelClick();
     }
 
     public void GoodsDesignBonus(){
         goodsDesigningTime -= Time.deltaTime;
         if(goodsDesigningTime <= 0f && goodsTransporting){
             goodsDesigningTime = 5f;
-            gameManager.money += goodsPrice * designBonus ;
+            gameManager.money += goodsPrice * designBonus * goodsTransPortCapacity;
             goodsDesignBonusCnt--;
 
         } else if (goodsDesigningTime <= 0f && !goodsTransporting) {
@@ -167,6 +177,7 @@ public class GoodsSystem : MonoBehaviour
             }
         }
         GoodsMakeAnimOn();
+        soundManager.DrillSound();
     }
 
     public void GoodsMakeAnimOn(){
@@ -196,6 +207,7 @@ public class GoodsSystem : MonoBehaviour
         if(gameManager.goods <= 0f) goodsTransporting = false;
         else goodsTransporting = ! goodsTransporting;
         transportAnim.SetBool("on", goodsTransporting);
+        transportEarthAnim.SetBool("on", goodsTransporting);
     }
 
 
