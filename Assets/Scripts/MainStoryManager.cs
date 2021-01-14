@@ -6,6 +6,7 @@ public class MainStoryManager : MonoBehaviour
 {
     public UIManager uiManager;
     public TalkManager talkManager;
+    public TextTypeEffect talkText;
 
     public GameObject colletPanel;
     public GameObject colletStreaming;
@@ -184,19 +185,562 @@ public class MainStoryManager : MonoBehaviour
                         timer2 = 0;
                         uiManager.StoryTalk();
                         isStartedNext = true;
-
+                    }
+                    break;
+                case 15:
+                    if(talkText.isEnd){
                         isColletStoryEnd = true;
                         GameManager.Instance.isStopTime = false;
                         GameManager.Instance.isStopUI = false;
                         uiManager.stopTimeWindow.SetActive(false);
                         storyIndex = 0; //다음 스토리에 쓸 수 있게
+
+                        colletBossRoom.SetActive(true);
+                        colletPanel.SetActive(true);
+                        colletStreaming.SetActive(true);
                     }
                     break;
             }
+
         }else if(!isTamX2StoryEnd){
+            switch(storyIndex){
+                case 1:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 2:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 3:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 4:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 5:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 6:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 7:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 8:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 9:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 10:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 11:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 12:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 13:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.코렛트;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 14:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 15:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 16:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.금사향;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 17:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 18:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.금사향;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 19:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 20:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 21:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 22:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 23:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 24:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 25:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 26:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 27:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 28:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.금사향;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 29:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 30:
+                    if(talkText.isEnd){
+                        isTamX2StoryEnd= true;
+                        GameManager.Instance.isStopTime = false;
+                        GameManager.Instance.isStopUI = false;
+                        uiManager.stopTimeWindow.SetActive(false);
+                        storyIndex = 0; //다음 스토리에 쓸 수 있게
+
+                        tamx2BossRoom.SetActive(true);
+                        tamx2Panel.SetActive(true);
+                        tamx2Streaming.SetActive(true);
+                    }
+                    break;
+            }
 
         }else if(!isNanayangStoryEnd){
+            switch(storyIndex){
+                 case 1:
+                    timer1 += Time.deltaTime;
 
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.나나양;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 2:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 3:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.나나양;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 4:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 5:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.나나양;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 6:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 7:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.나나양;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 8:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 9:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.나나양;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 10:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 11:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.코렛트;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 12:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 13:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 14:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 15:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.지누;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 16:
+                    timer2 += Time.deltaTime;
+
+                    if(timer2 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 17:
+                    timer1 += Time.deltaTime;
+
+                    if(timer1 > 0.6f && !isStartedNext){
+                        talkManager.curTalkActor = TalkManager.Actor.나나양;
+                        timer1 = 0;
+                        timer2 = 0;
+                        uiManager.StoryTalk();
+                        isStartedNext = true;
+                    }
+                    break;
+                case 18:
+                    if(talkText.isEnd){
+                        isNanayangStoryEnd= true;
+                        GameManager.Instance.isStopTime = false;
+                        GameManager.Instance.isStopUI = false;
+                        uiManager.stopTimeWindow.SetActive(false);
+                        storyIndex = 0; //다음 스토리에 쓸 수 있게
+
+                        nanayangBossRoom.SetActive(true);
+                        nanayangPanel.SetActive(true);
+                        nanayangStreaming.SetActive(true);
+                    }
+                    break;
+            }
         }
     }
 

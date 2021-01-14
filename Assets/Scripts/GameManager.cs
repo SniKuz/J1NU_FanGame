@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -96,9 +97,11 @@ public class GameManager : MonoBehaviour
             }
             money -= (int)(totalstaffCost * skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level]); // each month -> staff cost pay
 
-            time = 15f;
 
+            //#스태프용량, 기본용량, 디자인 수 등 증가부분
             staffCapacity++;
+
+            time = 15f;
         }
 
 
@@ -111,20 +114,39 @@ public class GameManager : MonoBehaviour
 
         //Check Main Story
         if(!mainStoryManager.isColletStoryStart && day == 5){
-            uiManager.ColletStoryStart();
-            mainStoryManager.isColletStoryStart = true;
+            if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
+                uiManager.ColletStoryStart();
+                mainStoryManager.isColletStoryStart = true;
+            }else{
+                StartCoroutine(Ending(false));
+            }
         }
         if(!mainStoryManager.isTamX2StoryStart && day == 10){
-            uiManager.TamX2StoryStart();
-            mainStoryManager.isTamX2StoryStart = true;
+            if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
+                uiManager.TamX2StoryStart();
+                mainStoryManager.isTamX2StoryStart = true;
+            }else{
+                StartCoroutine(Ending(false));
+            }
         }
         if(!mainStoryManager.isNanayangtoryStart && day == 15){
-            uiManager.NanayangStoryStart();
-            mainStoryManager.isNanayangtoryStart = true;
+            if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
+                uiManager.NanayangStoryStart();
+                mainStoryManager.isNanayangtoryStart = true;
+            }else{
+                StartCoroutine(Ending(false));
+            }
+        }
+        if(day == 20){
+            if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
+                StartCoroutine(Ending(true));
+            }else{
+                StartCoroutine(Ending(false));
+            }
         }
 
         goods = goods > maxCapacity ? maxCapacity : goods; // goods는 최대 goods 용량 못넘어감
-        money = money > 999999999 ? 999999999 : money; // 돈 최대 제한 9억9...
+        money = money > 1999999999 ? 1999999999 : money; // 돈 최대 제한 19억9...
     }
 
     //#. Map Move
@@ -138,22 +160,6 @@ public class GameManager : MonoBehaviour
         }else if(dir == "Left"&&(int)gameManager.curType > 0){
             gameManager.curType--;
         }
-
-        switch(gameManager.curType)
-        {
-            case GameManager.Type.GoodsRoom:
-                break;
-
-            case GameManager.Type.BossRoom:
-                break;
-
-            case GameManager.Type.StreamingRoom:
-                break;
-
-            default:
-                break;
-        }
-
         //#.Move BackGround
         gameManager.ChangeMap();
         soundManager.PanelClick();
@@ -175,6 +181,27 @@ public class GameManager : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+
+    IEnumerator Ending(bool isClear){
+
+        //#.Stop All Active
+        isStopTime = true;
+        isStopUI = true;
+
+        if(isClear){//HappyEnding
+            uiManager.Ending(isClear);
+            yield return new WaitForSeconds(2f);
+        }else{//Bad Ending
+            uiManager.Ending(isClear);
+
+            yield return new WaitForSeconds(2f);
+            uiManager.BankruptcyScale();
+            yield return new WaitForSeconds(2f);
+            
+            SceneManager.LoadScene(1);
         }
     }
 }

@@ -105,6 +105,9 @@ public class UIManager : MonoBehaviour
     public GameObject tutorailSkipBtn;
     public GameObject tutorialNotSkipBtn;
 
+    public Image fadeImg;
+    public Image bankruptcy; //파산
+
     
 
     private void Start(){
@@ -158,10 +161,24 @@ public class UIManager : MonoBehaviour
         if(staffManager.staffCnt[0, 1]>0) goodsSystem.GoodsMakeAnimOn();
         if(staffManager.staffCnt[0, 2]>0) goodsSystem.GoodsMakeAnimOn();
         if(staffManager.staffCnt[0, 3]>0) goodsSystem.GoodsMakeAnimOn();
-        if(staffManager.staffCnt[1, 0]>0) goodsSystem.designAnim.SetTrigger("on");
-        if(staffManager.staffCnt[1, 1]>0) goodsSystem.designAnim.SetTrigger("on");
-        if(staffManager.staffCnt[1, 2]>0) goodsSystem.designAnim.SetTrigger("on");
-        if(staffManager.staffCnt[1, 3]>0) goodsSystem.designAnim.SetTrigger("on");
+        if(staffManager.staffCnt[1, 0]>0) {
+            goodsSystem.designAnim.SetTrigger("on");
+            goodsSystem.capacityAnim.SetTrigger("on");
+        }
+        if(staffManager.staffCnt[1, 1]>0) {
+            goodsSystem.designAnim.SetTrigger("on");
+            goodsSystem.capacityAnim.SetTrigger("on");
+        }
+        if(staffManager.staffCnt[1, 2]>0) {
+            goodsSystem.designAnim.SetTrigger("on");
+            goodsSystem.capacityAnim.SetTrigger("on");
+        }
+        if(staffManager.staffCnt[1, 3]>0) {
+            goodsSystem.designAnim.SetTrigger("on");
+            goodsSystem.capacityAnim.SetTrigger("on");
+        }
+        
+
 
         //#.StaffCost and Staff Max Capacity
         staffCostText.text = string.Format("{0:n0}", gameManager.totalstaffCost);
@@ -606,7 +623,7 @@ public class UIManager : MonoBehaviour
                 break;
             case 2:
                 if(btn == 0){
-                    EventBtnEffect("내가 발전기 실수를 할리가 없지. 탬탬도 아니고 ㅋ...\n발전기를 무사히 고쳤습니다.");
+                    EventBtnEffect("내가 발전기 실수를 할리가 없지. 탬탬버린도 아니고 ㅋ...\n발전기를 무사히 고쳤습니다.");
                 }else if(btn ==1){
                     EventBtnEffect("아 진짜 갑자기 옆에서 튀어나와서 실수한거라니까!\n굿즈 클릭 필요 터치 수 + 3");;
                     goodsSystem.maxCnt[1] += 3;
@@ -839,6 +856,11 @@ public class UIManager : MonoBehaviour
         talkManager.talkState[2] = 0;
         tutorailSkipBtn.SetActive(false);
         tutorialNotSkipBtn.SetActive(false);
+
+        stockPanel.gameObject.SetActive(true);
+        streamerPanel.gameObject.SetActive(true);
+        staffPanel.gameObject.SetActive(true);
+        informationPanel.gameObject.SetActive(true);
         }
     }
 
@@ -865,5 +887,16 @@ public class UIManager : MonoBehaviour
         stopTimeWindow.SetActive(true);
         talkManager.curTalkActor = (int)TalkManager.Actor.지누; //Actor정하기
         Invoke("StoryTalk", 1f);
+    }
+
+    public void Ending(bool isClear){
+        fadeImg.gameObject.SetActive(true);
+        if(isClear) fadeImg.color = new Color32(255, 255, 255, 0);
+        else fadeImg.color = new Color32(0, 0, 0, 0);
+        fadeImg.DOFade(1, 1.5f).SetEase(Ease.InQuad);
+    }
+
+    public void BankruptcyScale(){
+        bankruptcy.rectTransform.DOScale(new Vector3(1, 1, 1), 1f).SetEase(Ease.OutBounce);
     }
 }
