@@ -106,7 +106,7 @@ public class UIManager : MonoBehaviour
     public GameObject tutorialNotSkipBtn;
 
     public Image fadeImg;
-    public Image bankruptcy; //파산
+    public GameObject badEnd; //파산
 
     
 
@@ -897,6 +897,6 @@ public class UIManager : MonoBehaviour
     }
 
     public void BankruptcyScale(){
-        bankruptcy.rectTransform.DOScale(new Vector3(1, 1, 1), 1f).SetEase(Ease.OutBounce);
+        badEnd.transform.DOScale(new Vector3(1, 1, 1), 1f).SetEase(Ease.OutBounce);
     }
 }
