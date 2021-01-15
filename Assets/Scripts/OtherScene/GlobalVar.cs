@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 public class GlobalVar : MonoBehaviour
 {
     public static int soundVolume;
+    public static int clickCnt;
+    public static int goodsPrice;
+    public static int donationPrice;
+    public static int startMoney;
     private void Awake() {
         DontDestroyOnLoad(gameObject);
 

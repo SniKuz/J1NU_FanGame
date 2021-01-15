@@ -57,11 +57,29 @@ public class Menu : MonoBehaviour
             gameBtn.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.OutBack);
     }
 
-    public void NewGameBtn(){
+    public void EasyGameBtn(){
+        GlobalVar.startMoney = 1000000;
+
+
         fadeImg.gameObject.SetActive(true);
         fadeImg.DOFade(1, 1).SetEase(Ease.InQuad);
         Invoke("NextScene", 3f);
     }
+
+    public void NormalGameBtn(){
+
+        fadeImg.gameObject.SetActive(true);
+        fadeImg.DOFade(1, 1).SetEase(Ease.InQuad);
+        Invoke("NextScene", 3f);
+    }
+
+    public void HardGameBtn(){
+
+        fadeImg.gameObject.SetActive(true);
+        fadeImg.DOFade(1, 1).SetEase(Ease.InQuad);
+        Invoke("NextScene", 3f);
+    }
+
     public void NextScene(){
         SceneManager.LoadScene(2);
     }
