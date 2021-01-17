@@ -53,6 +53,15 @@ public class SoundManager : MonoBehaviour
         drillBool = false;
     }
 
+    public void MuteAll(){
+        backGroundMusic.volume = 0;
+        panelAudioSource.volume = 0;
+        staffABCOpen.volume = 0;
+        staffSOepn.volume = 0;
+        skillLevelUp.volume = 0;
+        electricDrill.volume = 0;
+    }
+
     public void StaffOpen(int staff){
         if(staff <= 0){
             staffABCOpen.loop = false;

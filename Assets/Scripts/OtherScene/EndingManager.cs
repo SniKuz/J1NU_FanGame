@@ -12,6 +12,7 @@ public class EndingManager : MonoBehaviour
     public int index;
     public TextMeshProUGUI storyText;
     public Animator creditAnim;
+    public Image EndingPicture;
 
     private void Start() {
         fadeImg.DOFade(1, 1.5f).SetEase(Ease.InQuad);
@@ -21,7 +22,7 @@ public class EndingManager : MonoBehaviour
                                     "다시 픽셀을\n세계 최고의 기업으로 성장시킨다.",
                                     "김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!",
                                     "The End",
-                                    "(쿠키영상 있어요)"};
+                                    "(쿠키 이야기 있어요)"};
 
         Invoke("EndStoryTalikg", 2f);
     }
@@ -33,6 +34,7 @@ public class EndingManager : MonoBehaviour
         Invoke("DoFadeText", 3f);
         if(index >= 6){
             creditAnim.SetBool("CreditOn", true);
+            Invoke("DoEndingPicutreFadeOn", 63f);
         }
 
         if(index<6)
@@ -41,5 +43,13 @@ public class EndingManager : MonoBehaviour
 
     public void DoFadeText(){
         storyText.DOFade(0, 1f);
+    }
+    public void DoEndingPicutreFadeOn(){
+        creditAnim.Rebind();//애니메이션 초기화
+        EndingPicture.DOFade(1, 1.5f);
+        Invoke("DoEndingPicutreFadeOff", 5f);
+    }
+    public void DoEndingPicutreFadeOff(){
+        EndingPicture.DOFade(0, 1f);
     }
 }

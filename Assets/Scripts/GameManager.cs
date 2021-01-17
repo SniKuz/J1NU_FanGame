@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
     public int donationPrice; //donationPrice
     public int maxCapacity; //총 굿즈 개수
     public int staffCapacity;
-    public float time; //
-    public float timeMPS; // StaffMps Time - 
+    public float time; 
+    public float finalTime;//시작 시간. 몇초인지
     public int totalstaffCost;//totalStaffCost
     public int workStaff;// How many staff working
 
@@ -56,7 +56,14 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
-        staffCapacity = 2 + ((int)maxCapacity/50); //staffCapcity는 default 2 + maxCapacity/50 + 게이지마다 1명씩 상승? 밸런스 조절 ㄱ
+        staffCapacity = 2 + ((int)maxCapacity/20); //staffCapcity는 default 2 + maxCapacity/50 + 게이지마다 1명씩 상승? 밸런스 조절 ㄱ
+        
+        money = GlobalVar.startMoney;
+        donationPrice = GlobalVar.donationPrice;
+        finalTime = GlobalVar.startFinalTime;
+        time = finalTime;
+
+        stockManager.MainStockChange("코렛샤 컴퍼니", 1000, 150, 0);//150만원
     }
 
     private void Update() {
@@ -68,7 +75,6 @@ public class GameManager : MonoBehaviour
 
         //0.Guage Time
         time -= Time.deltaTime;
-        timeMPS += Time.deltaTime;
 
         //1.Guage Over Event
         if(time <= 0f){
@@ -76,32 +82,46 @@ public class GameManager : MonoBehaviour
 
             //#2. Day Change Event
             if(guage < 1){
-                guage = 5;
+                guage = 3;
                 day++;
+
+                goodsSystem.goodsDesignBonusCnt += 1;
 
                 int Bang = Random.Range(0, 1000);
                 if(Bang <= 2) money += (int)(skillManager.skillList[8]._functionDesc[skillManager.skillList[8]._level] * 35000000);
                 money += (int)skillManager.skillList[10]._functionDesc[skillManager.skillList[10]._level];
                 //Important Event 발생
             }
-            //게이지마다 +1씩 시청자 증가
-            viwer += (int)skillManager.skillList[7]._functionDesc[skillManager.skillList[7]._level];
+            //게이지마다 t자원 증가 스킬
             money += (int)(viwer * donationPrice * skillManager.skillList[13]._functionDesc[skillManager.skillList[13]._level]);
 
             //#.Auto Making by staffs- StaffMPS Time
             for(int i = 0; i < 4; i++){
                 goods += (int)(staffManager.staffCnt[0, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]);
-                goodsSystem.goodsDesignBonusCnt += (int)(staffManager.staffCnt[1, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]); 
-                gameManager.maxCapacity += (int)(staffManager.staffCnt[1, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]); 
-                viwer += (int)(staffManager.staffCnt[2, i] * staffManager.staffMPS[0, i] * (skillManager.skillList[14]._functionDesc[skillManager.skillList[14]._level] + skillManager.skillList[19]._functionDesc[skillManager.skillList[19]._level] ));
+                goodsSystem.goodsDesignBonusCnt += (int)(staffManager.staffCnt[1, i] * staffManager.staffMPS[1, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]); 
+                gameManager.maxCapacity += (int)(staffManager.staffCnt[1, i] * staffManager.staffMPS[1, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]); 
+                staffCapacity +=(int)((staffManager.staffCnt[1, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level])/10); 
+                viwer += (int)(staffManager.staffCnt[2, i] * staffManager.staffMPS[2, i] * (skillManager.skillList[14]._functionDesc[skillManager.skillList[14]._level] + skillManager.skillList[19]._functionDesc[skillManager.skillList[19]._level] ));
             }
+            
+            //#.샤샤스킬.게이지마다 시청자수 증가
+            viwer += (int)skillManager.skillList[7]._functionDesc[skillManager.skillList[7]._level];
+            
+
+            //#.Goods Price, Donation Price Change
+            int changeGoodsPrice = Random.Range(-5, 6);
+            int changeDonationPrice = Random.Range(-5, 6);
+            goodsSystem.goodsPrice += goodsSystem.goodsPrice * changeGoodsPrice / 100;
+            donationPrice += donationPrice * changeDonationPrice / 100;
+
             money -= (int)(totalstaffCost * skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level]); // each month -> staff cost pay
 
 
             //#스태프용량, 기본용량, 디자인 수 등 증가부분
             staffCapacity++;
+            maxCapacity += 5;
 
-            time = 15f;
+            time = finalTime;
         }
 
 
@@ -117,6 +137,7 @@ public class GameManager : MonoBehaviour
             if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
                 uiManager.ColletStoryStart();
                 mainStoryManager.isColletStoryStart = true;
+                stockManager.MainStockChange("밀감 컴퍼니", 5000, 200, 1);
             }else{
                 StartCoroutine(Ending(false));
             }
@@ -125,6 +146,7 @@ public class GameManager : MonoBehaviour
             if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
                 uiManager.TamX2StoryStart();
                 mainStoryManager.isTamX2StoryStart = true;
+                stockManager.MainStockChange("우주대스타 컴퍼니", 10000, 250, 2);
             }else{
                 StartCoroutine(Ending(false));
             }
@@ -133,6 +155,7 @@ public class GameManager : MonoBehaviour
             if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
                 uiManager.NanayangStoryStart();
                 mainStoryManager.isNanayangtoryStart = true;
+                stockManager.MainStockChange("원두컴퍼니", 20000, 300, 3);
             }else{
                 StartCoroutine(Ending(false));
             }
@@ -192,8 +215,10 @@ public class GameManager : MonoBehaviour
         isStopUI = true;
 
         if(isClear){//HappyEnding
+            soundManager.MuteAll();
             uiManager.Ending(isClear);
             yield return new WaitForSeconds(2f);
+            SceneManager.LoadScene(4);
         }else{//Bad Ending
             uiManager.Ending(isClear);
 

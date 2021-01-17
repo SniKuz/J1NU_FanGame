@@ -20,6 +20,8 @@ public class StaffManager : MonoBehaviour
     public int drawStaffGrade;
     public int[] drawTenStaffGrade;
 
+    public bool tutorialStaffGet;//true/false
+
     public bool drawingTime; // while drawing don't talk tutorail or etc
 
     private void Awake() {
@@ -27,15 +29,16 @@ public class StaffManager : MonoBehaviour
         staffCnt = new int[3, 4]{ {0, 0, 0, 0}
                                 ,{0, 0, 0, 0}
                                 ,{0, 0, 0, 0} }; //Goods make room, 
-        staffMPS = new float[3, 4]{ {10, 3f, 1f, 0.5f}
+        staffMPS = new float[3, 4]{ {5, 2f, 1f, 0.5f}
                                 ,{1, 0.4f, 0.2f, 0.1f}
-                                ,{10f, 3f, 1f, 0.5f} }; //Goods make room, 
+                                ,{12f, 5f, 2f, 1f} }; //Goods make room, 
 
-        staffCost = new int[4] {10, 7, 5, 3};
+        staffCost = new int[4] {10000, 7000, 5000, 2000};
     }
 
     public void StartDrawStaff(int num){
         drawingTime = true;
+        tutorialStaffGet = true;
         if(num == 1){
 
             hideStaffOne.SetActive(true);
@@ -104,13 +107,13 @@ public class StaffManager : MonoBehaviour
 
     public void Recruit(int num){
         if(num == 1){
-            staffPrefabsOne[drawStaffGrade].transform.localScale = new Vector3(0, 0, 0);
+            staffPrefabsOne[drawStaffGrade].transform.localScale = Vector3.zero;
             hideStaffOne.GetComponent<Animator>().Rebind(); //Animation 초기화
             hideStaffOne.SetActive(false);
             waitStaffCnt[drawStaffGrade]++;
         }else{
             for(int i=0; i<10; i++){
-                staffPrefabsTen[i * 4 + drawTenStaffGrade[i]].transform.localScale = new Vector3(0, 0, 0);
+                staffPrefabsTen[i * 4 + drawTenStaffGrade[i]].transform.localScale = Vector3.zero;
                 waitStaffCnt[drawTenStaffGrade[i]]++;
             }
         }

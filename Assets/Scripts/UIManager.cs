@@ -126,15 +126,15 @@ public class UIManager : MonoBehaviour
         if(gameManager.isStopUI) return;
 
         //#0. 
-		dateImage.fillAmount = gameManager.time/15f;
+		dateImage.fillAmount = gameManager.time/gameManager.finalTime;
 		dateText.text = gameManager.day+"" ;	
 
         //#.Money UI	
-		if(gameManager.money > 100000) moneyText.text = string.Format("{0:n0}", gameManager.money/1000)+"k";
+		if(gameManager.money > 10000000) moneyText.text = string.Format("{0:n0}", gameManager.money/1000)+"k";
 		else moneyText.text = string.Format("{0:n0}", gameManager.money);
 
         //#.Goods UI
-		if(gameManager.goods > 100000) goodsText.text = gameManager.goods/1000 +"k/" + gameManager.maxCapacity/1000 +"k";
+		if(gameManager.goods > 10000000) goodsText.text = gameManager.goods/1000 +"k/" + gameManager.maxCapacity/1000 +"k";
 		else goodsText.text = gameManager.goods + "/" + gameManager.maxCapacity;
 
         //#.DesignBonus UI
@@ -146,7 +146,7 @@ public class UIManager : MonoBehaviour
 		if(gameManager.viwer > 100000) viwerText.text = string.Format("{0:n0}", gameManager.viwer/1000)+"k";
 		else viwerText.text = string.Format("{0:n0}", gameManager.viwer);
 
-		battery.gameObject.GetComponent<Image>().sprite = guageImage[5 - gameManager.guage]; // battery change
+		battery.gameObject.GetComponent<Image>().sprite = guageImage[3 - gameManager.guage]; // battery change
 
         //#.Staff UI
         staffSInText.text = string.Format("{0:n0}", staffManager.staffCnt[(int)gameManager.curType, 0]);
@@ -185,15 +185,15 @@ public class UIManager : MonoBehaviour
         maxStaffCapasityText.text = gameManager.workStaff +"/"+ gameManager.staffCapacity;
 
         //#.Status Panel Update
-        int staffAutoMakeDesign = 0;
-        int staffAutoMakeGoods = 0;
+        float staffAutoMakeDesign = 0;
+        float staffAutoMakeGoods = 0;
         for(int i = 0; i < 4; i++){
-            staffAutoMakeDesign += (int)(staffManager.staffCnt[0, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]);
-            staffAutoMakeGoods += (int)(staffManager.staffCnt[1, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]); 
+            staffAutoMakeDesign += (staffManager.staffCnt[1, i] * staffManager.staffMPS[1, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]);
+            staffAutoMakeGoods += (staffManager.staffCnt[0, i] * staffManager.staffMPS[0, i] * skillManager.skillList[6]._functionDesc[skillManager.skillList[6]._level]); 
         }
-        statusDesignAutoMake.text = staffAutoMakeDesign + "";
-        statusGoodsAutoMake.text = staffAutoMakeGoods +"";
-        statusCapacityAutoMake.text = staffAutoMakeDesign+"";
+        statusDesignAutoMake.text = (int)staffAutoMakeDesign + "";
+        statusGoodsAutoMake.text = (int)staffAutoMakeGoods +"";
+        statusCapacityAutoMake.text = (int)staffAutoMakeDesign+"";
         StatusPanelUpdate();
 
 
@@ -389,7 +389,7 @@ public class UIManager : MonoBehaviour
 
     public void SkillUpBtn(){
         if(selectedSkill == null || selectedSkill._level>=5) return ;
-        if(selectedSkill._level <5){
+        if(selectedSkill._level <5 && gameManager.money > selectedSkill._nextLevelGold[selectedSkill._level]){
             gameManager.money -= selectedSkill._nextLevelGold[selectedSkill._level];//다음 레벨 가는 가격 빼고
             skillManager.SkillLevelUp(selectedSkill._id); // level++;
             skillUIUpdate(); //
@@ -405,13 +405,13 @@ public class UIManager : MonoBehaviour
             }
             
             //#.SkillGuideAnim
+            soundManager.SkillUp();
             skillGuideBtn.enabled = false;//잠시 버튼 끄고
             skillDescLevel.transform.DOPunchScale(new Vector3(1, 1, 1), 0.3f);
             skillDescGold.transform.DOPunchScale(new Vector3(1, 1, 1), 0.3f);
             skillDescFunc.transform.DOPunchScale(new Vector3(1, 1, 1), 0.3f);
             Invoke("SkillGuideBtnOn", 0.5f);//애니메이션 끝나고 버튼 다시 온. 애니메이션때문에 버튼 안터지게
         }
-        soundManager.SkillUp();
     }
     public void SkillGuideBtnOn(){
         skillGuideBtn.enabled = true;
@@ -564,17 +564,17 @@ public class UIManager : MonoBehaviour
     //#.This code for staff recruit btn Dotween Animation
     void StaffOneRecruitBtnSetActiveTrueAnim(){
         staffOneRecruitBtn.SetActive(true);
-        staffOneRecruitBtn.transform.DOScale(new Vector3(1,1,1), 1).SetEase(Ease.OutBack);
+        staffOneRecruitBtn.transform.DOScale(new Vector3(1,1,1), 2).SetEase(Ease.OutBack);
     }
     void StaffTenRecruitBtnSetActiveTrueAnim(){
         staffTenRecruitBtn.SetActive(true);
-        staffTenRecruitBtn.transform.DOScale(new Vector3(1,1,1), 1).SetEase(Ease.OutBack);
+        staffTenRecruitBtn.transform.DOScale(new Vector3(1,1,1), 2).SetEase(Ease.OutBack);
     }
 
     //#.---------------------[Status]
 
     void StatusPanelUpdate(){
-        statusGoodsPrice.text = goodsSystem.goodsPrice * skillManager.skillList[4]._functionDesc[skillManager.skillList[4]._level] +"";
+        statusGoodsPrice.text = (int)(goodsSystem.goodsPrice * skillManager.skillList[4]._functionDesc[skillManager.skillList[4]._level]) +"";
         statusDonationPrice.text = gameManager.donationPrice * skillManager.skillList[13]._functionDesc[skillManager.skillList[13]._level] +"";
         statusGoodsSellTime.text =  5f * skillManager.skillList[1]._functionDesc[skillManager.skillList[1]._level]+"";
         statusGoodsSellCapacity.text = goodsSystem.goodsTransPortCapacity + skillManager.skillList[2]._functionDesc[skillManager.skillList[2]._level] +"";
@@ -614,8 +614,7 @@ public class UIManager : MonoBehaviour
                 break;
             case 1:
                 if(btn == 0){
-                    EventBtnEffect("도망치다가 기계에 부딪혔다...\n디자인 클릭 필요 터치 수 + 5");
-                    goodsSystem.maxCnt[0] += 5;
+                    EventBtnEffect("후 잘 따돌린 것 같다. 근데 대체 누구지?");
                 }else if(btn ==1){
                     EventBtnEffect("놀랍게도 문을 두드린 사람은 꽃핀누나였다! 또 한번 큰 은총을 받았다...\n돈 + 100000");
                     gameManager.money += 100000;
@@ -623,7 +622,7 @@ public class UIManager : MonoBehaviour
                 break;
             case 2:
                 if(btn == 0){
-                    EventBtnEffect("내가 발전기 실수를 할리가 없지. 탬탬버린도 아니고 ㅋ...\n발전기를 무사히 고쳤습니다.");
+                    EventBtnEffect("내가 발전기 실수를 할리가 없지. 탬탬버린도 아니고 \n발전기를 무사히 고쳤습니다.");
                 }else if(btn ==1){
                     EventBtnEffect("아 진짜 갑자기 옆에서 튀어나와서 실수한거라니까!\n굿즈 클릭 필요 터치 수 + 3");;
                     goodsSystem.maxCnt[1] += 3;
@@ -644,7 +643,7 @@ public class UIManager : MonoBehaviour
             case 4:
                 if(btn == 0){
                     EventBtnEffect("서로 노려보던 둘은 다음날부터 같이 방송을 하기 시작했다. 둘은 서로의 가능성을 보고 싸우기보다 타협을 한 것이다! 이 조합은 사기가 아닌가? 코렛샤 컴퍼니가 코요코요 컴퍼니가 되는 순간을 나는 목격했다.\n 시청자수 + 1000");
-                    gameManager.viwer += 1000;
+                    gameManager.viwer += 50;
                 }else if(btn ==1){
                     EventBtnEffect("왜 이렇게 사이가 안좋 아아아악! 뿌요야!! 그만 좀 물라고 진짜!!!");
                 }
@@ -652,7 +651,7 @@ public class UIManager : MonoBehaviour
             case 5:
                 if(btn == 0){
                     EventBtnEffect("지원금을 통해 반탬탬파는 급격히 몸집을 불려 밀감 컴퍼니를 향해 방해공작을 펼쳤습니다. 하지만 배신자로 인하여 빠르게 진압 됐으며 대부분이 처단 당했습니다.\n지원금 - 10000");
-                    gameManager.money -= 10000;
+                    gameManager.money -= 1000000;
                 }else if(btn ==1){
                     EventBtnEffect("속보 - 신원불명의 밀고자? 밀감 컴퍼니 CEO 탬탬버린 회사 자금을 횡령한 것으로 드러나...\n해당 자금은 현재 모게임사로 흘러들어갔으며 이에 그녀는 해당 게임사로부터 적우의 칭호를 받은 것으로 밝혀졌다. 현재까지 발생한 피해액만 340억으로 알려져 이에 투자자들은 극심한 분노를 터트리고 있다.\n주식가격 -40%");
                     int milgamStockPrice = (int)(stockManager.mainStock.GetComponent<StockItem>().GetStockPrice() * 0.6f);
@@ -664,8 +663,8 @@ public class UIManager : MonoBehaviour
                     EventBtnEffect("배상금으로 그분의 분노를 해소합니다.\n배상금 -10000");
                     gameManager.money -= 10000;
                 }else if(btn ==1){
-                    EventBtnEffect("주식으로 그분의 분노를 해소합니다.\n보유 밀감 컴퍼니 주식 10% 양도");
-                    stockManager.mainStock.GetComponent<StockItem>().myStock -= (int)(stockManager.mainStock.GetComponent<StockItem>().myStock / 10);
+                    EventBtnEffect("주식으로 그분의 분노를 해소합니다.\n보유 밀감 컴퍼니 주식 20% 양도");
+                    stockManager.mainStock.GetComponent<StockItem>().SetMyStock((int)(stockManager.mainStock.GetComponent<StockItem>().myStock * 8 /10));
                 }else if(btn == 2){
                     EventBtnEffect("굿즈 공장을 개박살을 냅니다. 굿즈 공장에 모든 생산 기계들이 효율이 떨어집니다.\n생산 기계 필요 터치 수 50% 증가");//2배도 ㄱㅊ은듯
                     for(int i =0; i<3; i++){
@@ -700,10 +699,10 @@ public class UIManager : MonoBehaviour
                 break;
             case 10:
                 if(btn == 0){
-                    EventBtnEffect("속보 - 김진우, 나나양 상반되는 해명?\n(전) 픽셀 CEO 김진우는 이는 오해에서 비롯한 악의적인 편집이라며 이런 허무맹랑한 주장은 법적으로 처리할 것이라 공식 입장을 표명했다. 하지만 같은 시기 우주대스타 컴퍼니 측에서는 아직 당사자간의 대화가 오가지 않았으니 언급을 자제해주길 바라며 심한 경우 사실적시 명예훼손으로 강경 대응할 것으로 밝히며 악성 단체의 주장을 부정하지 않고 있다. 이에 수많은 사람들의 관심이 쏠리고 있다.\n시청자 수 + 100\n스니커즈 기자");
+                    EventBtnEffect("속보 - 김진우, 나나양 상반되는 해명?\n(전) 픽셀 CEO 김진우는 이는 오해에서 비롯한 악의적인 편집이라며 이런 허무맹랑한 주장은 법적으로 처리할 것이라 공식 입장을 표명했다. 하지만 같은 시기 우주대스타 컴퍼니 측에서는 아직 당사자간의 대화가 오가지 않았으니 언급을 자제해주길 바라며 심한 경우 사실적시 명예훼손으로 강경 대응할 것으로 밝히며 악성 단체의 주장을 부정하지 않고 있다. 이에 수많은 사람들의 관심이 쏠리고 있다.\n시청자 수 + 100");
                     gameManager.viwer += 100;
                 }else if(btn ==1){
-                    EventBtnEffect("속보 - 우주대스타 컴퍼니 나나양 CEO 의문의 습격?\n우주대스타 컴퍼니 나나양 CEO가 금일 에란겔에서 파밍을 하던 도중 의문의 습격을 받았다고 전해진다. 이에 평소 그녀는 수 많은 스캔들로 인하여 악성 단체가 많았으며, 단체 대다수가 코인 종목을 투자한 것으로 밝혀져 논란이 되고 있다.\n스니커즈 기자\n우주대스타 컴퍼니 주가 -15%");
+                    EventBtnEffect("속보 - 우주대스타 컴퍼니 나나양 CEO 의문의 습격?\n우주대스타 컴퍼니 나나양 CEO가 금일 에란겔에서 파밍을 하던 도중 의문의 습격을 받았다고 전해진다. 이에 평소 그녀는 수 많은 스캔들로 인하여 악성 단체가 많았으며, 단체 대다수가 코인 종목을 투자한 것으로 밝혀져 논란이 되고 있다.\n우주대스타 컴퍼니 주가 -15%");
                     stockManager.mainStock.GetComponent<StockItem>().myStock -= (int)(stockManager.mainStock.GetComponent<StockItem>().myStock  * 0.85f);
                 }
                 break;
@@ -737,12 +736,12 @@ public class UIManager : MonoBehaviour
                 break;
             case 14:
                 if(btn == 0){
-                    EventBtnEffect("원두컴퍼니가 무차별적으로 시장을 혼란스럽게 만들고 PIXEL을 사들이고 있습니다. 매 게이지마다 원두 컴퍼니가 사는 주식수가 늘어납니다.\n매 게이지 + 30");
+                    EventBtnEffect("원두컴퍼니가 무차별적으로 시장을 혼란스럽게 만들고 PIXEL을 사들이고 있습니다. 매 게이지마다 원두 컴퍼니가 사는 주식수가 늘어납니다.\n매 게이지마다 보유 주식 -2");
                 }
                 break;
             case 15:
                 if(btn == 0){
-                    EventBtnEffect("원두컴퍼니가 영혼을 끌어모아 매수를 시작합니다. 매 게이지마다 사는 주식수가 늘어납니다.\n매 게이지 + 100");
+                    EventBtnEffect("원두컴퍼니가 영혼을 끌어모아 매수를 시작합니다. 매 게이지마다 사는 주식수가 늘어납니다.\n매 게이지마다 보유 주식 -10");
                 }
                 break;
         }
@@ -856,6 +855,10 @@ public class UIManager : MonoBehaviour
         talkManager.talkState[2] = 0;
         tutorailSkipBtn.SetActive(false);
         tutorialNotSkipBtn.SetActive(false);
+        
+        tutorialManager.GoodsDesignEnable();
+        tutorialManager.GoodsMakeEnable();
+        tutorialManager.GoodsPackingEnable();
 
         stockPanel.gameObject.SetActive(true);
         streamerPanel.gameObject.SetActive(true);

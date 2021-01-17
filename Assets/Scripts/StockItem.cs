@@ -81,22 +81,6 @@ public class StockItem : MonoBehaviour
         totalStockText.text = myStock+"/"+totalStock;
     }
 
-    public void BuyStock(){
-        if(this.totalStock > this.myStock){
-            gameManager.money -= (int)(stockPrice * skillManager.skillList[17]._functionDesc[skillManager.skillList[17]._level]);
-            this.myStock++;
-            totalStockText.text = myStock +"/" + totalStock;
-        }
-    }
-
-    public void SellStock(){
-        if(this.myStock>0){
-            gameManager.money += (int)(stockPrice * skillManager.skillList[18]._functionDesc[skillManager.skillList[18]._level]);
-            this.myStock--;
-            totalStockText.text = myStock +"/" + totalStock;
-        }
-    }
-
     public void ChangeStockPrice(){
         int stockVolatilityLow = volatilityLow + (int)(skillManager.skillList[12]._functionDesc[skillManager.skillList[12]._level] + skillManager.skillList[15]._functionDesc[skillManager.skillList[15]._level]);;
         int stockVolatilityHigh = volatilityHigh + (int)skillManager.skillList[16]._functionDesc[skillManager.skillList[16]._level];

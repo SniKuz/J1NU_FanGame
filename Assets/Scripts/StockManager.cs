@@ -19,10 +19,18 @@ public class StockManager : MonoBehaviour
     public Sprite[] ranStockImg;
     public Sprite[] mainStockImg;
 
+    public string[] subStockName;
+
+
     private void Awake() {
+        subStockName = new string[] {"도넛 컴퍼니","뿡뿡이 컴퍼니", "안경 컴퍼니", "장미 컴퍼니", "다이아몬드 컴퍼니","상섬 컴퍼니", "데이바이 컴퍼니", "뿌요요 컴퍼니", "레인보우 컴퍼니","공팔이팔 컴퍼니", "똘띠 컴퍼니","푸르르린 컴퍼니","질풍 컴퍼니","쫀드기 컴퍼니","애니덕 컴퍼니"};
+
         for(int i=0; i<10; i++){
             int ranImg = Random.Range(0, 5);
-            subStock[i] = newStock("SubStock"+i, i*10, i*1000, ranStockImg[ranImg]);
+            int ranPrice = Random.Range(1000, 30000);
+            int ranTotal = Random.Range(50, 1000);
+            int ranName = Random.Range(0, 15);
+            subStock[i] = newStock(subStockName[ranName], ranPrice, ranTotal, ranStockImg[ranImg]);
         }
         checkDayChange = gameManager.day;
         checkGuageChange = gameManager.guage;
@@ -51,12 +59,15 @@ public class StockManager : MonoBehaviour
 
     public void ChangeSubStocks(){
         if(gameManager.day > checkDayChange){
-            int changeStock = Random.Range(0, 5);
+            int changeStock = Random.Range(0, 6);
             while(changeStock>=0){
                 int i = Random.Range(0, 10);
                 int ranImg = Random.Range(0, 5);
+                int ranPrice = Random.Range(1000, 50000);
+                int ranTotal = Random.Range(50, 1000);
+                int ranName = Random.Range(0, 15);
                 DestroyStock(i);
-                subStock[i] = newStock("NewStock"+i, i*200, i*20000, ranStockImg[ranImg]);  
+                subStock[i] = newStock(subStockName[ranName], ranPrice, ranTotal, ranStockImg[ranImg]);  
                 changeStock--;
             }
             checkDayChange = gameManager.day;
@@ -72,10 +83,11 @@ public class StockManager : MonoBehaviour
         }
     }
 
-    public void MainStockChange(string name, int price, int totalStock){
+    public void MainStockChange(string name, int price, int totalStock, int spriteNum){
         mainStock.GetComponent<StockItem>().SetMyStock(0); //가지고 있는 주 개수 초기화 
         mainStock.GetComponent<StockItem>().SetStockName(name);
         mainStock.GetComponent<StockItem>().SetStockPrice(price);
         mainStock.GetComponent<StockItem>().SetTotalStock(totalStock);
+        mainStock.GetComponent<StockItem>().stockImg.sprite = mainStockImg[spriteNum];
     }
 }
