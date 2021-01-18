@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class EndingManager : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class EndingManager : MonoBehaviour
     public TextMeshProUGUI storyText;
     public Animator creditAnim;
     public Image EndingPicture;
+
+    public Sprite[] cookie;
+    public Image cookieImg;
+    public int cookieIndex;
 
     private void Start() {
         fadeImg.DOFade(1, 1.5f).SetEase(Ease.InQuad);
@@ -46,10 +51,31 @@ public class EndingManager : MonoBehaviour
     }
     public void DoEndingPicutreFadeOn(){
         creditAnim.Rebind();//애니메이션 초기화
-        EndingPicture.DOFade(1, 1.5f);
+        EndingPicture.DOFade(1, 1f);
         Invoke("DoEndingPicutreFadeOff", 5f);
     }
     public void DoEndingPicutreFadeOff(){
         EndingPicture.DOFade(0, 1f);
+        Invoke("CookieEnd", 2f);
+
+    }
+    public void CookieEnd(){
+        cookieImg.sprite = cookie[cookieIndex < 5 ? cookieIndex++ : 4];
+        cookieImg.DOFade(1, 1f);
+
+
+        if(cookieIndex >=5){
+            Invoke("SceneEnd", 4f);
+        }
+        if(cookieIndex<5){
+            Invoke("CookieFade", 1f);
+            Invoke("CookieEnd", 3f);
+        }
+    }
+    public void CookieFade(){
+        cookieImg.DOFade(0, 1f);
+    }
+    public void SceneEnd(){
+        SceneManager.LoadScene(0);
     }
 }

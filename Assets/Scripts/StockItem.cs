@@ -45,13 +45,18 @@ public class StockItem : MonoBehaviour
         volatilityHigh = 31;
     }
 
+    private void Update() {
+        stockNameText.text = stockName;
+        stockPriceText.text = string.Format("{0:n0}", stockPrice);
+        totalStockText.text = myStock +"/" +totalStock;
+    }
+
     public string GetStockName(){
         return this.stockName;
     }
 
     public void SetStockName(string name){
         this.stockName = name;
-        stockNameText.text = stockName;
     }
 
     public int  GetStockPrice(){
@@ -60,7 +65,6 @@ public class StockItem : MonoBehaviour
 
     public void SetStockPrice(int stockPrice){
         this.stockPrice = stockPrice;
-        stockPriceText.text = string.Format("{0:n0}", stockPrice);
     }
 
     public int GetTotalStock(){
@@ -69,7 +73,6 @@ public class StockItem : MonoBehaviour
 
     public void SetTotalStock(int total){
         this.totalStock = total;
-        totalStockText.text = myStock +"/" +totalStock;
     }
 
     public int GetMyStock(){
@@ -78,7 +81,6 @@ public class StockItem : MonoBehaviour
 
     public void SetMyStock(int my){
         this.myStock = my;
-        totalStockText.text = myStock+"/"+totalStock;
     }
 
     public void ChangeStockPrice(){

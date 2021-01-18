@@ -24,13 +24,13 @@ public class StreamerSkillManager : MonoBehaviour
 
     void GenerateStreamerSkill(){
         StreamerSkillVo GoldSaHyang0 = new StreamerSkillVo(0,skillIcons[0], "치명적인 귀여움", 0, new int[5] {1000, 3000, 5000, 10000, 20000}, 
-                                                new string[] {  "스태프 월급 축소 0%",
-                                                                 "스태프 월급 축소 4%", 
-                                                                 "스태프 월급 축소 8%", 
-                                                                 "스태프 월급 축소 12%", 
-                                                                 "스태프 월급 축소 16%",
-                                                                 "스태프 월급 축소 20%"},
-                                                new float[] {1f, 0.96f, 0.92f, 0.88f, 0.84f, 0.8f} ,  "그녀의 귀여움은 스태프들이 월급을 반환할 정도입니다...");
+                                                new string[] {  "0%확률로 추가 클릭 + 0",
+                                                                 "10%확률로 추가 클릭 + 2", 
+                                                                 "20%확률로 추가 클릭 + 4", 
+                                                                 "30%확률로 추가 클릭 + 6", 
+                                                                 "40%확률로 추가 클릭 + 8",
+                                                                 "50%확률로 추가 클릭 + 10"},
+                                                new float[] {0f, 10f, 20f, 30f, 40f, 50f} ,  "그녀의 귀여움은 기계가 홀릴 정도입니다...");
         StreamerSkillVo GoldSaHyang1 = new StreamerSkillVo(1,skillIcons[1], "질러팅", 0, new int[5] {1000, 3000, 50000, 10000, 20000}, 
                                                 new string[] {  "굿즈 판매 속도 가속 X 1", 
                                                                 "굿즈 판매 속도 가속 X 1.2", 
@@ -48,13 +48,13 @@ public class StreamerSkillManager : MonoBehaviour
                                                                 "굿즈 판매 개수 + 10"},
                                                 new float[] {0, 2, 4, 6, 8, 10},  "숏과 까미가 판매를 돕습니다."); // 막라 난이도 낮추는 용으로 괜찮은듯
         StreamerSkillVo GoldSaHyang3 = new StreamerSkillVo(3,skillIcons[3], "???", 0, new int[5] {1000, 3000, 5000, 10000, 20000}, 
-                                                new string[] {  "아직 효과를 알 수 없습니다.", 
-                                                                "아직 효과를 알 수 없습니다", 
-                                                                "아직 효과를 알 수 없습니다", 
-                                                                "아직 효과를 알 수 없습니다", 
-                                                                "아직 효과를 알 수 없습니다",
-                                                                "아직 효과를 알 수 없습니다"}, // 마지막 금사향 Turn에 효과용
-                                                new float[] {1, 2, 3, 4, 5},  "?는 게임의 로망입니다.\n왜냐고요?\n???");
+                                                new string[] {  "0% 확률로 디자인 용량 시청자 증가.", 
+                                                                "10% 확률로 디자인 용량 시청자 증가.", 
+                                                                "20% 확률로 디자인 용량 시청자 증가.", 
+                                                                "30% 확률로 디자인 용량 시청자 증가.", 
+                                                                "40% 확률로 디자인 용량 시청자 증가.",
+                                                                "60% 확률로 디자인 용량 시청자 증가."}, 
+                                                new float[] {0, 10, 20, 30, 40, 60},  "그녀(?)는 변신술의 달인입니다.\n일정확률로 굿즈 생산시 나머지 자원도 생산됩니다.");
         StreamerSkillVo GoldSaHyang4 = new StreamerSkillVo(4,skillIcons[4], "지모노", 0, new int[5] {1000, 3000, 5000, 10000, 20000}, 
                                                 new string[] {  "굿즈 판매가 보너스 + 0%", 
                                                                 "굿즈 판매가 보너스 + 10%", 

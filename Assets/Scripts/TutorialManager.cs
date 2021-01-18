@@ -93,7 +93,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 7://화자 : 아리스톨 : 4 : 잘하셨어요. 우측 상단에
                 timer1 += Time.deltaTime;
-                if(timer1 >0.6f  && !isStartedNext){
+                if(timer1 >1f  && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
@@ -161,7 +161,7 @@ public class TutorialManager : MonoBehaviour
                     timer2 = 0;
                     Invoke("InvokeTutorialTalk", 0.6f);
                     isStartedNext = true;
-                    GameManager.Instance.money += 90000; // 스태프 뽑기용 돈 주기
+                    GameManager.Instance.money += 10000; // 스태프 뽑기용 돈 주기
                 }
                 break;
             case 14://화자 : 아리스톨 : 11 : 스태프 뽑기 -> 게임 스타트
@@ -212,6 +212,13 @@ public class TutorialManager : MonoBehaviour
                     GameManager.Instance.isStopTime = false;
                 }
                 break;
+            case 18:
+                    if(uiManager.talkText.isEnd){
+                        GameManager.Instance.isStopTime = false;
+                        GameManager.Instance.isStopUI = false;
+                        uiManager.stopTimeWindow.SetActive(false);
+                    }
+                    break;
         }
     }
     public void NextTutorial(){

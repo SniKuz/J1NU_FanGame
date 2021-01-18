@@ -14,6 +14,8 @@ public class GoodsSystem : MonoBehaviour
     public GameObject goodsMakeMachine;
     public bool whileGoodsMakePunchScale;
 
+    public GameObject goodsTransportMachine;
+
     public Animator designAnim;
     public Animator makeleftArmAnim;
     public Animator leftArmSpark;
@@ -181,6 +183,12 @@ public class GoodsSystem : MonoBehaviour
 
     void GoodsMakeBtn(){
         goodsMakeCnt+= 1 + (int)skillManager.skillList[5]._functionDesc[skillManager.skillList[5]._level]; //Collet0 Skill
+
+        int goldSaHyang0 = Random.Range(0, 100);
+        if((int)skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level] < goldSaHyang0){
+            goodsMakeCnt += (int)skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level]/5;
+        }
+
         if(goodsMakeCnt >= maxCnt[1]){
             goodsMakeCnt -= maxCnt[1];
             if(gameManager.maxCapacity > gameManager.goods){
@@ -190,6 +198,13 @@ public class GoodsSystem : MonoBehaviour
                     MakeItem();
                 }
                 gameManager.goods += 1;
+
+                int goodsMakeOtherSource = Random.Range(0, 100);
+                if(goodsMakeOtherSource < skillManager.skillList[3]._functionDesc[skillManager.skillList[3]._level]){
+                    designBonus++;
+                    gameManager.maxCapacity++;
+                    gameManager.viwer++;
+                }
 
                 if(!whileGoodsMakePunchScale){
                     whileGoodsMakePunchScale = true;
@@ -257,6 +272,8 @@ public class GoodsSystem : MonoBehaviour
                 * (skillManager.skillList[4]._functionDesc[skillManager.skillList[4]._level]));
                 gameManager.goods -= (int)(goodsTransPortCapacity + skillManager.skillList[2]._functionDesc[skillManager.skillList[2]._level]);
             }
+            goodsTransportMachine.transform.DOPunchScale(new Vector3(1,1,1), 1.5f, 2);
+            soundManager.TransportSellSound();
         }
     }
 

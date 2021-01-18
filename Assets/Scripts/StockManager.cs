@@ -49,6 +49,7 @@ public class StockManager : MonoBehaviour
         newStockItem.GetComponent<StockItem>().SetStockName(name);
         newStockItem.GetComponent<StockItem>().SetStockPrice(price);
         newStockItem.GetComponent<StockItem>().SetTotalStock(totalStock);
+        newStockItem.GetComponent<StockItem>().myStock = 0;
         newStockItem.GetComponent<StockItem>().stockImg.sprite = ranStockImg;
         newStockItem.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         return newStockItem;

@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         finalTime = GlobalVar.startFinalTime;
         time = finalTime;
 
-        stockManager.MainStockChange("코렛샤 컴퍼니", 1000, 150, 0);//150만원
+        stockManager.MainStockChange("코렛샤 컴퍼니", 2000, 150, 0);//30만원
     }
 
     private void Update() {
@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
             goodsSystem.goodsPrice += goodsSystem.goodsPrice * changeGoodsPrice / 100;
             donationPrice += donationPrice * changeDonationPrice / 100;
 
-            money -= (int)(totalstaffCost * skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level]); // each month -> staff cost pay
+            money -= (int)(totalstaffCost); // each month -> staff cost pay
 
 
             //#스태프용량, 기본용량, 디자인 수 등 증가부분
@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour
             if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
                 uiManager.ColletStoryStart();
                 mainStoryManager.isColletStoryStart = true;
-                stockManager.MainStockChange("밀감 컴퍼니", 5000, 200, 1);
+                stockManager.MainStockChange("밀감 컴퍼니", 10000, 200, 1);//200만원
             }else{
                 StartCoroutine(Ending(false));
             }
@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
             if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
                 uiManager.TamX2StoryStart();
                 mainStoryManager.isTamX2StoryStart = true;
-                stockManager.MainStockChange("우주대스타 컴퍼니", 10000, 250, 2);
+                stockManager.MainStockChange("우주대스타 컴퍼니", 20000, 300, 2);//600만원
             }else{
                 StartCoroutine(Ending(false));
             }
@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
             if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
                 uiManager.NanayangStoryStart();
                 mainStoryManager.isNanayangtoryStart = true;
-                stockManager.MainStockChange("원두컴퍼니", 20000, 300, 3);
+                stockManager.MainStockChange("원두컴퍼니", 30000, 500, 3);//1500만원
             }else{
                 StartCoroutine(Ending(false));
             }
@@ -211,8 +211,6 @@ public class GameManager : MonoBehaviour
     IEnumerator Ending(bool isClear){
 
         //#.Stop All Active
-        isStopTime = true;
-        isStopUI = true;
 
         if(isClear){//HappyEnding
             soundManager.MuteAll();
@@ -226,7 +224,7 @@ public class GameManager : MonoBehaviour
             uiManager.BankruptcyScale();
             yield return new WaitForSeconds(3f);
             
-            SceneManager.LoadScene(1);
+            Application.Quit();
         }
     }
 }
