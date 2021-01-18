@@ -10,16 +10,18 @@ public class SoundManager : MonoBehaviour
     public AudioSource staffSOepn;
     public AudioSource skillLevelUp;
     public AudioSource electricDrill;
+    public AudioSource transportSell;
 
     public bool drillBool;
 
     private void Start() {
         //#0.Global soundVolume Setting
-        // backGroundMusic.volume = GlobalVar.soundVolume /10f;
-        // panelAudioSource.volume = GlobalVar.soundVolume /10f;
-        // staffABCOpen.volume = GlobalVar.soundVolume /10f;
-        // staffSOepn.volume = GlobalVar.soundVolume /10f;
-        // skillLevelUp.volume =GlobalVar.soundVolume /10f;
+        backGroundMusic.volume = GlobalVar.soundVolume /10f;
+        panelAudioSource.volume = GlobalVar.soundVolume /10f;
+        staffABCOpen.volume = GlobalVar.soundVolume /10f;
+        staffSOepn.volume = GlobalVar.soundVolume /10f;
+        skillLevelUp.volume =GlobalVar.soundVolume /10f;
+        transportSell.volume = GlobalVar.soundVolume*2/10f;
 
         backGroundMusic = GetComponent<AudioSource>();
         backGround(backGroundMusic);
@@ -40,7 +42,10 @@ public class SoundManager : MonoBehaviour
         skillLevelUp.time = 0;
         skillLevelUp.Play();
     }
-
+    public void TransportSellSound(){
+        transportSell.time = 0;
+        transportSell.Play();
+    }
     public void DrillSound(){
         if(drillBool == false){
             drillBool = true;
@@ -51,6 +56,15 @@ public class SoundManager : MonoBehaviour
     }
     public void DrillBoolChange(){
         drillBool = false;
+    }
+
+    public void MuteAll(){
+        backGroundMusic.volume = 0;
+        panelAudioSource.volume = 0;
+        staffABCOpen.volume = 0;
+        staffSOepn.volume = 0;
+        skillLevelUp.volume = 0;
+        electricDrill.volume = 0;
     }
 
     public void StaffOpen(int staff){

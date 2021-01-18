@@ -10,6 +10,7 @@ public class GlobalVar : MonoBehaviour
     public static int goodsPrice;
     public static int donationPrice;
     public static int startMoney;
+    public static float startFinalTime;//게이지당 시간 선택
     private void Awake() {
         DontDestroyOnLoad(gameObject);
 

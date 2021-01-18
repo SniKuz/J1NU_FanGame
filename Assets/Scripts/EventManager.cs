@@ -34,19 +34,19 @@ public class EventManager : MonoBehaviour
         EventVo event02 = new EventVo(2, 3, "발전기", 
         "굿즈 기계가 갑자기 말을 안들어! 아마 발전기가 망가진 것 같아. 발전기를 수리해야 하는데... 누가 하지?", 
         3,  new string[] {"김진우", "금사향", "아리스톨"});
-        EventVo event03 = new EventVo(3, 4, "굿즈 생산 의탁", 
-        "타기업에서 굿즈 생산을 의뢰했다. 좋은 기회인거 같은데... 어떻게 할까?", 
-        2,  new string[] {"수락!", "거절!"});
+        EventVo event03 = new EventVo(3, 4, "지뿌 콘텐츠", 
+        "코렛샤 컴퍼니를 견제하기 위해 뿌요의 도움이 필요해... 하지만 내 몸은 어떡하지...?", 
+        2,  new string[] {"몸을 아끼지 말자!", "제발 그만좀 무세요 선생님!!!"});
 
         EventVo event04 = new EventVo(4, 6, "뿌요야? 샤샤?", 
         "무슨일이지? 뿌요랑 샤샤가 서로 노려본다. 설마 싸우려는 건가? 어떡하지?", 
         2,  new string[] {"일단 나둬보자.", "뿌요야 차라리 나를 물어!"});
         EventVo event05 = new EventVo(5, 7, "츄즈미 플리즈", 
-        "속보 - 츄즈미 플리즈가 기록적인 상승세를 보이며 조회수 천만신화를 찍으며 참여자인 밀감 컴퍼니의 CEO 탬탬버린 또한 주목을 받고 있다. 이전에 자신의 귀여움을 공식적으로 인정하며 폭발적인 이익을 취한 것과 맞물려 또 다시 시장이 독점되는 것은 아닌지 우려의 시선이나오며 반탬탬파라가 다시 활동을 시작했다고 한다.\n-스니커즈 기자", 
+        "속보 - 츄즈미 플리즈가 기록적인 상승세를 보이며 조회수 천만신화를 찍으며 참여자인 밀감 컴퍼니의 CEO 탬탬버린 또한 주목을 받고 있다. 이전에 자신의 귀여움을 공식적으로 인정하며 폭발적인 이익을 취한 것과 맞물려 또 다시 시장이 독점되는 것은 아닌지 우려의 시선이나오며 반탬탬파가 다시 활동을 시작했다고 한다.", 
         2,  new string[] {"좋은 기회야. 반탬탬파를 지원해야겠어.", "좋은 기회네 신문사에 밀고를 해야겠어."});
         EventVo event06 = new EventVo(6, 8, "예은이랑 짱친인 탬탬버린", 
         "밀감사의 CEO 탬탬버린은 무려 그분의 짱친입니다. 천만신화 츄즈미 3인 중 한 분이자 대적할 자가 없는 그분 말이죠. 문제는 지금 그분이 뉴스 문제로 저희에게 소송을 걸었습니다. 다음 3가지 선택지 중 하나를 골라야 합니다.", 
-        3,  new string[] {"배상금을 지불합니다. 배상금 : 10000", "현재 보유한 밀감사 주식의 10%를 양도합니다.(10개 미만시 지불 X)", "그분의 분노를 몸으로 체험합니다."});
+        3,  new string[] {"배상금을 지불합니다. 배상금 : 1000000", "현재 보유한 밀감사 주식의 20%를 양도합니다.(10개 미만시 지불 X)", "그분의 분노를 몸으로 체험합니다."});
         EventVo event07 = new EventVo(7, 9, "그 모자", 
         "그 모자는 이 업계에서 매우 유명합니다. 그는 탁월한 센스와 다양한 능력을 갖추었죠. 그런 그를 믿고 투자할 사람은 꽤 적지 않습니다. 그들은 미래의 보답을 바라며 당신에게 투자를 희망한다는 의견을 보입니다.", 
         1,  new string[] {"투자 수락"});
@@ -58,7 +58,7 @@ public class EventManager : MonoBehaviour
         "새로운 기능 포인트 도박이 생겼습니다. 이 기능... 너무나 매력적입니다. 어떻게 할까요?", 
         2,  new string[] {"바로 도입해야지!", "이건 아닌거 같아..."});
         EventVo event10 = new EventVo(10, 13, "허위 뉴스와 악성단체", 
-        "속보 - 김진우 적극적인 여성 좋아 발언에 악성적인 단체가 형성되고 있는 상태이다. 이에 대하여 우주대스타 컴퍼니의 나나양 CEO는 해명을 하지 않고 묵묵부답인 상태를 고수하고 있으며 이번 사건과 맞물려 나나양 CEO의 여러 스캔들에 대한 진실의 목소리를 들려달라는 대중들의 의견이 모여 일촉즉발의 상황을 만들고 있다.\n-스니커즈 기자", 
+        "속보 - 김진우 적극적인 여성 좋아 발언에 악성적인 단체가 형성되고 있는 상태이다. 이에 대하여 우주대스타 컴퍼니의 나나양 CEO는 해명을 하지 않고 묵묵부답인 상태를 고수하고 있으며 이번 사건과 맞물려 나나양 CEO의 여러 스캔들에 대한 진실의 목소리를 들려달라는 대중들의 의견이 모여 일촉즉발의 상황을 만들고 있다.", 
         2,  new string[] {"X발 당장 저거 내리고 정정 뉴스 올려", "당장 나나양을 제거해야해..."});
         EventVo event11 = new EventVo(11, 14, "전설 속 탬파이트", 
         "오랜만에 롤합방! 근데 어라? 내 눈이 잘못 됐나? C.Va 저 말파이트 뭐야???", 
@@ -126,7 +126,15 @@ public class EventManager : MonoBehaviour
         newEventBtn.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newEventBtn.GetComponentInChildren<TextMeshProUGUI>().text = btnText;
 
+        newEventBtn.GetComponent<Button>().enabled = false;
+        StartCoroutine("BtnEnable",  newEventBtn.GetComponent<Button>());
+
         newEventBtn.GetComponent<Button>().onClick.AddListener(delegate{uiManager.EventBtn(i);});//각 버튼 AddListner 배치
         return newEventBtn;
+    }
+
+    IEnumerator BtnEnable(Button btn){
+        yield return new WaitForSeconds(0.6f);
+        btn.enabled = true;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GoodsSystem : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class GoodsSystem : MonoBehaviour
     public SoundManager soundManager;
 
     public GameObject DesignOnOffBtn;
+    public GameObject goodsMakeMachine;
+    public bool whileGoodsMakePunchScale;
+
+    public GameObject goodsTransportMachine;
 
     public Animator designAnim;
     public Animator makeleftArmAnim;
@@ -35,6 +40,7 @@ public class GoodsSystem : MonoBehaviour
     private bool goodsTransporting;
     public float goodsTransportTime;
     public int goodsTransPortCapacity; // How many goods can sell in one time
+    
 
     private void Start() {
         //추후 데이터 저장해서 업그레이드 반영해야함
@@ -43,10 +49,17 @@ public class GoodsSystem : MonoBehaviour
         designBonus = 2;
         goodsTransporting = false;
         goodsTransPortCapacity = 5;
+
+        for(int i=0; i<3; i++){
+            maxCnt[i] = GlobalVar.clickCnt;
+        }
+        goodsPrice = GlobalVar.goodsPrice;
     }
 
 
     private void Update() {
+
+        if(gameManager.isStopUI) return;
 
         TouchGoodsCreate();
 
@@ -72,15 +85,15 @@ public class GoodsSystem : MonoBehaviour
                     case "Design_Btn_OnOff":
                         ChangeGoodsDesigning();
                         break;
-                    case "Goods_Design":
-                        GoodsDesignCntUp();
-                        break;
+                    // case "Goods_Design":
+                    //     GoodsDesignCntUp();
+                    //     break;
                     case "Goods_Make":
                         GoodsMakeBtn();
                         break;
-                    case "Goods_Packing":
-                        GoodsCapacityBtn();
-                        break;
+                    // case "Goods_Packing":
+                    //     GoodsCapacityBtn();
+                    //     break;
                     case "Goods_Transport_Box":
                         ChangeGoodsTransporting();
                         break;
@@ -97,15 +110,15 @@ public class GoodsSystem : MonoBehaviour
                     case "Design_Btn_OnOff":
                         ChangeGoodsDesigning();
                         break;
-                    case "Goods_Design":
-                        GoodsDesignCntUp();
-                        break;
+                    // case "Goods_Design":
+                    //     GoodsDesignCntUp();
+                    //     break;
                     case "Goods_Make":
                         GoodsMakeBtn();
                         break;
-                    case "Goods_Packing":
-                        GoodsCapacityBtn();
-                        break;
+                    // case "Goods_Packing":
+                    //     GoodsCapacityBtn();
+                    //     break;
                     case "Goods_Transport_Box":
                         ChangeGoodsTransporting();
                         break;
@@ -116,25 +129,25 @@ public class GoodsSystem : MonoBehaviour
         }
 
         if(gameManager.curType == 0){
-            if(Input.GetKeyDown(KeyCode.Q)){
-                GoodsDesignCntUp();
-            }
-            if(Input.GetKeyDown(KeyCode.W)){
-                GoodsMakeBtn();
-            }
+            // if(Input.GetKeyDown(KeyCode.Q)){
+            //     GoodsDesignCntUp();
+            // }
+            // if(Input.GetKeyDown(KeyCode.W)){
+            //     GoodsMakeBtn();
+            // }
             if(Input.GetKeyDown(KeyCode.Space)){
                 GoodsMakeBtn();
             }
-            if(Input.GetKeyDown(KeyCode.E)){
-                GoodsCapacityBtn();
-            }
+            // if(Input.GetKeyDown(KeyCode.E)){
+            //     GoodsCapacityBtn();
+            // }
         }
 #endif
     }
 
     void GoodsDesignCntUp(){
         designAnim.SetTrigger("on");
-        goodsDesignCnt += 1  + (int)skillManager.skillList[9]._functionDesc[skillManager.skillList[9]._level];
+        goodsDesignCnt += 1  ;
         if(goodsDesignCnt >= maxCnt[0]){
             goodsDesignCnt -= maxCnt[0];
             goodsDesignBonusCnt++;
@@ -170,14 +183,44 @@ public class GoodsSystem : MonoBehaviour
 
     void GoodsMakeBtn(){
         goodsMakeCnt+= 1 + (int)skillManager.skillList[5]._functionDesc[skillManager.skillList[5]._level]; //Collet0 Skill
+
+        int goldSaHyang0 = Random.Range(0, 100);
+        if((int)skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level] < goldSaHyang0){
+            goodsMakeCnt += (int)skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level]/5;
+        }
+
         if(goodsMakeCnt >= maxCnt[1]){
             goodsMakeCnt -= maxCnt[1];
             if(gameManager.maxCapacity > gameManager.goods){
+                int copyGoods = Random.Range(0, 100);
+                if(copyGoods < skillManager.skillList[9]._functionDesc[skillManager.skillList[9]._level]){
+                    gameManager.goods += 1;
+                    MakeItem();
+                }
                 gameManager.goods += 1;
+
+                int goodsMakeOtherSource = Random.Range(0, 100);
+                if(goodsMakeOtherSource < skillManager.skillList[3]._functionDesc[skillManager.skillList[3]._level]){
+                    designBonus++;
+                    gameManager.maxCapacity++;
+                    gameManager.viwer++;
+                }
+
+                if(!whileGoodsMakePunchScale){
+                    whileGoodsMakePunchScale = true;
+                    goodsMakeMachine.transform.DOPunchScale(new Vector3(1,1,1),1f, 5);
+                    Invoke("GoodsMakePunchScale", 1f);
+                }
+                MakeItem();
+                soundManager.SkillUp();
             }
         }
         GoodsMakeAnimOn();
         soundManager.DrillSound();
+    }
+
+    void GoodsMakePunchScale(){
+        whileGoodsMakePunchScale = false;
     }
 
     public void GoodsMakeAnimOn(){
@@ -193,7 +236,7 @@ public class GoodsSystem : MonoBehaviour
     }
 
     void GoodsCapacityBtn(){
-        goodsCapacityCnt += 1 + (int)skillManager.skillList[9]._functionDesc[skillManager.skillList[9]._level];;
+        goodsCapacityCnt += 1 ;
         capacityAnim.SetTrigger("on");
         if(goodsCapacityCnt >= maxCnt[2]){
             goodsCapacityCnt -= maxCnt[2];
@@ -229,6 +272,8 @@ public class GoodsSystem : MonoBehaviour
                 * (skillManager.skillList[4]._functionDesc[skillManager.skillList[4]._level]));
                 gameManager.goods -= (int)(goodsTransPortCapacity + skillManager.skillList[2]._functionDesc[skillManager.skillList[2]._level]);
             }
+            goodsTransportMachine.transform.DOPunchScale(new Vector3(1,1,1), 1.5f, 2);
+            soundManager.TransportSellSound();
         }
     }
 
@@ -239,5 +284,22 @@ public class GoodsSystem : MonoBehaviour
 
     public void BtnOff(GameObject btn){
         btn.GetComponent<SpriteRenderer>().sprite = onOffBtnSprite[1];
+    }
+
+    public void MakeItem(){
+        GameObject item  = GoodsCupObjectPool.GetObject();
+        item.transform.position = Vector3.zero;
+        float ranScale = Random.Range(0.15f, 0.9f);
+        item.transform.localScale = new Vector3(ranScale, ranScale, 0.3f);
+        Rigidbody2D itemRigid = item.GetComponent<Rigidbody2D>();
+
+        Vector2 popVect = new Vector2(Random.Range(-1f, 1f), Random.Range(2f, 3f));
+        itemRigid.AddForce(popVect, ForceMode2D.Impulse);
+
+        StartCoroutine("DestroyGoods", item);
+    }
+    IEnumerator DestroyGoods(GameObject returnThis){
+        yield return new WaitForSeconds(3f);
+        GoodsCupObjectPool.ReturnObject(returnThis);
     }
 }

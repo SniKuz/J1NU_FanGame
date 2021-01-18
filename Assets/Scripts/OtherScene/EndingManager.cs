@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class EndingManager : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class EndingManager : MonoBehaviour
     public int index;
     public TextMeshProUGUI storyText;
     public Animator creditAnim;
+    public Image EndingPicture;
+
+    public Sprite[] cookie;
+    public Image cookieImg;
+    public int cookieIndex;
 
     private void Start() {
         fadeImg.DOFade(1, 1.5f).SetEase(Ease.InQuad);
@@ -21,7 +27,7 @@ public class EndingManager : MonoBehaviour
                                     "다시 픽셀을\n세계 최고의 기업으로 성장시킨다.",
                                     "김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!",
                                     "The End",
-                                    "(쿠키영상 있어요)"};
+                                    "(쿠키 이야기 있어요)"};
 
         Invoke("EndStoryTalikg", 2f);
     }
@@ -33,6 +39,7 @@ public class EndingManager : MonoBehaviour
         Invoke("DoFadeText", 3f);
         if(index >= 6){
             creditAnim.SetBool("CreditOn", true);
+            Invoke("DoEndingPicutreFadeOn", 63f);
         }
 
         if(index<6)
@@ -41,5 +48,34 @@ public class EndingManager : MonoBehaviour
 
     public void DoFadeText(){
         storyText.DOFade(0, 1f);
+    }
+    public void DoEndingPicutreFadeOn(){
+        creditAnim.Rebind();//애니메이션 초기화
+        EndingPicture.DOFade(1, 1f);
+        Invoke("DoEndingPicutreFadeOff", 5f);
+    }
+    public void DoEndingPicutreFadeOff(){
+        EndingPicture.DOFade(0, 1f);
+        Invoke("CookieEnd", 2f);
+
+    }
+    public void CookieEnd(){
+        cookieImg.sprite = cookie[cookieIndex < 5 ? cookieIndex++ : 4];
+        cookieImg.DOFade(1, 1f);
+
+
+        if(cookieIndex >=5){
+            Invoke("SceneEnd", 4f);
+        }
+        if(cookieIndex<5){
+            Invoke("CookieFade", 1f);
+            Invoke("CookieEnd", 3f);
+        }
+    }
+    public void CookieFade(){
+        cookieImg.DOFade(0, 1f);
+    }
+    public void SceneEnd(){
+        SceneManager.LoadScene(0);
     }
 }

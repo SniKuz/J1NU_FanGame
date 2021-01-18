@@ -58,7 +58,12 @@ public class Menu : MonoBehaviour
     }
 
     public void EasyGameBtn(){
-        GlobalVar.startMoney = 1000000;
+        GlobalVar.startMoney = 100000000;
+        GlobalVar.clickCnt = 5;
+        GlobalVar.goodsPrice = 5000; //평균 3천원으로
+        GlobalVar.donationPrice = 2000; //평균 천원으로
+        GlobalVar.startFinalTime = 15f;
+
 
 
         fadeImg.gameObject.SetActive(true);
@@ -67,6 +72,11 @@ public class Menu : MonoBehaviour
     }
 
     public void NormalGameBtn(){
+        GlobalVar.startMoney = 0;
+        GlobalVar.clickCnt = 15;
+        GlobalVar.goodsPrice = 2000; //평균 3천원으로
+        GlobalVar.donationPrice = 700; //평균 천원으로
+        GlobalVar.startFinalTime = 20f;
 
         fadeImg.gameObject.SetActive(true);
         fadeImg.DOFade(1, 1).SetEase(Ease.InQuad);
@@ -74,6 +84,11 @@ public class Menu : MonoBehaviour
     }
 
     public void HardGameBtn(){
+        GlobalVar.startMoney = 0;
+        GlobalVar.clickCnt = 20;
+        GlobalVar.goodsPrice = 1500; //평균 3천원으로
+        GlobalVar.donationPrice = 700; //평균 천원으로
+        GlobalVar.startFinalTime = 30f;
 
         fadeImg.gameObject.SetActive(true);
         fadeImg.DOFade(1, 1).SetEase(Ease.InQuad);
