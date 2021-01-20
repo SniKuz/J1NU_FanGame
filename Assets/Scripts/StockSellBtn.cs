@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class StockSellBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    public GameManager gameManager;
     public StockItem stock;
     public StreamerSkillManager skillManager;
     bool isPress;
@@ -23,7 +24,7 @@ public class StockSellBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
         public void SellStock(){
         if(stock.myStock>0){
-            GameManager.Instance.money += (int)(stock.stockPrice * skillManager.skillList[18]._functionDesc[skillManager.skillList[18]._level]);
+            gameManager.money += (int)(stock.stockPrice * skillManager.skillList[18]._functionDesc[skillManager.skillList[18]._level]);
             stock.myStock--;
             stock.totalStockText.text = stock.myStock +"/" + stock.totalStock;
         }

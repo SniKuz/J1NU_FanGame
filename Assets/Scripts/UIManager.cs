@@ -32,6 +32,8 @@ public class UIManager : MonoBehaviour
     public RectTransform staffPanel;
     public RectTransform informationPanel;
 
+    public RectTransform alertSet;
+
     //#.--------Streamer Skill
 	public GameObject GoldSaHyangUpgradeSet;
     public GameObject GoldSaHyangPanelBnt;
@@ -107,6 +109,7 @@ public class UIManager : MonoBehaviour
 
     public Image fadeImg;
     public GameObject badEnd; //파산
+
 
     
 
@@ -564,11 +567,22 @@ public class UIManager : MonoBehaviour
     //#.This code for staff recruit btn Dotween Animation
     void StaffOneRecruitBtnSetActiveTrueAnim(){
         staffOneRecruitBtn.SetActive(true);
+        staffOneRecruitBtn.GetComponent<Button>().enabled = false;
         staffOneRecruitBtn.transform.DOScale(new Vector3(1,1,1), 2).SetEase(Ease.OutBack);
+        Invoke("InvokeEnableOneRecruitBtn", 2f);
     }
     void StaffTenRecruitBtnSetActiveTrueAnim(){
         staffTenRecruitBtn.SetActive(true);
+        staffTenRecruitBtn.GetComponent<Button>().enabled = false;
         staffTenRecruitBtn.transform.DOScale(new Vector3(1,1,1), 2).SetEase(Ease.OutBack);
+        Invoke("InvokeEnableTenRecruitBtn", 2f);
+    }
+
+    void InvokeEnableOneRecruitBtn(){
+        staffOneRecruitBtn.GetComponent<Button>().enabled = true;
+    }
+    void InvokeEnableTenRecruitBtn(){
+        staffTenRecruitBtn.GetComponent<Button>().enabled = true;
     }
 
     //#.---------------------[Status]
@@ -601,7 +615,7 @@ public class UIManager : MonoBehaviour
             case 0:
                 if(btn == 0){
                     EventBtnEffect("그렇지 다행히 군적금에 제대로 있네. 28일동안 남은 모든것...\n돈 + 10000");
-                    gameManager.money += 50000;
+                    gameManager.money += 10000;
                 }
                 else if(btn == 1){
                     EventBtnEffect("너무 든든하게 먹었나? 주식에 남은게 없네.\n돈 + 3000");
@@ -614,9 +628,9 @@ public class UIManager : MonoBehaviour
                 break;
             case 1:
                 if(btn == 0){
-                    EventBtnEffect("후 잘 따돌린 것 같다. 근데 대체 누구지?");
+                    EventBtnEffect("후 잘 따돌린 것 같다. 더 이상 이상한 꿀꿀소리는 들리지 않는다... 근데 대체 누구지?");
                 }else if(btn ==1){
-                    EventBtnEffect("놀랍게도 문을 두드린 사람은 꽃핀누나였다! 또 한번 큰 은총을 받았다...\n돈 + 100000");
+                    EventBtnEffect("놀랍게도 문을 두드린 사람은 꽃핀누나였다! 또 한번 큰 은총을 받았다... 근데 대체 그 소리는 뭐였지?\n돈 + 100000");
                     gameManager.money += 100000;
                 }
                 break;
@@ -637,7 +651,7 @@ public class UIManager : MonoBehaviour
                     goodsSystem.maxCnt[1] += 2;
                     gameManager.viwer += 50;
                 }else if(btn ==1){
-                    EventBtnEffect("후... 뿌요를 위해 절대 그런일을 할 수는 없어... 절대 내가 아파서 그런게 아니야. 아니라면 아닌거야");
+                    EventBtnEffect("후... 뿌요를 위해 절대 그런일을 할 수는 없어... 절대 내가 아파서 그런게 아니야.\n아니라면 아닌거야");
                 }
                 break;
 
@@ -690,7 +704,7 @@ public class UIManager : MonoBehaviour
                 break;
             case 9:
                 if(btn == 0){
-                    EventBtnEffect("지누님! 지누님. 지누님? 지...누..님..? 김..진우가 누구..?\n수 많은 시청자들의 꿈, 희망, 추억이 사라졌습니다. 하지만 더 많은 도네와 참여율로 방송은 뜨거워졌습니다.\n시청자수 - 100\n도네가격 +300");
+                    EventBtnEffect("지누님! 지누님. 지누님? 지...누..님..? 지누가 누구..?\n수 많은 시청자들의 꿈, 희망, 추억이 사라졌습니다. 하지만 더 많은 도네와 참여율로 방송은 뜨거워졌습니다.\n시청자수 - 100\n도네가격 +300");
                     gameManager.viwer -= gameManager.viwer >100 ? 100 : gameManager.viwer;
                     gameManager.donationPrice +=300;
                 }else if(btn ==1){
@@ -704,7 +718,7 @@ public class UIManager : MonoBehaviour
                     gameManager.viwer += 100;
                 }else if(btn ==1){
                     EventBtnEffect("속보 - 우주대스타 컴퍼니 나나양 CEO 의문의 습격?\n우주대스타 컴퍼니 나나양 CEO가 금일 에란겔에서 파밍을 하던 도중 의문의 습격을 받았다고 전해진다. 이에 평소 그녀는 수 많은 스캔들로 인하여 악성 단체가 많았으며, 단체 대다수가 코인 종목을 투자한 것으로 밝혀져 논란이 되고 있다.\n우주대스타 컴퍼니 주가 -15%");
-                    stockManager.mainStock.GetComponent<StockItem>().myStock -= (int)(stockManager.mainStock.GetComponent<StockItem>().myStock  * 0.85f);
+                    stockManager.mainStock.GetComponent<StockItem>().stockPrice -= (int)(stockManager.mainStock.GetComponent<StockItem>().stockPrice  * 0.15f);
                 }
                 break;
             case 11:
@@ -730,7 +744,7 @@ public class UIManager : MonoBehaviour
                 break;
             case 13:
                 if(btn == 0){
-                    EventBtnEffect("시장은 한치 앞을 보기 힘들정도입니다. 일반주는 -80 ~ 50% 사이를 횡보합니다.");
+                    EventBtnEffect("시장은 한치 앞을 보기 힘들정도입니다. 일반주는 -80 ~ 50% 변동률을 가집니다.");
                     StockItem.volatilityLow = -80;
                     StockItem.volatilityHigh = 50;
                 }
@@ -854,7 +868,7 @@ public class UIManager : MonoBehaviour
         gameManager.isStopUI = false;
         stopTimeWindow.SetActive(false);
         talkManager.talkState[0] = 4;//튜토리얼 중 대사량
-        talkManager.talkState[1] = 11;//튜토리얼 중 대사량
+        talkManager.talkState[1] = 14;//튜토리얼 중 대사량
         talkManager.talkState[2] = 0;
         tutorailSkipBtn.SetActive(false);
         tutorialNotSkipBtn.SetActive(false);
@@ -897,12 +911,27 @@ public class UIManager : MonoBehaviour
 
     public void Ending(bool isClear){
         fadeImg.gameObject.SetActive(true);
-        if(isClear) fadeImg.color = new Color32(255, 255, 255, 0);
-        else fadeImg.color = new Color32(0, 0, 0, 0);
+        if(isClear){
+            fadeImg.color = new Color32(255, 255, 255, 0);
+        }
+        else {
+            fadeImg.color = new Color32(0, 0, 0, 0);
+        }
+
         fadeImg.DOFade(1, 1.5f).SetEase(Ease.InQuad);
     }
 
     public void BankruptcyScale(){
         badEnd.transform.DOScale(new Vector3(1, 1, 1), 1f).SetEase(Ease.OutBounce);
+    }
+
+    //#.-------------------------[Alert]--------------------
+
+    public void AlertPanelMove(){
+        if(alertSet.anchoredPosition.y > -80){
+            alertSet.DOAnchorPos(new Vector2(0, -80), 0.4f).SetEase(Ease.OutQuad); //
+        }else if(alertSet.anchoredPosition.y == -80){
+            alertSet.DOAnchorPos(new Vector2(0, 200), 0.4f).SetEase(Ease.OutQuad); //
+        }
     }
 }

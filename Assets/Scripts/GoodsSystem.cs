@@ -40,6 +40,10 @@ public class GoodsSystem : MonoBehaviour
     private bool goodsTransporting;
     public float goodsTransportTime;
     public int goodsTransPortCapacity; // How many goods can sell in one time
+
+
+//#. -------GoodsMakeClickGuage
+    public GameObject goodsClickGuage;
     
 
     private void Start() {
@@ -101,7 +105,7 @@ public class GoodsSystem : MonoBehaviour
             }
         }
 #endif
-#if UNITY_EDITOR 
+#if UNITY_EDITOR
         if(Input.GetMouseButtonDown(0)){
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out raycastHit, Mathf.Infinity)){
@@ -155,7 +159,7 @@ public class GoodsSystem : MonoBehaviour
     }
 
     public void ChangeGoodsDesigning(){
-        if(GameManager.Instance.isStopTime) return;//시간 멈출시
+        if(gameManager.isStopUI) return;//UI멈출시
 
         if(goodsDesignBonusCnt <= 0 ) goodsDesigning = false;
         else goodsDesigning  = !goodsDesigning;
@@ -185,22 +189,22 @@ public class GoodsSystem : MonoBehaviour
         goodsMakeCnt+= 1 + (int)skillManager.skillList[5]._functionDesc[skillManager.skillList[5]._level]; //Collet0 Skill
 
         int goldSaHyang0 = Random.Range(0, 100);
-        if((int)skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level] < goldSaHyang0){
-            goodsMakeCnt += (int)skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level]/5;
+        if( goldSaHyang0 < (int)skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level]){
+            goodsMakeCnt += (int)skillManager.skillList[0]._functionDesc[skillManager.skillList[0]._level]/10;
         }
 
-        if(goodsMakeCnt >= maxCnt[1]){
-            goodsMakeCnt -= maxCnt[1];
-            if(gameManager.maxCapacity > gameManager.goods){
-                int copyGoods = Random.Range(0, 100);
-                if(copyGoods < skillManager.skillList[9]._functionDesc[skillManager.skillList[9]._level]){
+            while(goodsMakeCnt>=maxCnt[1]){
+                goodsMakeCnt -= maxCnt[1];
+                if(gameManager.maxCapacity > gameManager.goods){
+                    int copyGoods = Random.Range(0, 100);
+                    if(copyGoods < skillManager.skillList[9]._functionDesc[skillManager.skillList[9]._level]){
+                        gameManager.goods += 1;
+                        MakeItem();
+                    }
                     gameManager.goods += 1;
-                    MakeItem();
-                }
-                gameManager.goods += 1;
 
-                int goodsMakeOtherSource = Random.Range(0, 100);
-                if(goodsMakeOtherSource < skillManager.skillList[3]._functionDesc[skillManager.skillList[3]._level]){
+                    int goodsMakeOtherSource = Random.Range(0, 100);
+                    if(goodsMakeOtherSource < skillManager.skillList[3]._functionDesc[skillManager.skillList[3]._level]){
                     designBonus++;
                     gameManager.maxCapacity++;
                     gameManager.viwer++;
@@ -209,14 +213,17 @@ public class GoodsSystem : MonoBehaviour
                 if(!whileGoodsMakePunchScale){
                     whileGoodsMakePunchScale = true;
                     goodsMakeMachine.transform.DOPunchScale(new Vector3(1,1,1),1f, 5);
-                    Invoke("GoodsMakePunchScale", 1f);
+                        Invoke("GoodsMakePunchScale", 1f);
+                    }
+                    MakeItem();
+                    soundManager.SkillUp();
                 }
-                MakeItem();
-                soundManager.SkillUp();
             }
-        }
         GoodsMakeAnimOn();
         soundManager.DrillSound();
+
+        //Guage무브
+        goodsClickGuage.transform.localScale = new Vector3((float)goodsMakeCnt/(float)maxCnt[1],1,1);
     }
 
     void GoodsMakePunchScale(){
@@ -289,7 +296,7 @@ public class GoodsSystem : MonoBehaviour
     public void MakeItem(){
         GameObject item  = GoodsCupObjectPool.GetObject();
         item.transform.position = Vector3.zero;
-        float ranScale = Random.Range(0.15f, 0.9f);
+        float ranScale = Random.Range(0.1f, 0.7f);
         item.transform.localScale = new Vector3(ranScale, ranScale, 0.3f);
         Rigidbody2D itemRigid = item.GetComponent<Rigidbody2D>();
 

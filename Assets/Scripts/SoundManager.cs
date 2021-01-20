@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource skillLevelUp;
     public AudioSource electricDrill;
     public AudioSource transportSell;
+    public AudioSource beforeMainDay;
 
     public bool drillBool;
 
@@ -22,6 +23,7 @@ public class SoundManager : MonoBehaviour
         staffSOepn.volume = GlobalVar.soundVolume /10f;
         skillLevelUp.volume =GlobalVar.soundVolume /10f;
         transportSell.volume = GlobalVar.soundVolume*2/10f;
+        beforeMainDay.volume = GlobalVar.soundVolume/10f;
 
         backGroundMusic = GetComponent<AudioSource>();
         backGround(backGroundMusic);
@@ -47,15 +49,22 @@ public class SoundManager : MonoBehaviour
         transportSell.Play();
     }
     public void DrillSound(){
-        if(drillBool == false){
-            drillBool = true;
+        // if(drillBool == false){
+            // drillBool = true;
             electricDrill.time = 0;
             electricDrill.Play();
-            Invoke("DrillBoolChange", 1f);
-        }
+        //     Invoke("DrillBoolChange", 1f);
+        // }
     }
     public void DrillBoolChange(){
         drillBool = false;
+    }
+    public void BeforeMainDayNoise(){
+        beforeMainDay.Play();
+        Invoke("BeforeMainDayNoiseOff", 4f);
+    }
+    public void BeforeMainDayNoiseOff(){
+        beforeMainDay.Stop();
     }
 
     public void MuteAll(){

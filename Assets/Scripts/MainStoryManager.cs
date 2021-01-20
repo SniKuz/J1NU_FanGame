@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MainStoryManager : MonoBehaviour
 {
+    public GameManager gameManager;
     public UIManager uiManager;
     public TalkManager talkManager;
     public TextTypeEffect talkText;
@@ -36,7 +37,7 @@ public class MainStoryManager : MonoBehaviour
                 case 1:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.코렛트;
                         timer1 = 0;
                         timer2 = 0;
@@ -47,7 +48,7 @@ public class MainStoryManager : MonoBehaviour
                 case 2:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f  && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -58,7 +59,7 @@ public class MainStoryManager : MonoBehaviour
                 case 3:// 1
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f  && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.코렛트;
                         timer1 = 0;
                         timer2 = 0;
@@ -69,7 +70,7 @@ public class MainStoryManager : MonoBehaviour
                 case 4:// 7
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f  && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -80,7 +81,7 @@ public class MainStoryManager : MonoBehaviour
                 case 5:// 2
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f  && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.코렛트;
                         timer1 = 0;
                         timer2 = 0;
@@ -91,7 +92,7 @@ public class MainStoryManager : MonoBehaviour
                 case 6:// 8
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f  && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -102,7 +103,7 @@ public class MainStoryManager : MonoBehaviour
                 case 7:// 3
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.코렛트;
                         timer1 = 0;
                         timer2 = 0;
@@ -113,7 +114,7 @@ public class MainStoryManager : MonoBehaviour
                 case 8:// 9
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f&& !isStartedNext){
+                    if(timer2 > 0.6f&& !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -124,7 +125,7 @@ public class MainStoryManager : MonoBehaviour
                 case 9:// 4
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.코렛트;
                         timer1 = 0;
                         timer2 = 0;
@@ -135,7 +136,7 @@ public class MainStoryManager : MonoBehaviour
                 case 10:// 12
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                         timer1 = 0;
                         timer2 = 0;
@@ -146,7 +147,7 @@ public class MainStoryManager : MonoBehaviour
                 case 11:// 1
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.금사향;
                         timer1 = 0;
                         timer2 = 0;
@@ -157,7 +158,7 @@ public class MainStoryManager : MonoBehaviour
                 case 12:// 10
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -168,7 +169,7 @@ public class MainStoryManager : MonoBehaviour
                 case 13:// 13
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                         timer1 = 0;
                         timer2 = 0;
@@ -179,7 +180,7 @@ public class MainStoryManager : MonoBehaviour
                 case 14:// 11
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -190,8 +191,8 @@ public class MainStoryManager : MonoBehaviour
                 case 15:
                     if(talkText.isEnd){
                         isColletStoryEnd = true;
-                        GameManager.Instance.isStopTime = false;
-                        GameManager.Instance.isStopUI = false;
+                        gameManager.isStopTime = false;
+                        gameManager.isStopUI = false;
                         uiManager.stopTimeWindow.SetActive(false);
                         storyIndex = 0; //다음 스토리에 쓸 수 있게
 
@@ -207,7 +208,7 @@ public class MainStoryManager : MonoBehaviour
                 case 1:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -218,7 +219,7 @@ public class MainStoryManager : MonoBehaviour
                 case 2:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -229,7 +230,7 @@ public class MainStoryManager : MonoBehaviour
                 case 3:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -240,7 +241,7 @@ public class MainStoryManager : MonoBehaviour
                 case 4:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -251,7 +252,7 @@ public class MainStoryManager : MonoBehaviour
                 case 5:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -262,7 +263,7 @@ public class MainStoryManager : MonoBehaviour
                 case 6:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -273,7 +274,7 @@ public class MainStoryManager : MonoBehaviour
                 case 7:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -284,7 +285,7 @@ public class MainStoryManager : MonoBehaviour
                 case 8:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -295,7 +296,7 @@ public class MainStoryManager : MonoBehaviour
                 case 9:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -306,7 +307,7 @@ public class MainStoryManager : MonoBehaviour
                 case 10:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -317,7 +318,7 @@ public class MainStoryManager : MonoBehaviour
                 case 11:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -328,7 +329,7 @@ public class MainStoryManager : MonoBehaviour
                 case 12:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -339,7 +340,7 @@ public class MainStoryManager : MonoBehaviour
                 case 13:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 >1f && !isStartedNext){
+                    if(timer1 >0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.코렛트;
                         timer1 = 0;
                         timer2 = 0;
@@ -350,7 +351,7 @@ public class MainStoryManager : MonoBehaviour
                 case 14:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -361,7 +362,7 @@ public class MainStoryManager : MonoBehaviour
                 case 15:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                         timer1 = 0;
                         timer2 = 0;
@@ -372,7 +373,7 @@ public class MainStoryManager : MonoBehaviour
                 case 16:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.금사향;
                         timer1 = 0;
                         timer2 = 0;
@@ -383,7 +384,7 @@ public class MainStoryManager : MonoBehaviour
                 case 17:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -394,7 +395,7 @@ public class MainStoryManager : MonoBehaviour
                 case 18:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.금사향;
                         timer1 = 0;
                         timer2 = 0;
@@ -405,7 +406,7 @@ public class MainStoryManager : MonoBehaviour
                 case 19:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -416,7 +417,7 @@ public class MainStoryManager : MonoBehaviour
                 case 20:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -427,7 +428,7 @@ public class MainStoryManager : MonoBehaviour
                 case 21:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -438,7 +439,7 @@ public class MainStoryManager : MonoBehaviour
                 case 22:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -449,7 +450,7 @@ public class MainStoryManager : MonoBehaviour
                 case 23:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -460,7 +461,7 @@ public class MainStoryManager : MonoBehaviour
                 case 24:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                         timer1 = 0;
                         timer2 = 0;
@@ -471,7 +472,7 @@ public class MainStoryManager : MonoBehaviour
                 case 25:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -482,7 +483,7 @@ public class MainStoryManager : MonoBehaviour
                 case 26:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                         timer1 = 0;
                         timer2 = 0;
@@ -493,7 +494,7 @@ public class MainStoryManager : MonoBehaviour
                 case 27:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -504,7 +505,7 @@ public class MainStoryManager : MonoBehaviour
                 case 28:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.금사향;
                         timer1 = 0;
                         timer2 = 0;
@@ -515,7 +516,7 @@ public class MainStoryManager : MonoBehaviour
                 case 29:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -526,8 +527,8 @@ public class MainStoryManager : MonoBehaviour
                 case 30:
                     if(talkText.isEnd){
                         isTamX2StoryEnd= true;
-                        GameManager.Instance.isStopTime = false;
-                        GameManager.Instance.isStopUI = false;
+                        gameManager.isStopTime = false;
+                        gameManager.isStopUI = false;
                         uiManager.stopTimeWindow.SetActive(false);
                         storyIndex = 0; //다음 스토리에 쓸 수 있게
 
@@ -543,7 +544,7 @@ public class MainStoryManager : MonoBehaviour
                  case 1:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.나나양;
                         timer1 = 0;
                         timer2 = 0;
@@ -554,7 +555,7 @@ public class MainStoryManager : MonoBehaviour
                 case 2:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -565,7 +566,7 @@ public class MainStoryManager : MonoBehaviour
                 case 3:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.나나양;
                         timer1 = 0;
                         timer2 = 0;
@@ -576,7 +577,7 @@ public class MainStoryManager : MonoBehaviour
                 case 4:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -587,7 +588,7 @@ public class MainStoryManager : MonoBehaviour
                 case 5:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.나나양;
                         timer1 = 0;
                         timer2 = 0;
@@ -598,7 +599,7 @@ public class MainStoryManager : MonoBehaviour
                 case 6:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -609,7 +610,7 @@ public class MainStoryManager : MonoBehaviour
                 case 7:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.나나양;
                         timer1 = 0;
                         timer2 = 0;
@@ -620,7 +621,7 @@ public class MainStoryManager : MonoBehaviour
                 case 8:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -631,7 +632,7 @@ public class MainStoryManager : MonoBehaviour
                 case 9:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.나나양;
                         timer1 = 0;
                         timer2 = 0;
@@ -642,7 +643,7 @@ public class MainStoryManager : MonoBehaviour
                 case 10:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                         timer1 = 0;
                         timer2 = 0;
@@ -653,7 +654,7 @@ public class MainStoryManager : MonoBehaviour
                 case 11:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f&& !isStartedNext){
+                    if(timer1 > 0.6f&& !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.코렛트;
                         timer1 = 0;
                         timer2 = 0;
@@ -664,7 +665,7 @@ public class MainStoryManager : MonoBehaviour
                 case 12:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.탬탬버린;
                         timer1 = 0;
                         timer2 = 0;
@@ -675,7 +676,7 @@ public class MainStoryManager : MonoBehaviour
                 case 13:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 >1f&& !isStartedNext){
+                    if(timer1 >0.6f&& !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -686,7 +687,7 @@ public class MainStoryManager : MonoBehaviour
                 case 14:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                         timer1 = 0;
                         timer2 = 0;
@@ -697,7 +698,7 @@ public class MainStoryManager : MonoBehaviour
                 case 15:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f&& !isStartedNext){
+                    if(timer1 > 0.6f&& !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.지누;
                         timer1 = 0;
                         timer2 = 0;
@@ -708,7 +709,7 @@ public class MainStoryManager : MonoBehaviour
                 case 16:
                     timer2 += Time.deltaTime;
 
-                    if(timer2 > 1f && !isStartedNext){
+                    if(timer2 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                         timer1 = 0;
                         timer2 = 0;
@@ -719,7 +720,7 @@ public class MainStoryManager : MonoBehaviour
                 case 17:
                     timer1 += Time.deltaTime;
 
-                    if(timer1 > 1f && !isStartedNext){
+                    if(timer1 > 0.6f && !isStartedNext){
                         talkManager.curTalkActor = TalkManager.Actor.나나양;
                         timer1 = 0;
                         timer2 = 0;
@@ -730,8 +731,8 @@ public class MainStoryManager : MonoBehaviour
                 case 18:
                     if(talkText.isEnd){
                         isNanayangStoryEnd= true;
-                        GameManager.Instance.isStopTime = false;
-                        GameManager.Instance.isStopUI = false;
+                        gameManager.isStopTime = false;
+                        gameManager.isStopUI = false;
                         uiManager.stopTimeWindow.SetActive(false);
                         storyIndex = 0; //다음 스토리에 쓸 수 있게
 
