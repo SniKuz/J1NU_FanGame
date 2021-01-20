@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance = null;
     public GameManager gameManager;
     public UIManager uiManager;
     public StreamerSkillManager skillManager;
@@ -36,24 +35,8 @@ public class GameManager : MonoBehaviour
     public int totalstaffCost;//totalStaffCost
     public int workStaff;// How many staff working
 
-    //#.------싱글톤-------
-    private void Awake() {
-        if(null == instance){
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else{
-            Destroy(this.gameObject);
-        }
-    }
-    public static GameManager Instance{
-        get{
-            if (null == instance){
-                return null;
-            }
-            return instance;
-        }
-    }
+    public bool alertDay;
+    public bool alreadyAlert;
 
     private void Start() {
         staffCapacity = 2 + ((int)maxCapacity/20); //staffCapcity는 default 2 + maxCapacity/50 + 게이지마다 1명씩 상승? 밸런스 조절 ㄱ
@@ -84,6 +67,7 @@ public class GameManager : MonoBehaviour
             if(guage < 1){
                 guage = 3;
                 day++;
+                alreadyAlert = false;//알람 초기화
 
                 goodsSystem.goodsDesignBonusCnt += 1;
 
@@ -124,12 +108,31 @@ public class GameManager : MonoBehaviour
             time = finalTime;
         }
 
+        //#. 밀감이 스킬. 최소 가격 선정
+        if(donationPrice<(int)skillManager.skillList[11]._functionDesc[skillManager.skillList[11]._level]){
+            donationPrice = (int)skillManager.skillList[11]._functionDesc[skillManager.skillList[11]._level];
+        }
+        if(goodsSystem.goodsPrice < (int)skillManager.skillList[11]._functionDesc[skillManager.skillList[11]._level]){
+            goodsSystem.goodsPrice = (int)skillManager.skillList[11]._functionDesc[skillManager.skillList[11]._level];
+        }
+
 
         //Check Event
-        if(eventManager.CheckEvent(day)){ //이건 날마다 있는 이벤트. 튜토리얼 이벤트는 UI돌아가야함.
+        if(day<20){
+            if(eventManager.CheckEvent(day)){ //이건 날마다 있는 이벤트. 튜토리얼 이벤트는 UI돌아가야함.
             uiManager.EventUpdate(eventManager.curEvent);
             isStopTime = true;
             isStopUI = true;
+            }
+        }
+
+        //Before Main Story. Show Alert Set
+        if(day % 5 == 4 && !alreadyAlert &!alertDay && !isStopTime ){
+            alreadyAlert = true;
+            alertDay = true;
+            uiManager.AlertPanelMove();
+            soundManager.BeforeMainDayNoise();
+            Invoke("BeforeMainDayPanelOff", 4f);
         }
 
         //Check Main Story
@@ -162,6 +165,8 @@ public class GameManager : MonoBehaviour
         }
         if(day == 20){
             if(stockManager.mainStock.GetComponent<StockItem>().myStock == stockManager.mainStock.GetComponent<StockItem>().totalStock){
+                isStopTime =true;
+                isStopUI = true;
                 StartCoroutine(Ending(true));
             }else{
                 StartCoroutine(Ending(false));
@@ -207,15 +212,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void BeforeMainDayPanelOff(){
+        alertDay = false;
+        uiManager.AlertPanelMove();
+    }
+
 
     IEnumerator Ending(bool isClear){
 
         //#.Stop All Active
+        isStopTime = true;
+        isStopUI = true;
 
         if(isClear){//HappyEnding
-            soundManager.MuteAll();
+            // soundManager.MuteAll();
             uiManager.Ending(isClear);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(3f);
             SceneManager.LoadScene(4);
         }else{//Bad Ending
             uiManager.Ending(isClear);
@@ -223,8 +235,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
             uiManager.BankruptcyScale();
             yield return new WaitForSeconds(3f);
-            
-            Application.Quit();
+            SceneManager.LoadScene(1);
         }
     }
 }

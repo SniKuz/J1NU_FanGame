@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
+    public GameManager gameManager;
     public UIManager uiManager;
     public TalkManager talkManager;
     public GoodsSystem goodsManager;
     public StaffManager staffManager;
+    public StockManager stockManager;
 
     public bool isTutorialEnd; //튜토를 했나?
     public int tutorialIndex;
@@ -18,6 +21,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject goodsDesign;
     public GameObject goodsMake;
     public GameObject goodsPacking;
+    public Scrollbar stockDrag;
 
     private void Update() {
         if(isTutorialEnd) 
@@ -27,7 +31,7 @@ public class TutorialManager : MonoBehaviour
             case 1: //화자 : 아리스톨 : 0 :사장님 드디어 나오셨군요!
                 timer1 += Time.deltaTime;
 
-                if(timer1 > 1f && !isStartedNext){
+                if(timer1 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
@@ -38,7 +42,7 @@ public class TutorialManager : MonoBehaviour
             case 2://화자 지누 : 1 :아리스톨! 진짜 오랜만이다...~
                 timer2 += Time.deltaTime;
 
-                if(timer2 > 1f && !isStartedNext){
+                if(timer2 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
@@ -49,7 +53,7 @@ public class TutorialManager : MonoBehaviour
             case 3://화자 : 아리스톨 : 1 :사장님 갔다오신 동안에
                 timer1 += Time.deltaTime;
 
-                if(timer1 > 1f && !isStartedNext){
+                if(timer1 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
@@ -60,7 +64,7 @@ public class TutorialManager : MonoBehaviour
             case 4://화자 지누 : 2 :망했다는 것치곤 배경이나쁘지 않은데
                  timer2 += Time.deltaTime;
 
-                if(timer2 > 1f && !isStartedNext){
+                if(timer2 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
@@ -71,7 +75,7 @@ public class TutorialManager : MonoBehaviour
             case 5://화자 : 아리스톨 : 2 :제작자가 국가의 납치를 당해서
                 timer1 += Time.deltaTime;
 
-                if(timer1 >1f && !isStartedNext){
+                if(timer1 >0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
@@ -82,39 +86,47 @@ public class TutorialManager : MonoBehaviour
             case 6://화자 : 아리스톨 : 3 : 여기는 굿즈 공장입니다.
                 timer2 += Time.deltaTime;
                 
-                if(GameManager.Instance.curType == 0 && !isStartedNext){
+                if(gameManager.curType == 0 && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 = 0;
                     timer2 = 0;
                     Invoke("InvokeTutorialTalk", 0.6f);
                     isStartedNext = true;
-                    Invoke("GoodsDesignEnable", 1f);
                 }
                 break;
             case 7://화자 : 아리스톨 : 4 : 잘하셨어요. 우측 상단에
                 timer1 += Time.deltaTime;
-                if(timer1 >1f  && !isStartedNext){
+                if(timer1 >0.6f  && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
                     uiManager.StoryTalk();
                     isStartedNext = true;
-                    Invoke("GoodsMakeEnable", 1f);
+                    Invoke("GoodsMakeEnable", 0.6f);
                 }
                 break;
             case 8://화자 : 아리스톨 : 5 : 개발 잘하셨어요
-                if(GameManager.Instance.goods > 0 && !isStartedNext){//굿즈 생산
+                if(gameManager.goods > 0 && !isStartedNext){//굿즈 생산
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
                     uiManager.StoryTalk();
                     isStartedNext = true;
-                    Invoke("GoodsPackingEnable", 1f);
+                    goodsMake.GetComponent<BoxCollider>().enabled = false;
                 }
                 break;
-            case 9://화자 : 아리스톨 : 6 : 저장공간도 늘었네요 -> 주식패널 눌러보세요
+            case 9://화자 : 아리스톨 : 6 : 판매기계-> 굿즈 터치해보삼
                 timer2+=Time.deltaTime;
-                if(timer2 > 1f && !isStartedNext){//굿즈 생산
+                if(timer2 > 0.6f && !isStartedNext){
+                    talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.StoryTalk();
+                    isStartedNext = true;
+                }
+                break;
+            case 10://화자 : 아리스톨 : 7 : 굿즈 터치 후 판매 ->이제 주식패널 눌러보삼
+                if(gameManager.goods<=0 && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
@@ -123,8 +135,28 @@ public class TutorialManager : MonoBehaviour
                     Invoke("stockPanelActive", 0.6f);
                 }
                 break;
-            case 10://화자 : 아리스톨 : 7 : 주식패널 눌렀고 -> 여러 주식들이 보이죠?
+            case 11://화자 : 아리스톨 : 8 : 주식패널 눌름 ->이제 드래그해보삼
                 if(uiManager.stockPanel.localPosition.y == 0 && !isStartedNext){
+                    talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.StoryTalk();
+                    isStartedNext = true;
+                }
+                break;
+            case 12://화자 : 아리스톨 : 9 : 드래그 해봄 -> 이제 메인 주식 사보삼
+                if(stockDrag.value<0.8f && !isStartedNext){//굿즈 생산
+                    talkManager.curTalkActor = TalkManager.Actor.아리스톨;
+                    timer1 =0;
+                    timer2 = 0;
+                    uiManager.StoryTalk();
+                    isStartedNext = true;
+
+                    gameManager.money+=2000;
+                }
+                break;
+            case 13://화자 : 아리스톨 : 10 : 메인 주식 삼. 이제 스트리머 패널 눌러보삼
+                if(stockManager.mainStock.GetComponent<StockItem>().myStock > 0 && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
@@ -134,7 +166,7 @@ public class TutorialManager : MonoBehaviour
                     Invoke("streamerPanelActive", 0.6f);
                 }
                 break;
-            case 11://화자 : 아리스톨 : 8 : 스트리머 패널 선택 -> 여기는 소속 스트리머 
+            case 14://화자 : 아리스톨 : 11 : 스트리머 패널 눌름 -> 이제 스태프 패널 선택해보삼
                 if(uiManager.streamerPanel.localPosition.y == 0 && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
@@ -145,7 +177,7 @@ public class TutorialManager : MonoBehaviour
                     Invoke("staffPanelActive", 0.6f);
                 }
                 break;
-            case 12://화자 : 아리스톨 : 9 : 스태프 패널 선택 -> 여기는 스태프를 고용하고 배치 
+            case 15://화자 : 아리스톨 : 12 : 스태프 패널 선택 -> 여기는 스태프를 고용하고 배치 
                 if(uiManager.staffPanel.localPosition.y == 0 && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
@@ -154,17 +186,17 @@ public class TutorialManager : MonoBehaviour
                     isStartedNext = true;
                 }
                 break;
-            case 13://화자 : 아리스톨 : 10 : 스태프 뽑기 창 -> 
+            case 16://화자 : 아리스톨 : 13 : 스태프 뽑기 창 -> 
                 if(uiManager.staffGet.activeSelf == true && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
                     timer2 = 0;
                     Invoke("InvokeTutorialTalk", 0.6f);
                     isStartedNext = true;
-                    GameManager.Instance.money += 10000; // 스태프 뽑기용 돈 주기
+                    gameManager.money += 10000; // 스태프 뽑기용 돈 주기
                 }
                 break;
-            case 14://화자 : 아리스톨 : 11 : 스태프 뽑기 -> 게임 스타트
+            case 17://화자 : 아리스톨 : 14 : 스태프 뽑기 -> 게임 스타트
                 if(staffManager.tutorialStaffGet && !isStartedNext && !staffManager.drawingTime){ //뽑기에 썼기를 바라며
                     talkManager.curTalkActor = TalkManager.Actor.아리스톨;
                     timer1 =0;
@@ -175,10 +207,10 @@ public class TutorialManager : MonoBehaviour
                     Invoke("informationPanelActive", 0.6f);
                 }
                 break;
-            case 15://화자 지누 : 3 : 설명 진짜 기네요
+            case 18://화자 지누 : 3 : 설명 진짜 기네요
                  timer1 += Time.deltaTime;
 
-                if(timer1 > 1f && !isStartedNext){
+                if(timer1 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
@@ -187,10 +219,10 @@ public class TutorialManager : MonoBehaviour
                 }
                 break;
 
-            case 16://화자 금사향 : 0 : 내가 있으니까 걱정하지마
+            case 19://화자 금사향 : 0 : 내가 있으니까 걱정하지마
                  timer2 += Time.deltaTime;
 
-                if(timer2 > 1f && !isStartedNext){
+                if(timer2 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.금사향;
                     timer1 =0;
                     timer2 = 0;
@@ -198,25 +230,26 @@ public class TutorialManager : MonoBehaviour
                     isStartedNext = true;
                 }
                 break;
-            case 17://화자 지누 : 4 : 오우 Z같은거 봐
+            case 20://화자 지누 : 4 : 오우 Z같은거 봐
                  timer1 += Time.deltaTime;
 
-                if(timer1 > 1f && !isStartedNext){
+                if(timer1 > 0.6f && !isStartedNext){
                     talkManager.curTalkActor = TalkManager.Actor.지누;
                     timer1 =0;
                     timer2 = 0;
                     uiManager.StoryTalk();
                     isStartedNext = true;
 
-                    isTutorialEnd = true;
-                    GameManager.Instance.isStopTime = false;
                 }
                 break;
-            case 18:
+            case 21:
                     if(uiManager.talkText.isEnd){
-                        GameManager.Instance.isStopTime = false;
-                        GameManager.Instance.isStopUI = false;
+                        isTutorialEnd = true;
+                        gameManager.isStopTime = false;
+                        gameManager.isStopUI = false;
                         uiManager.stopTimeWindow.SetActive(false);
+                        GoodsMakeEnable();
+
                     }
                     break;
         }

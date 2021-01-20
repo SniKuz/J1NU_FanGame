@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossRoomAnim : MonoBehaviour
 {
+    public GameManager gamemanager;
     private Animator anim;
     private bool isStop;
     public bool isEvent;
@@ -13,7 +14,7 @@ public class BossRoomAnim : MonoBehaviour
     }
     
     private void Update() {
-        isStop = GameManager.Instance.isStopUI;
+        isStop = gamemanager.isStopUI;
         if(!isStop){
             anim.SetBool("isStop", false);
         }else{

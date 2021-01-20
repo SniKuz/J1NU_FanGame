@@ -7,7 +7,7 @@ now there are only default and sleep animation so code is only change isSleep pa
 **/
 public class HighCharacterAnim : MonoBehaviour
 {
-
+    public GameManager gameManager;
     private Animator anim;
     private float animChangeTime;
     private bool isDefault;
@@ -22,7 +22,7 @@ public class HighCharacterAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.isStopUI){
+        if(gameManager.isStopUI){
             anim.SetBool("Default",false);
             anim.SetBool("Sleep", false);
             return ;

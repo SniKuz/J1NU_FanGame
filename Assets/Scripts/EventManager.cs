@@ -29,7 +29,7 @@ public class EventManager : MonoBehaviour
         "생각해보니 군대에서 벌은 월급을 어떻게 했더라?\n기억이 나지 않네 다음 중 한 가지였던 걸로 기억하는데...",
         3,  new string[] {"당연히 매일 군적금에 넣었지.", "요즘 무슨 군적금이야, 매일 주식에 든든하게 넣었지", "X트코인 했지. 5만원으로 1억 2천... 신의 투자자."});
         EventVo event01 = new EventVo(1, 2, "빚쟁이?", 
-        "쾅!쾅!쾅! 지누님! 밖에 빚쟁이가 온 것 같아요. 혹시 제가 모르는 빚이 있었나요? 아니 일단 이 상황을 어떻게 하죠? 도망쳐야 할까요.", 
+        "쾅!쾅!쾅! 지누님! 밖에 빚쟁이가 온 것 같아요. 혹시 제가 모르는 빚이 있었나요? 아니 일단 이 상황을 어떻게 하죠? 도망쳐야 할까요.\n 근데 이 꿀꿀 소리는 뭐죠...?", 
         2,  new string[] {"잘 기억이 안나는데 일단 도망치자", "빌린 돈이 있으면 갚아야지... 일단 열어보자", ""});
         EventVo event02 = new EventVo(2, 3, "발전기", 
         "굿즈 기계가 갑자기 말을 안들어! 아마 발전기가 망가진 것 같아. 발전기를 수리해야 하는데... 누가 하지?", 
@@ -98,6 +98,7 @@ public class EventManager : MonoBehaviour
         eventList[13] = event13;
         eventList[14] = event14;
         eventList[15] = event15;
+        eventList[16] = new EventVo(16, 20, "End", "End", 1, new string[]{"end"});
     }
 
     public bool CheckEvent(int curDay){

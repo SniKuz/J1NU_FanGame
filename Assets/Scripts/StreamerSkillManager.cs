@@ -25,12 +25,12 @@ public class StreamerSkillManager : MonoBehaviour
     void GenerateStreamerSkill(){
         StreamerSkillVo GoldSaHyang0 = new StreamerSkillVo(0,skillIcons[0], "치명적인 귀여움", 0, new int[5] {1000, 3000, 5000, 10000, 20000}, 
                                                 new string[] {  "0%확률로 추가 클릭 + 0",
-                                                                 "10%확률로 추가 클릭 + 2", 
-                                                                 "20%확률로 추가 클릭 + 4", 
-                                                                 "30%확률로 추가 클릭 + 6", 
-                                                                 "40%확률로 추가 클릭 + 8",
-                                                                 "50%확률로 추가 클릭 + 10"},
-                                                new float[] {0f, 10f, 20f, 30f, 40f, 50f} ,  "그녀의 귀여움은 기계가 홀릴 정도입니다...");
+                                                                 "10%확률로 추가 클릭 + 1", 
+                                                                 "20%확률로 추가 클릭 + 2", 
+                                                                 "30%확률로 추가 클릭 + 3", 
+                                                                 "40%확률로 추가 클릭 + 4",
+                                                                 "50%확률로 추가 클릭 + 5"},
+                                                new float[] {0f, 10f, 20f, 30f, 40f, 50f} ,  "그녀의 귀여움은 기계가 혼동할 정도입니다...");
         StreamerSkillVo GoldSaHyang1 = new StreamerSkillVo(1,skillIcons[1], "질러팅", 0, new int[5] {1000, 3000, 50000, 10000, 20000}, 
                                                 new string[] {  "굿즈 판매 속도 가속 X 1", 
                                                                 "굿즈 판매 속도 가속 X 1.2", 
@@ -170,7 +170,7 @@ public class StreamerSkillManager : MonoBehaviour
                                                                 "주식 구매가격 6% 감소", 
                                                                 "주식 구매가격 8% 감소",
                                                                 "주식 구매가격 10% 감소"},  
-                                                new float[] {1, 0.98f, 0.96f, 0.94f, 0.92f, 0.9f}, "Coke 디렉터입니다.\n 응원과 존경을 보냅니다.");
+                                                new float[] {1, 0.98f, 0.96f, 0.94f, 0.92f, 0.9f}, "Coke 디렉터입니다. 응원과 존경을 보냅니다.\n(해당스킬은 적혀있는 가격보다 싸게 사집니다.)");
         StreamerSkillVo Nanayang3 = new StreamerSkillVo(18,skillIcons[18], "머찐나", 0, new int[5] {1000, 3000, 5000, 10000, 20000}, 
                                                 new string[] {  "주식 판매가격 0% 증가", 
                                                                 "주식 판매가격 2% 증가", 
@@ -178,7 +178,7 @@ public class StreamerSkillManager : MonoBehaviour
                                                                 "주식 판매가격 6% 증가", 
                                                                 "주식 판매가격 8% 증가",
                                                                 "주식 판매가격 10% 증가"},  
-                                                new float[] {1, 1.02f, 1.04f, 1.06f, 1.08f, 1.1f}, "그녀는 머찝니다.\n카리스마가 거래를 성공으로 이끕니다.");
+                                                new float[] {1, 1.02f, 1.04f, 1.06f, 1.08f, 1.1f}, "그녀는 머찝니다.카리스마가 거래를 성공으로 이끕니다.\n(해당스킬은 적혀있는 가격보다 비싸게 판매됩니다.)");
         StreamerSkillVo Nanayang4 = new StreamerSkillVo(19,skillIcons[19], "우주대스타", 0, new int[5] {1000, 3000, 5000, 10000, 20000}, 
                                                 new string[] {  "시청자 수 증가량 + 0%", 
                                                                 "시청자 수 증가량 + 10%", 

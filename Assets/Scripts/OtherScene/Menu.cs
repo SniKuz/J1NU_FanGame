@@ -11,7 +11,8 @@ public class Menu : MonoBehaviour
     public GameObject pixelPan; // transform.y : 1000->-60
     public GameObject startBtn;
     public GameObject optionBtn;
-    public GameObject closeBtn;
+    public GameObject copryrightBtn;
+    public GameObject copyright;
     public GameObject gameBtn;
     public GameObject OptionPanel;
 
@@ -46,7 +47,7 @@ public class Menu : MonoBehaviour
     public void MenuBtnScale(){
         startBtn.transform.DOScale(new Vector3(1,1,1), 1);
         optionBtn.transform.DOScale(new Vector3(1,1,1), 1);
-        closeBtn.transform.DOScale(new Vector3(1,1,1), 1);
+        copryrightBtn.transform.DOScale(new Vector3(1,1,1), 1);
         BGM.Play();
     }
 
@@ -125,12 +126,16 @@ public class Menu : MonoBehaviour
     }
 
 
-    public void CloseBtnClick(){
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying=false;
-        #else
-            Application.Quit();
-        #endif
+    public void Copyright(){
+        if(copyright.transform.localScale == Vector3.zero) 
+            copyright.transform.DOScale(new Vector3(1f, 1f, 1), 0.5f).SetEase(Ease.OutBack);
+        else
+            copyright.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.OutBack);
+        // #if UNITY_EDITOR
+        //     UnityEditor.EditorApplication.isPlaying=false;
+        // #else
+        //     Application.Quit();
+        // #endif
     }
 
 
