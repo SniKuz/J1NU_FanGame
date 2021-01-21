@@ -21,6 +21,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject goodsDesign;
     public GameObject goodsMake;
     public GameObject goodsPacking;
+    public GameObject goodsTransport;
     public Scrollbar stockDrag;
 
     private void Update() {
@@ -123,6 +124,7 @@ public class TutorialManager : MonoBehaviour
                     timer2 = 0;
                     uiManager.StoryTalk();
                     isStartedNext = true;
+                    Invoke("GoodsTransportEnable", 1f);
                 }
                 break;
             case 10://화자 : 아리스톨 : 7 : 굿즈 터치 후 판매 ->이제 주식패널 눌러보삼
@@ -132,6 +134,7 @@ public class TutorialManager : MonoBehaviour
                     timer2 = 0;
                     uiManager.StoryTalk();
                     isStartedNext = true;
+                    goodsTransport.GetComponent<BoxCollider>().enabled =false;
                     Invoke("stockPanelActive", 0.6f);
                 }
                 break;
@@ -249,6 +252,7 @@ public class TutorialManager : MonoBehaviour
                         gameManager.isStopUI = false;
                         uiManager.stopTimeWindow.SetActive(false);
                         GoodsMakeEnable();
+                        GoodsTransportEnable();
 
                     }
                     break;
@@ -284,6 +288,9 @@ public class TutorialManager : MonoBehaviour
     }
     public void GoodsPackingEnable(){
         goodsPacking.GetComponent<BoxCollider>().enabled = true;
+    }
+    public void GoodsTransportEnable(){
+        goodsTransport.GetComponent<BoxCollider>().enabled = true;
     }
 
 }

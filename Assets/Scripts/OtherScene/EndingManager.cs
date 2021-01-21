@@ -27,7 +27,7 @@ public class EndingManager : MonoBehaviour
                                     "다시 픽셀을\n세계 최고의 기업으로 성장시킨다.",
                                     "김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!김진우!",
                                     "The End",
-                                    "(쿠키 이야기 있어요)"};
+                                    "Credit"};
 
         Invoke("EndStoryTalikg", 2f);
     }
@@ -65,10 +65,10 @@ public class EndingManager : MonoBehaviour
 
 
         if(cookieIndex >=5){
-            Invoke("SceneEnd", 4f);
+            Invoke("SceneEnd", 6f);
         }
         if(cookieIndex<5){
-            Invoke("CookieFade", 1f);
+            Invoke("CookieFade", 2f);
             Invoke("CookieEnd", 3f);
         }
     }
