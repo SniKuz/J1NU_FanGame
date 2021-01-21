@@ -392,7 +392,7 @@ public class UIManager : MonoBehaviour
 
     public void SkillUpBtn(){
         if(selectedSkill == null || selectedSkill._level>=5) return ;
-        if(selectedSkill._level <5 && gameManager.money > selectedSkill._nextLevelGold[selectedSkill._level]){
+        if(selectedSkill._level <5 && gameManager.money >= selectedSkill._nextLevelGold[selectedSkill._level]){
             gameManager.money -= selectedSkill._nextLevelGold[selectedSkill._level];//다음 레벨 가는 가격 빼고
             skillManager.SkillLevelUp(selectedSkill._id); // level++;
             skillUIUpdate(); //
@@ -641,8 +641,8 @@ public class UIManager : MonoBehaviour
                     EventBtnEffect("아 진짜 갑자기 옆에서 튀어나와서 실수한거라니까!\n굿즈 필요 터치 수 + 1");;
                     goodsSystem.maxCnt[1] += 1;
                 }else if(btn ==2){
-                    EventBtnEffect("발전기는 망가졌지만 아예 새로운 발전기를 디자인했습니다!\n굿즈 용량 필요 터치수 -1");
-                    goodsSystem.maxCnt[2] -= 1;
+                    EventBtnEffect("발전기는 망가졌지만 아예 새로운 발전기를 디자인했습니다!\n굿즈 필요 터치수 -1");
+                    goodsSystem.maxCnt[1] -= 1;
                 }
                 break;
             case 3:
@@ -697,7 +697,7 @@ public class UIManager : MonoBehaviour
             case 8:
                 if(btn == 0){
                     EventBtnEffect("설마 그걸 보고도 당신은 이것을 고른 걸까요? 당신은 미친게 분명합니다. 일부 투자자들은 당신에게 실망해 투자금을 돌려달라합니다.\n돈 - 300000");
-                    gameManager.money -= gameManager.money>300000 ? 300000 : gameManager.money;
+                    gameManager.money -= gameManager.money > 300000 ? 300000 : gameManager.money;
                 }else if(btn ==1){
                     EventBtnEffect("평행세계의 당신이 보낸 시그널을 믿은 당신은 도전하지 않았습니다. 하지만 조금 아쉽네요... 설마 그 돈으로 실패를 할 수 있을까요?");
                 }
@@ -752,13 +752,13 @@ public class UIManager : MonoBehaviour
             case 14:
                 if(btn == 0){
                     EventBtnEffect("원두컴퍼니가 무차별적으로 시장을 혼란스럽게 만들고 PIXEL을 사들이고 있습니다. 원두 컴퍼니가 주식을 매수합니다.\n보유 원두컴퍼니 주식 -30");
-                    stockManager.mainStock.GetComponent<StockItem>().myStock -= stockManager.mainStock.GetComponent<StockItem>().myStock<0 ? 0 : 30;
+                    stockManager.mainStock.GetComponent<StockItem>().myStock -= stockManager.mainStock.GetComponent<StockItem>().myStock<=30 ? stockManager.mainStock.GetComponent<StockItem>().myStock : 30;
                 }
                 break;
             case 15:
                 if(btn == 0){
                     EventBtnEffect("원두컴퍼니가 영혼을 끌어모아 매수를 시작합니다. 매 게이지마다 사는 주식수가 늘어납니다.\n보유 원두 컴퍼니 주식 -50");
-                    stockManager.mainStock.GetComponent<StockItem>().myStock -= stockManager.mainStock.GetComponent<StockItem>().myStock<0 ? 0 : 50;
+                    stockManager.mainStock.GetComponent<StockItem>().myStock -= stockManager.mainStock.GetComponent<StockItem>().myStock<=50 ? stockManager.mainStock.GetComponent<StockItem>().myStock : 50;
                 }
                 break;
         }
@@ -876,6 +876,7 @@ public class UIManager : MonoBehaviour
         tutorialManager.GoodsDesignEnable();
         tutorialManager.GoodsMakeEnable();
         tutorialManager.GoodsPackingEnable();
+        tutorialManager.GoodsTransportEnable();
 
         stockPanel.gameObject.SetActive(true);
         streamerPanel.gameObject.SetActive(true);

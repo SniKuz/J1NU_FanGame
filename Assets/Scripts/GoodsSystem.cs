@@ -104,6 +104,20 @@ public class GoodsSystem : MonoBehaviour
                 }
             }
         }
+        if(gameManager.curType == 0){
+            // if(Input.GetKeyDown(KeyCode.Q)){
+            //     GoodsDesignCntUp();
+            // }
+            // if(Input.GetKeyDown(KeyCode.W)){
+            //     GoodsMakeBtn();
+            // }
+            if(Input.GetKeyDown(KeyCode.Space)){
+                GoodsMakeBtn();
+            }
+            // if(Input.GetKeyDown(KeyCode.E)){
+            //     GoodsCapacityBtn();
+            // }
+        }
 #endif
 #if UNITY_EDITOR
         if(Input.GetMouseButtonDown(0)){
