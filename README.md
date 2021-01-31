@@ -7,7 +7,9 @@ Project : The_PIXEL : J1NU_FanGame
 ![3](https://user-images.githubusercontent.com/76653265/106374036-8fa9b080-63c2-11eb-96a0-1edcf37d3f3b.png)
 
 # Short Description
-This is fan game for Twitch streamer **김진우** and PIXEL streamers.
+This is fan game project for Twitch streamer **김진우** and PIXEL streamers. 
+Project Name : The_PIXEL(2020.12.21 ~ 2021.01.20)
+
 
 # Thanks 
 1. PIXEL, PIXEL streamers http://pixelstore.kr/
@@ -17,3 +19,6 @@ This is fan game for Twitch streamer **김진우** and PIXEL streamers.
 + Font : Maplestory Bold, Light
 + Audio : CC0
 + resources first copyright holder : PIXEL and each streamers
+
+# PS
+I'm so sorry for quality of game. I'll make better one after military service.
