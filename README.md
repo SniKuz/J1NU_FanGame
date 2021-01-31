@@ -7,7 +7,7 @@ Project : The_PIXEL : J1NU_FanGame
 ![3](https://user-images.githubusercontent.com/76653265/106374036-8fa9b080-63c2-11eb-96a0-1edcf37d3f3b.png)
 
 # Short Description
-This is fan game project for Twitch streamer **김진우** and PIXEL streamers. 
+This is fan game project for Twitch streamer **김진우** and PIXEL streamers.  
 Project Name : The_PIXEL(2020.12.21 ~ 2021.01.20)
 
 
