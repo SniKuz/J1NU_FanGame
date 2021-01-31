@@ -1,5 +1,5 @@
 # Title
-J1NU_FanGame
+Project : The_PIXEL : J1NU_FanGame
 
 # Banner
 ![1](https://user-images.githubusercontent.com/76653265/106374019-7e60a400-63c2-11eb-9abe-8f79acf0caac.jpg)
