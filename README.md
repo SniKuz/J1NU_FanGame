@@ -1,5 +1,6 @@
 # Title
 Project : The_PIXEL : J1NU_FanGame
+https://www.youtube.com/watch?v=2zecvixEBTk
 
 # Banner
 ![1](https://user-images.githubusercontent.com/76653265/106374019-7e60a400-63c2-11eb-9abe-8f79acf0caac.jpg)
